@@ -103,7 +103,17 @@ export function Example() {
 |------|--------|---------|
 | `variant` | `pop` `primary` `danger` `success` `outline` `ghost` | `pop` |
 | `size` | `sm` `md` `lg` | `md` |
+| `loading` | `true` / `false` | `false` |
+| `icon` | `true` / `false` — square icon-only button | `false` |
 | `effect` | `none` `pop` `shake` `wiggle` | `none` |
+
+```tsx
+<Button loading>Saving…</Button>
+
+<Button icon aria-label="Add">
+  <PlusIcon />
+</Button>
+```
 
 ### Input
 

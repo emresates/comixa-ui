@@ -1,8 +1,8 @@
 <p align="center">
-  <img src="docs/assets/logo.png" alt="Comixa UI" width="520" />
+  <img src="docs/assets/logo.png" alt="Comixa UI" width="320" />
 </p>
 
-<h3 align="center">Comic-inspired React UI Components.</h3>
+<h1 align="center">Comic-inspired React UI Components.</h3>
 
 <p align="center">
   <img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=1A1A1A" alt="React" />

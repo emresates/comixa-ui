@@ -60,10 +60,7 @@
     "type": "git",
     "url": "git+https://github.com/emresates/comixa-ui.git"
   },
-  "bugs": {
-    "url": "https://github.com/emresates/comixa-ui/issues"
-  },
-  "homepage": "https://github.com/emresates/comixa-ui#readme",
+  "homepage": "https://comixa-ui.vercel.app",
   "publishConfig": {
     "access": "public",
     "provenance": true

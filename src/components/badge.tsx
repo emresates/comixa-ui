@@ -4,7 +4,7 @@ import { cn } from "../lib/cn";
 
 export const badgeVariants = cva(
   [
-    "inline-flex items-center border-2 border-ink font-comic uppercase tracking-wide",
+    "inline-flex items-center justify-center gap-1 border-2 border-ink font-comic uppercase tracking-wide",
     "shadow-comic-sm",
   ].join(" "),
   {
@@ -15,11 +15,15 @@ export const badgeVariants = cva(
         blue: "bg-comic-blue text-white",
         green: "bg-comic-green text-ink",
         pink: "bg-comic-pink text-ink",
+        orange: "bg-comic-orange text-ink",
         outline: "bg-paper text-ink",
+        ink: "bg-ink text-paper",
+        soft: "border-dashed bg-paper-cream text-ink shadow-none",
       },
       size: {
         sm: "rounded-md px-2 py-0.5 text-xs",
         md: "rounded-lg px-2.5 py-1 text-sm",
+        lg: "rounded-xl px-3 py-1.5 text-base",
       },
     },
     defaultVariants: {

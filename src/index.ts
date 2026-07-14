@@ -1,6 +1,39 @@
 export { Button, buttonVariants, type ButtonProps } from "./components/button";
 export { Input, inputVariants, type InputProps } from "./components/input";
+export {
+  Select,
+  selectTriggerVariants,
+  selectVariants,
+  type SelectProps,
+  type SelectOption,
+  type SelectClassNames,
+} from "./components/select";
+export {
+  Checkbox,
+  checkboxVariants,
+  type CheckboxProps,
+} from "./components/checkbox";
+export {
+  Radio,
+  RadioGroup,
+  radioVariants,
+  type RadioProps,
+  type RadioGroupProps,
+} from "./components/radio";
+export { Switch, switchVariants, type SwitchProps } from "./components/switch";
 export { Badge, badgeVariants, type BadgeProps } from "./components/badge";
+export {
+  Avatar,
+  AvatarGroup,
+  avatarVariants,
+  type AvatarProps,
+} from "./components/avatar";
+export {
+  Tooltip,
+  tooltipVariants,
+  type TooltipProps,
+  type TooltipSide,
+} from "./components/tooltip";
 export {
   Card,
   CardHeader,

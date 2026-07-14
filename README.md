@@ -117,8 +117,69 @@ export function Example() {
 
 | Prop | Values | Default |
 |------|--------|---------|
-| `variant` | `yellow` `red` `blue` `green` `pink` `outline` | `yellow` |
-| `size` | `sm` `md` | `md` |
+| `variant` | `yellow` `red` `blue` `green` `pink` `orange` `outline` `ink` `soft` | `yellow` |
+| `size` | `sm` `md` `lg` | `md` |
+
+### Select
+
+Custom listbox (not a native `<select>`). Arrow stays on the right.
+
+```tsx
+<Select
+  value={hero}
+  onValueChange={setHero}
+  variant="pop"
+  placeholder="Pick a hero"
+  options={[
+    { value: "zap", label: "Captain Zap" },
+    { value: "boom", label: "Boom Knight" },
+  ]}
+/>
+```
+
+| Prop | Values / notes | Default |
+|------|--------|---------|
+| `options` | `{ value, label, disabled? }[]` | required |
+| `value` / `defaultValue` | string | — |
+| `onValueChange` | `(value: string) => void` | — |
+| `variant` | `default` `ghost` `filled` `pop` | `default` |
+| `selectSize` | `sm` `md` `lg` | `md` |
+| `state` | `default` `error` `success` | `default` |
+| `classNames` | `root` `trigger` `value` `placeholder` `icon` `list` `option` `optionActive` | — |
+
+### Checkbox / Radio / Switch
+
+| | Checkbox / Radio | Switch |
+|--|--|--|
+| `variant` | `default` `primary` `danger` `success` `pink` | same |
+| size prop | `checkboxSize` / `radioSize`: `sm` `md` `lg` | `switchSize` |
+| extras | `label` | `checked`, `onCheckedChange`, `label` |
+
+`RadioGroup` wraps radios (`orientation`: `horizontal` \| `vertical`).
+
+### Avatar
+
+| Prop | Values | Default |
+|------|--------|---------|
+| `variant` | `default` `yellow` `blue` `red` `green` `pink` `ink` | `default` |
+| `size` | `sm` `md` `lg` `xl` | `md` |
+| `shape` | `rounded` `square` `circle` | `rounded` |
+
+Also: `src`, `name` (initials), `fallback`, plus `AvatarGroup`.
+
+### Tooltip
+
+```tsx
+<Tooltip content="Hello!" side="top" variant="pop">
+  <Button>Hover me</Button>
+</Tooltip>
+```
+
+| Prop | Values | Default |
+|------|--------|---------|
+| `side` | `top` `right` `bottom` `left` | `top` |
+| `variant` | `default` `pop` `paper` `danger` `success` `blue` | `default` |
+| `delay` | ms | `120` |
 
 ### Card
 

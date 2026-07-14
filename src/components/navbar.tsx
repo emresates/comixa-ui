@@ -4,8 +4,8 @@ import { cn } from "../lib/cn";
 
 export const navbarVariants = cva(
   [
-    "relative z-40 flex w-full flex-wrap items-center gap-3 border-b-2 border-ink",
-    "px-4 py-3 font-body text-ink",
+    "relative z-40 flex w-full items-center gap-3 border-b-2 border-ink",
+    "px-6 py-3 font-body text-ink md:px-8",
   ].join(" "),
   {
     variants: {
@@ -72,7 +72,7 @@ Navbar.displayName = "Navbar";
 export const NavbarBrand = React.forwardRef<
   HTMLAnchorElement,
   React.AnchorHTMLAttributes<HTMLAnchorElement>
->(({ className, ...props }, ref) => (
+>(({ className, children, ...props }, ref) => (
   <a
     ref={ref}
     className={cn(
@@ -80,7 +80,9 @@ export const NavbarBrand = React.forwardRef<
       className
     )}
     {...props}
-  />
+  >
+    {children}
+  </a>
 ));
 NavbarBrand.displayName = "NavbarBrand";
 
@@ -90,7 +92,10 @@ export const NavbarContent = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("flex min-w-0 flex-1 items-center gap-3", className)}
+    className={cn(
+      "flex min-w-0 flex-1 items-center justify-between gap-3",
+      className
+    )}
     {...props}
   />
 ));
@@ -118,7 +123,8 @@ export const navbarLinkVariants = cva(
     variants: {
       active: {
         true: "bg-ink text-paper shadow-comic-sm",
-        false: "hover:bg-black/5 hover:-translate-y-0.5",
+        false:
+          "hover:-translate-y-0.5 hover:bg-black/5 dark:hover:bg-white/10",
       },
     },
     defaultVariants: {
@@ -149,7 +155,7 @@ export const NavbarActions = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("ml-auto flex shrink-0 items-center gap-2", className)}
+    className={cn("flex shrink-0 items-center gap-2", className)}
     {...props}
   />
 ));
@@ -183,7 +189,7 @@ export const NavbarToggle = React.forwardRef<
       aria-label={open ? "Close menu" : "Open menu"}
       aria-expanded={open}
       className={cn(
-        "inline-flex h-10 w-10 items-center justify-center border-2 border-ink bg-paper font-comic text-lg text-ink shadow-comic-sm md:hidden",
+        "inline-flex h-10 w-10 items-center justify-center rounded-lg border-2 border-ink bg-paper font-comic text-lg text-ink shadow-comic-sm md:hidden",
         "transition-[transform,box-shadow] duration-150",
         "hover:-translate-y-0.5 active:translate-x-[2px] active:translate-y-[2px] active:shadow-none",
         className

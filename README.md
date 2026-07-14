@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="docs/assets/logo.svg" alt="Comixa UI" width="520" />
+  <img src="docs/assets/logo.png" alt="Comixa UI" width="520" />
 </p>
 
 <h3 align="center">Comic-inspired React UI Components.</h3>
@@ -21,8 +21,6 @@ Comic-themed React components built with **Tailwind CSS**. Hard shadows, ink bor
 ```tsx
 import { Button, Input, Badge, Card, Dialog, Navbar, toast, ToastProvider } from "comixa-ui";
 ```
-
-> **Images in this README:** files live in [`docs/assets/`](docs/assets). See [`docs/assets/ASSETS.md`](docs/assets/ASSETS.md) for how to replace thumbs with real Showcase screenshots.
 
 ## Install
 
@@ -119,7 +117,6 @@ export function Example() {
 |:-------:|-----------|------------|
 | <img src="docs/assets/components/button.svg" alt="Button" width="200" /> | **Button** | CTAs with variants, loading, icon buttons |
 | <img src="docs/assets/components/badge.svg" alt="Badge" width="200" /> | **Badge** | Status tags and labels |
-| <img src="docs/assets/components/sound-badge.svg" alt="SoundBadge" width="200" /> | **SoundBadge** | POW / BAM action words |
 | <img src="docs/assets/components/sticker.svg" alt="Sticker" width="200" /> | **Sticker** | Tilted promo stickers |
 | <img src="docs/assets/components/input.svg" alt="Input" width="200" /> | **Input** | Ink-bordered text fields |
 | <img src="docs/assets/components/select.svg" alt="Select" width="200" /> | **Select** | Custom listbox dropdown |

@@ -7,7 +7,7 @@ Put images for the GitHub README in this folder.
 In `README.md`, use a **relative path** from the repo root:
 
 ```md
-![Comixa logo](docs/assets/logo.svg)
+![Comixa logo](docs/assets/logo.png)
 
 ![Showcase](docs/assets/showcase.png)
 
@@ -20,7 +20,7 @@ After you push to GitHub, these files are part of the repo and render on the REA
 
 | Path | Use |
 |------|-----|
-| `logo.svg` | Big logo at the top of the README |
+| `logo.png` | Big logo at the top of the README |
 | `showcase.png` | Optional full playground screenshot |
 | `components/*.svg` (or `.png`) | Small preview next to each component |
 

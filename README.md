@@ -1,10 +1,28 @@
-# Comixa UI
+<p align="center">
+  <img src="docs/assets/logo.svg" alt="Comixa UI" width="520" />
+</p>
 
-Comic-themed React UI components built with **Tailwind CSS**.
+<h3 align="center">Comic-inspired React UI Components.</h3>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=1A1A1A" alt="React" />
+  <img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript" />
+  <img src="https://img.shields.io/badge/Tailwind-38BDF8?style=for-the-badge&logo=tailwindcss&logoColor=1A1A1A" alt="Tailwind" />
+  <img src="https://img.shields.io/badge/Accessible-5BD67A?style=for-the-badge&logo=ACCESSIBLE-ICON&logoColor=1A1A1A" alt="Accessible" />
+  <img src="https://img.shields.io/badge/Dark_Mode-1A1A1A?style=for-the-badge&logo=nightwatch&logoColor=FFE566" alt="Dark Mode" />
+</p>
+
+<p align="center">
+  <img src="docs/assets/showcase.png" alt="Comixa Showcase" width="900" />
+</p>
+
+Comic-themed React components built with **Tailwind CSS**. Hard shadows, ink borders, punchy motion.
 
 ```tsx
 import { Button, Input, Badge, Card, Dialog, Navbar, toast, ToastProvider } from "comixa-ui";
 ```
+
+> **Images in this README:** files live in [`docs/assets/`](docs/assets). See [`docs/assets/ASSETS.md`](docs/assets/ASSETS.md) for how to replace thumbs with real Showcase screenshots.
 
 ## Install
 
@@ -96,6 +114,20 @@ export function Example() {
 ```
 
 ## Components
+
+| Preview | Component | What it is |
+|:-------:|-----------|------------|
+| <img src="docs/assets/components/button.svg" alt="Button" width="200" /> | **Button** | CTAs with variants, loading, icon buttons |
+| <img src="docs/assets/components/badge.svg" alt="Badge" width="200" /> | **Badge** | Status tags and labels |
+| <img src="docs/assets/components/sound-badge.svg" alt="SoundBadge" width="200" /> | **SoundBadge** | POW / BAM action words |
+| <img src="docs/assets/components/sticker.svg" alt="Sticker" width="200" /> | **Sticker** | Tilted promo stickers |
+| <img src="docs/assets/components/input.svg" alt="Input" width="200" /> | **Input** | Ink-bordered text fields |
+| <img src="docs/assets/components/select.svg" alt="Select" width="200" /> | **Select** | Custom listbox dropdown |
+| <img src="docs/assets/components/checkbox.svg" alt="Checkbox" width="200" /> | **Checkbox** | Checkable options |
+| <img src="docs/assets/components/radio.svg" alt="Radio" width="200" /> | **Radio** | Single-choice radios |
+| <img src="docs/assets/components/toast.svg" alt="Toast" width="200" /> | **Toast** | Notifications |
+| <img src="docs/assets/components/divider.svg" alt="Divider" width="200" /> | **Divider** | Comic rules |
+| <img src="docs/assets/components/stats.svg" alt="Stats" width="200" /> | **Stats** | Metric tiles |
 
 ### Button
 

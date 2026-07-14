@@ -48,5 +48,6 @@ export {
   type ToastInput,
   type ToastVariant,
   type ToastClassNames,
+  type ToastPosition,
 } from "./components/toast";
 export { cn } from "./lib/cn";

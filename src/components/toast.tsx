@@ -31,6 +31,23 @@ function ensureToastStyles() {
   document.head.appendChild(style);
 }
 
+export type ToastPosition =
+  | "top-left"
+  | "top-right"
+  | "top-center"
+  | "bottom-left"
+  | "bottom-right"
+  | "bottom-center";
+
+const POSITION_CLASS: Record<ToastPosition, string> = {
+  "top-left": "left-4 top-4 items-start",
+  "top-right": "right-4 top-4 items-end",
+  "top-center": "left-1/2 top-4 -translate-x-1/2 items-center",
+  "bottom-left": "bottom-4 left-4 items-start",
+  "bottom-right": "bottom-4 right-4 items-end",
+  "bottom-center": "bottom-4 left-1/2 -translate-x-1/2 items-center",
+};
+
 export const toastVariants = cva(
   [
     "pointer-events-auto relative flex w-[min(100%,22rem)] gap-3 border-2 border-ink p-3 shadow-comic",
@@ -68,7 +85,15 @@ export type ToastInput = {
   title?: React.ReactNode;
   description?: React.ReactNode;
   variant?: ToastVariant;
+  /** Overrides `<ToastProvider position>` for this toast only. */
+  position?: ToastPosition;
+  /**
+   * Auto-dismiss in ms.
+   * Use `0` or `Infinity` to keep open until closed manually.
+   */
   duration?: number;
+  /** Show the × close button. Default `true`. */
+  closable?: boolean;
   className?: string;
   classNames?: ToastClassNames;
 };
@@ -80,6 +105,9 @@ type ToastRecord = Required<Pick<ToastInput, "id">> &
 
 type ToastContextValue = {
   toasts: ToastRecord[];
+  defaultPosition: ToastPosition;
+  defaultDuration: number;
+  defaultClosable: boolean;
   push: (toast: ToastInput) => string;
   dismiss: (id: string) => void;
   clear: () => void;
@@ -90,8 +118,10 @@ const ToastContext = React.createContext<ToastContextValue | null>(null);
 type Listener = (toasts: ToastRecord[]) => void;
 
 let memoryToasts: ToastRecord[] = [];
+let memoryDefaultPosition: ToastPosition = "bottom-right";
+let memoryDefaultDuration = 3500;
+let memoryDefaultClosable = true;
 const memoryListeners = new Set<Listener>();
-const DEFAULT_DURATION = 3500;
 const EXIT_MS = 200;
 
 function emit() {
@@ -99,12 +129,12 @@ function emit() {
 }
 
 function dismissToast(id: string) {
-  memoryToasts = memoryToasts.map((toast) =>
-    toast.id === id ? { ...toast, open: false } : toast
+  memoryToasts = memoryToasts.map((item) =>
+    item.id === id ? { ...item, open: false } : item
   );
   emit();
   window.setTimeout(() => {
-    memoryToasts = memoryToasts.filter((toast) => toast.id !== id);
+    memoryToasts = memoryToasts.filter((item) => item.id !== id);
     emit();
   }, EXIT_MS);
 }
@@ -112,12 +142,18 @@ function dismissToast(id: string) {
 function pushToast(input: ToastInput) {
   ensureToastStyles();
   const id = input.id ?? `toast-${Math.random().toString(36).slice(2, 9)}`;
+  const duration =
+    input.duration === undefined ? memoryDefaultDuration : input.duration;
+  const closable =
+    input.closable === undefined ? memoryDefaultClosable : input.closable;
   const next: ToastRecord = {
     id,
     title: input.title,
     description: input.description,
     variant: input.variant ?? "pop",
-    duration: input.duration ?? DEFAULT_DURATION,
+    position: input.position ?? memoryDefaultPosition,
+    duration,
+    closable,
     className: input.className,
     classNames: input.classNames,
     open: true,
@@ -125,15 +161,15 @@ function pushToast(input: ToastInput) {
   memoryToasts = [...memoryToasts, next];
   emit();
 
-  if (next.duration && next.duration > 0) {
-    window.setTimeout(() => dismissToast(id), next.duration);
+  if (Number.isFinite(duration) && duration > 0) {
+    window.setTimeout(() => dismissToast(id), duration);
   }
 
   return id;
 }
 
 function clearToasts() {
-  memoryToasts = memoryToasts.map((toast) => ({ ...toast, open: false }));
+  memoryToasts = memoryToasts.map((item) => ({ ...item, open: false }));
   emit();
   window.setTimeout(() => {
     memoryToasts = [];
@@ -141,19 +177,33 @@ function clearToasts() {
   }, EXIT_MS);
 }
 
+type ToastHelperOptions = Omit<ToastInput, "title" | "description" | "variant">;
+
 /** Imperative toast API — works when `<ToastProvider />` is mounted. */
 export const toast = Object.assign(
   (input: ToastInput | string) =>
     pushToast(typeof input === "string" ? { title: input } : input),
   {
-    success: (title: React.ReactNode, description?: React.ReactNode) =>
-      pushToast({ title, description, variant: "success" }),
-    danger: (title: React.ReactNode, description?: React.ReactNode) =>
-      pushToast({ title, description, variant: "danger" }),
-    info: (title: React.ReactNode, description?: React.ReactNode) =>
-      pushToast({ title, description, variant: "info" }),
-    pop: (title: React.ReactNode, description?: React.ReactNode) =>
-      pushToast({ title, description, variant: "pop" }),
+    success: (
+      title: React.ReactNode,
+      description?: React.ReactNode,
+      options?: ToastHelperOptions
+    ) => pushToast({ title, description, variant: "success", ...options }),
+    danger: (
+      title: React.ReactNode,
+      description?: React.ReactNode,
+      options?: ToastHelperOptions
+    ) => pushToast({ title, description, variant: "danger", ...options }),
+    info: (
+      title: React.ReactNode,
+      description?: React.ReactNode,
+      options?: ToastHelperOptions
+    ) => pushToast({ title, description, variant: "info", ...options }),
+    pop: (
+      title: React.ReactNode,
+      description?: React.ReactNode,
+      options?: ToastHelperOptions
+    ) => pushToast({ title, description, variant: "pop", ...options }),
     dismiss: dismissToast,
     clear: clearToasts,
   }
@@ -170,23 +220,31 @@ export function useToast() {
 export function ToastProvider({
   children,
   className,
+  viewportClassName,
   position = "bottom-right",
+  duration = 3500,
+  closable = true,
 }: {
   children?: React.ReactNode;
+  /** Applied to every viewport container. */
   className?: string;
-  position?:
-    | "top-left"
-    | "top-right"
-    | "top-center"
-    | "bottom-left"
-    | "bottom-right"
-    | "bottom-center";
+  /** Alias of `className` for clarity when customizing placement wrappers. */
+  viewportClassName?: string;
+  /** Default position for toasts that don't pass their own `position`. */
+  position?: ToastPosition;
+  /** Default auto-dismiss ms. `0` / `Infinity` = stay until closed. */
+  duration?: number;
+  /** Default close-button visibility. */
+  closable?: boolean;
 }) {
   const [toasts, setToasts] = React.useState<ToastRecord[]>(memoryToasts);
 
   React.useLayoutEffect(() => {
     ensureToastStyles();
-  }, []);
+    memoryDefaultPosition = position;
+    memoryDefaultDuration = duration;
+    memoryDefaultClosable = closable;
+  }, [position, duration, closable]);
 
   React.useEffect(() => {
     const listener: Listener = (next) => setToasts([...next]);
@@ -200,39 +258,55 @@ export function ToastProvider({
   const value = React.useMemo<ToastContextValue>(
     () => ({
       toasts,
+      defaultPosition: position,
+      defaultDuration: duration,
+      defaultClosable: closable,
       push: pushToast,
       dismiss: dismissToast,
       clear: clearToasts,
     }),
-    [toasts]
+    [toasts, position, duration, closable]
   );
 
-  const positionClass = {
-    "top-left": "left-4 top-4 items-start",
-    "top-right": "right-4 top-4 items-end",
-    "top-center": "left-1/2 top-4 -translate-x-1/2 items-center",
-    "bottom-left": "bottom-4 left-4 items-start",
-    "bottom-right": "bottom-4 right-4 items-end",
-    "bottom-center": "bottom-4 left-1/2 -translate-x-1/2 items-center",
-  }[position];
+  const grouped = React.useMemo(() => {
+    const map = new Map<ToastPosition, ToastRecord[]>();
+    for (const item of toasts) {
+      const key = item.position ?? position;
+      const list = map.get(key) ?? [];
+      list.push(item);
+      map.set(key, list);
+    }
+    return map;
+  }, [toasts, position]);
 
   return (
     <ToastContext.Provider value={value}>
       {children}
       {typeof document !== "undefined"
         ? createPortal(
-            <div
-              className={cn(
-                "pointer-events-none fixed z-[100] flex max-h-screen w-full max-w-[calc(100%-2rem)] flex-col gap-2",
-                positionClass,
-                className
-              )}
-              data-comixa-toast-viewport=""
-            >
-              {toasts.map((item) => (
-                <ToastView key={item.id} toast={item} onDismiss={dismissToast} />
+            <>
+              {[...grouped.entries()].map(([pos, items]) => (
+                <div
+                  key={pos}
+                  className={cn(
+                    "pointer-events-none fixed z-[100] flex max-h-screen w-full max-w-[calc(100%-2rem)] flex-col gap-2",
+                    POSITION_CLASS[pos],
+                    className,
+                    viewportClassName
+                  )}
+                  data-comixa-toast-viewport=""
+                  data-position={pos}
+                >
+                  {items.map((item) => (
+                    <ToastView
+                      key={item.id}
+                      toast={item}
+                      onDismiss={dismissToast}
+                    />
+                  ))}
+                </div>
               ))}
-            </div>,
+            </>,
             document.body
           )
         : null}
@@ -247,10 +321,13 @@ function ToastView({
   toast: ToastRecord;
   onDismiss: (id: string) => void;
 }) {
+  const showClose = item.closable !== false;
+
   return (
     <div
       data-comixa-toast=""
       data-state={item.open ? "open" : "closed"}
+      data-position={item.position}
       role="status"
       className={cn(
         toastVariants({ variant: item.variant }),
@@ -280,19 +357,21 @@ function ToastView({
           </p>
         ) : null}
       </div>
-      <button
-        type="button"
-        aria-label="Dismiss"
-        className={cn(
-          "inline-flex h-7 w-7 shrink-0 items-center justify-center border-2 border-ink bg-paper font-comic text-sm text-ink shadow-comic-sm",
-          "transition-[transform,box-shadow] duration-150",
-          "hover:-translate-y-0.5 active:translate-x-[1px] active:translate-y-[1px] active:shadow-none",
-          item.classNames?.close
-        )}
-        onClick={() => onDismiss(item.id)}
-      >
-        ×
-      </button>
+      {showClose ? (
+        <button
+          type="button"
+          aria-label="Dismiss"
+          className={cn(
+            "inline-flex h-7 w-7 shrink-0 items-center justify-center border-2 border-ink bg-paper font-comic text-sm text-ink shadow-comic-sm",
+            "transition-[transform,box-shadow] duration-150",
+            "hover:-translate-y-0.5 active:translate-x-[1px] active:translate-y-[1px] active:shadow-none",
+            item.classNames?.close
+          )}
+          onClick={() => onDismiss(item.id)}
+        >
+          ×
+        </button>
+      ) : null}
     </div>
   );
 }

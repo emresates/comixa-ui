@@ -208,13 +208,29 @@ Parts: `NavbarBrand`, `NavbarContent`, `NavbarMenu`, `NavbarLink`, `NavbarAction
 Wrap your app with `ToastProvider`, then call `toast()` anywhere.
 
 ```tsx
-<ToastProvider position="bottom-right">
+<ToastProvider
+  position="bottom-right"
+  duration={3500}
+  closable
+  viewportClassName="p-2"
+>
   <App />
 </ToastProvider>
 
 toast({ title: "Pow!", description: "Saved.", variant: "success" });
 toast.success("Done");
 toast.danger("Oops", "Try again");
+
+// Duration (ms). 0 or Infinity = stay until dismissed
+toast({ title: "Quick", duration: 1000 });
+toast({ title: "Sticky", duration: 0 });
+
+// Hide the × button
+toast({ title: "No close", closable: false, duration: 3000 });
+
+// Per-toast position (overrides provider default)
+toast({ title: "Top!", position: "top-center" });
+toast.info("Hi", "From the corner", { position: "top-left", duration: 5000 });
 
 // Custom classes per slot
 toast({
@@ -229,8 +245,12 @@ toast({
 });
 ```
 
+| | |
+|--|--|
 | Variant | `default` `pop` `success` `danger` `info` |
 | Position | `top-left` `top-right` `top-center` `bottom-left` `bottom-right` `bottom-center` |
+| `duration` | ms number — `0` / `Infinity` keeps toast open |
+| `closable` | `true` / `false` — show/hide × button |
 
 ## Design tokens (via preset)
 

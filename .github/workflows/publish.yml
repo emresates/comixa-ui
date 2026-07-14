@@ -29,6 +29,14 @@ jobs:
       - name: Install latest npm (OIDC / Trusted Publishing)
         run: npm install -g npm@latest
 
+      - name: Show npm / oidc readiness
+        run: |
+          npm -v
+          node -v
+          echo "Repo: ${{ github.repository }}"
+          echo "Workflow: ${{ github.workflow }}"
+          echo "Ref: ${{ github.ref }}"
+
       - name: Install dependencies
         run: npm ci
 
@@ -43,8 +51,16 @@ jobs:
 
           if npm view "${NAME}@${VERSION}" version >/dev/null 2>&1; then
             echo "Skipping publish: ${NAME}@${VERSION} is already on npm."
+            echo "Bump package.json version to publish a new release."
             exit 0
           fi
 
           echo "Publishing ${NAME}@${VERSION} via Trusted Publishing (OIDC)..."
-          npm publish --access public
+          echo "If this fails with ENEEDAUTH / 404, configure Trusted Publisher on npm:"
+          echo "  https://www.npmjs.com/package/${NAME}/access"
+          echo "  GitHub user/org: emresates"
+          echo "  Repository: comixa-ui"
+          echo "  Workflow filename: publish.yml"
+          echo "  Allowed action: npm publish"
+
+          npm publish --access public --provenance

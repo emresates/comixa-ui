@@ -65,6 +65,7 @@
   },
   "homepage": "https://github.com/emresates/comixa-ui#readme",
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "provenance": true
   }
 }

@@ -3,7 +3,7 @@
 Comic-themed React UI components built with **Tailwind CSS**.
 
 ```tsx
-import { Button, Input, Badge, Card, Dialog } from "comixa-ui";
+import { Button, Input, Badge, Card, Dialog, Navbar, toast, ToastProvider } from "comixa-ui";
 ```
 
 ## Install
@@ -171,6 +171,66 @@ const [open, setOpen] = useState(false);
   </Dialog>
 </>
 ```
+
+### Navbar
+
+Customizable compound navbar — every part accepts `className`.
+
+| Prop (`Navbar`) | Values | Default |
+|------|--------|---------|
+| `variant` | `default` `cream` `pop` `panel` `ink` `transparent` | `default` |
+| `position` | `static` `sticky` `fixed` | `static` |
+
+Parts: `NavbarBrand`, `NavbarContent`, `NavbarMenu`, `NavbarLink`, `NavbarActions`, `NavbarItem`, `NavbarToggle`, `NavbarMobileMenu`.
+
+```tsx
+<Navbar variant="pop" position="sticky" className="px-6">
+  <NavbarBrand href="/" className="text-ink">Comixa</NavbarBrand>
+  <NavbarContent>
+    <NavbarMenu className="gap-2">
+      <NavbarLink href="/" active className="shadow-comic">Home</NavbarLink>
+      <NavbarLink href="/docs">Docs</NavbarLink>
+    </NavbarMenu>
+  </NavbarContent>
+  <NavbarActions className="gap-3">
+    <Button size="sm">Join</Button>
+    <NavbarToggle className="bg-comic-yellow" />
+  </NavbarActions>
+  <NavbarMobileMenu className="bg-paper-cream">
+    <NavbarLink href="/">Home</NavbarLink>
+    <NavbarLink href="/docs">Docs</NavbarLink>
+  </NavbarMobileMenu>
+</Navbar>
+```
+
+### Toast
+
+Wrap your app with `ToastProvider`, then call `toast()` anywhere.
+
+```tsx
+<ToastProvider position="bottom-right">
+  <App />
+</ToastProvider>
+
+toast({ title: "Pow!", description: "Saved.", variant: "success" });
+toast.success("Done");
+toast.danger("Oops", "Try again");
+
+// Custom classes per slot
+toast({
+  title: "Styled",
+  className: "max-w-sm",
+  classNames: {
+    root: "rounded-2xl",
+    title: "text-comic-red",
+    description: "opacity-80",
+    close: "bg-comic-yellow",
+  },
+});
+```
+
+| Variant | `default` `pop` `success` `danger` `info` |
+| Position | `top-left` `top-right` `top-center` `bottom-left` `bottom-right` `bottom-center` |
 
 ## Design tokens (via preset)
 

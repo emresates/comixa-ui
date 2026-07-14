@@ -35,6 +35,37 @@ export {
   type TooltipSide,
 } from "./components/tooltip";
 export {
+  SpeechBubble,
+  speechBubbleVariants,
+  type SpeechBubbleProps,
+} from "./components/speech-bubble";
+export {
+  ComicPage,
+  ComicPanel,
+  comicPageVariants,
+  comicPanelVariants,
+  type ComicPageProps,
+  type ComicPanelProps,
+  type ComicPageLayout,
+} from "./components/comic-page";
+export {
+  SoundBadge,
+  soundBadgeVariants,
+  SOUND_WORDS,
+  type SoundBadgeProps,
+  type SoundWord,
+} from "./components/sound-badge";
+export {
+  Divider,
+  dividerVariants,
+  type DividerProps,
+} from "./components/divider";
+export {
+  Sticker,
+  stickerVariants,
+  type StickerProps,
+} from "./components/sticker";
+export {
   Card,
   CardHeader,
   CardTitle,

@@ -181,6 +181,58 @@ Also: `src`, `name` (initials), `fallback`, plus `AvatarGroup`.
 | `variant` | `default` `pop` `paper` `danger` `success` `blue` | `default` |
 | `delay` | ms | `120` |
 
+### SpeechBubble
+
+Classic comic dialogue bubble (no boom/explosion).
+
+```tsx
+<SpeechBubble shape="speech" tone="cream" tail="bottomLeft">
+  Hey! Did you see that?
+</SpeechBubble>
+<SpeechBubble shape="thought" tail="bottomRight">
+  Hmm…
+</SpeechBubble>
+```
+
+| Prop | Values | Default |
+|------|--------|---------|
+| `shape` | `speech` `thought` | `speech` |
+| `tone` | `default` `pop` `danger` `blue` `pink` `cream` | `default` |
+| `size` | `sm` `md` `lg` | `md` |
+| `tail` | `bottomLeft` `bottomRight` `bottom` `none` | `bottomLeft` |
+
+### ComicPage
+
+Comic-strip grid. `layout="2-1"` = two panels on top, one full-width below.
+
+```tsx
+<ComicPage layout="2-1">
+  <ComicPanel caption="1">Top left</ComicPanel>
+  <ComicPanel caption="2">Top right</ComicPanel>
+  <ComicPanel variant="alert">Wide bottom</ComicPanel>
+</ComicPage>
+```
+
+Layouts: `1` `1-1` `2` `2-1` `1-2` `2-2` `3` `1-1-1`
+
+### SoundBadge
+
+```tsx
+<SoundBadge variant="pow" />
+<SoundBadge variant="boom" burst />
+<SoundBadge variant="bam" word="SNAP!" />
+```
+
+Variants: `pow` `bam` `wow` `boom` `zap` `crash` `wham` `bang` `kapow` `splash`
+
+### Divider
+
+`variant`: `solid` `dashed` `zigzag` `dots` `burst` — optional `label`
+
+### Sticker
+
+`variant` colors + `tilt` (`none` `left` `right` `wild`) + `shape` (`square` `circle` `ticket`)
+
 ### Card
 
 | Prop | Values | Default |

@@ -114,4 +114,61 @@ export {
   type ToastClassNames,
   type ToastPosition,
 } from "./components/toast";
+export {
+  LetterReveal,
+  Typewriter,
+  ComicText,
+  Highlight,
+  comicTextVariants,
+  highlightVariants,
+  type LetterRevealProps,
+  type TypewriterProps,
+  type ComicTextProps,
+  type HighlightProps,
+  type AnimationRepeat,
+} from "./components/animated-text";
+export {
+  Background,
+  DotsBackground,
+  GridBackground,
+  LinesBackground,
+  PatternBackground,
+  ExplosionBackground,
+  ComicPaperBackground,
+  backgroundVariants,
+  type BackgroundProps,
+  type BackgroundVariant,
+} from "./components/background";
+export {
+  Testimonials,
+  Testimonial,
+  testimonialsVariants,
+  testimonialVariants,
+  type TestimonialsProps,
+  type TestimonialProps,
+} from "./components/testimonials";
+export {
+  Pricing,
+  PricingTier,
+  pricingVariants,
+  pricingTierVariants,
+  type PricingProps,
+  type PricingTierProps,
+} from "./components/pricing";
+export {
+  FAQ,
+  FAQItem,
+  faqVariants,
+  faqItemVariants,
+  type FAQProps,
+  type FAQItemProps,
+} from "./components/faq";
+export {
+  Stats,
+  Stat,
+  statsVariants,
+  statVariants,
+  type StatsProps,
+  type StatProps,
+} from "./components/stats";
 export { cn } from "./lib/cn";

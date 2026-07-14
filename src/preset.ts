@@ -82,6 +82,28 @@ const comicPreset: Partial<Config> = {
             opacity: "0",
           },
         },
+        "comic-letter-in": {
+          "0%": {
+            transform: "translateY(0.55em) rotate(-8deg)",
+            opacity: "0",
+          },
+          "60%": {
+            transform: "translateY(-0.08em) rotate(2deg)",
+            opacity: "1",
+          },
+          "100%": {
+            transform: "translateY(0) rotate(0deg)",
+            opacity: "1",
+          },
+        },
+        "comic-caret-blink": {
+          "0%, 45%": { opacity: "1" },
+          "50%, 100%": { opacity: "0" },
+        },
+        "comic-highlight-wipe": {
+          "0%": { backgroundSize: "0% 100%" },
+          "100%": { backgroundSize: "100% 100%" },
+        },
       },
       animation: {
         "comic-pop": "comic-pop 0.35s ease-out both",
@@ -92,6 +114,10 @@ const comicPreset: Partial<Config> = {
         "comic-dialog-in":
           "comic-dialog-in 0.42s cubic-bezier(0.34, 1.45, 0.64, 1) both",
         "comic-dialog-out": "comic-dialog-out 0.2s ease-in both",
+        "comic-letter-in":
+          "comic-letter-in 0.45s cubic-bezier(0.34, 1.45, 0.64, 1) both",
+        "comic-caret-blink": "comic-caret-blink 1s steps(1) infinite",
+        "comic-highlight-wipe": "comic-highlight-wipe 0.7s ease-out both",
       },
     },
   },

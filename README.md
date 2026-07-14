@@ -375,9 +375,97 @@ toast({
 | `duration` | ms number — `0` / `Infinity` keeps toast open |
 | `closable` | `true` / `false` — show/hide × button |
 
+### Testimonials / Pricing / FAQ / Stats
+
+Compound marketing sections:
+
+```tsx
+import {
+  Testimonials,
+  Testimonial,
+  Pricing,
+  PricingTier,
+  FAQ,
+  FAQItem,
+  Stats,
+  Stat,
+  Button,
+  Avatar,
+} from "comixa-ui";
+
+<Testimonials columns={3}>
+  <Testimonial
+    quote="Pow!"
+    author="Captain Zap"
+    role="Hero"
+    rating={5}
+    avatar={<Avatar name="CZ" size="sm" shape="circle" />}
+  />
+</Testimonials>
+
+<Pricing>
+  <PricingTier
+    name="Hero"
+    price="$19"
+    period="mo"
+    featured
+    badge="Popular"
+    features={["All components"]}
+    cta={<Button className="w-full">Start</Button>}
+  />
+</Pricing>
+
+<FAQ type="single" defaultValue="a">
+  <FAQItem value="a" title="What is Comixa?">
+    Comic React UI with Tailwind.
+  </FAQItem>
+</FAQ>
+
+<Stats columns={4}>
+  <Stat value="12k+" label="Heroes" animate />
+</Stats>
+```
+
+### Animated text
+
+`repeat` controls how many times the animation plays (`Infinity` = forever, default).
+
+```tsx
+import { LetterReveal, Typewriter, ComicText, Highlight } from "comixa-ui";
+
+<LetterReveal repeat={Infinity}>Boom Town</LetterReveal>
+<LetterReveal repeat={3}>Three times</LetterReveal>
+
+<Typewriter speed={40} repeat={Infinity}>Typing with ink…</Typewriter>
+<Typewriter repeat={1}>Once only</Typewriter>
+
+<ComicText effect="pop" tilt="left" repeat={Infinity}>Kapow!</ComicText>
+<p>
+  Ship <Highlight tone="yellow" repeat={Infinity}>faster</Highlight> pages.
+</p>
+```
+
+### Background
+
+```tsx
+import {
+  DotsBackground,
+  GridBackground,
+  ExplosionBackground,
+  ComicPaperBackground,
+} from "comixa-ui";
+
+<DotsBackground className="rounded-xl p-8" intensity="md">
+  Hero copy
+</DotsBackground>
+```
+
+Variants: `dots` `grid` `lines` `pattern` `explosion` `comic-paper`  
+Tone: `paper` `cream` `yellow` `ink` · Intensity: `sm` `md` `lg`
+
 ## Design tokens (via preset)
 
 - Colors: `ink`, `paper`, `comic.yellow|red|blue|green|pink|orange`
 - Shadows: `shadow-comic`, `shadow-comic-sm`, `shadow-comic-lg`
-- Animations: `animate-comic-pop`, `animate-comic-shake`, `animate-comic-wiggle`, `animate-comic-dialog-in`, `animate-comic-overlay-in`
+- Animations: `animate-comic-pop`, `animate-comic-shake`, `animate-comic-wiggle`, `animate-comic-dialog-in`, `animate-comic-overlay-in`, `animate-comic-letter-in`, `animate-comic-caret-blink`, `animate-comic-highlight-wipe`
 - Fonts: `font-comic`, `font-body`

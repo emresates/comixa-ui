@@ -13,6 +13,15 @@
 </p>
 
 <p align="center">
+  <a href="https://comixa-ui.vercel.app">
+    <img src="https://img.shields.io/badge/Live_Demo-000000?style=for-the-badge&logo=vercel&logoColor=white" alt="Live Demo" />
+  </a>
+  <a href="https://buymeacoffee.com/secenory">
+    <img src="https://img.shields.io/badge/Buy_Me_a_Coffee-FFDD00?style=for-the-badge&logo=buymeacoffee&logoColor=1A1A1A" alt="Buy Me a Coffee" />
+  </a>
+</p>
+
+<p align="center">
   <img src="docs/assets/showcase.png" alt="Comixa Showcase" width="900" />
 </p>
 

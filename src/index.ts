@@ -148,6 +148,14 @@ export {
   type TestimonialProps,
 } from "./components/testimonials";
 export {
+  Features,
+  Feature,
+  featuresVariants,
+  featureVariants,
+  type FeaturesProps,
+  type FeatureProps,
+} from "./components/features";
+export {
   Pricing,
   PricingTier,
   pricingVariants,

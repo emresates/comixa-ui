@@ -187,4 +187,15 @@ export {
   type GalleryProps,
   type GalleryItem,
 } from "./components/gallery";
+export { Ribbon, ribbonVariants, type RibbonProps } from "./components/ribbon";
+export {
+  ComicReveal,
+  comicRevealVariants,
+  type ComicRevealProps,
+} from "./components/comic-reveal";
+export {
+  ComicCursor,
+  type ComicCursorProps,
+  type ComicCursorVariant,
+} from "./components/comic-cursor";
 export { cn } from "./lib/cn";

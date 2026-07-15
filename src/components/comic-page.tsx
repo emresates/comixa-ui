@@ -80,7 +80,7 @@ ComicPage.displayName = "ComicPage";
 export const comicPanelVariants = cva(
   [
     "relative min-h-[8rem] overflow-hidden border-2 border-ink bg-paper p-4 text-ink",
-    "shadow-none",
+    "isolate transition-[transform,box-shadow,filter] duration-200",
   ].join(" "),
   {
     variants: {
@@ -91,10 +91,36 @@ export const comicPanelVariants = cva(
         alert: "bg-comic-red text-white",
         pop: "bg-comic-yellow",
         night: "bg-ink text-paper",
+        hero:
+          "min-h-[22rem] border-4 bg-comic-yellow p-6 shadow-comic-lg before:absolute before:inset-0 before:-z-10 before:bg-[radial-gradient(circle_at_18%_18%,rgba(255,255,255,0.9)_0_0.45rem,transparent_0.5rem),radial-gradient(circle_at_82%_12%,rgba(255,77,77,0.72)_0_6rem,transparent_6.1rem),linear-gradient(135deg,rgba(77,159,255,0.95),rgba(255,229,102,0.9)_45%,rgba(255,122,182,0.85))] after:absolute after:inset-4 after:-z-10 after:border-2 after:border-ink/25 after:content-['']",
+      },
+      shadow: {
+        none: "shadow-none",
+        sm: "shadow-comic-sm",
+        md: "shadow-comic",
+        lg: "shadow-comic-lg",
+        xl: "shadow-[10px_10px_0_0_#1A1A1A]",
+      },
+      tilt: {
+        true: "-rotate-1",
+        false: "",
+      },
+      hover: {
+        true: "hover:-translate-y-1 hover:rotate-0 hover:shadow-[12px_12px_0_0_#1A1A1A]",
+        false: "",
+      },
+      halftone: {
+        true:
+          "after:pointer-events-none after:absolute after:inset-0 after:z-0 after:bg-[radial-gradient(circle,rgba(26,26,26,0.18)_0_1px,transparent_1.3px)] after:bg-[length:10px_10px] after:mix-blend-multiply after:content-['']",
+        false: "",
       },
     },
     defaultVariants: {
       variant: "default",
+      shadow: "none",
+      tilt: false,
+      hover: false,
+      halftone: false,
     },
   }
 );
@@ -106,19 +132,37 @@ export interface ComicPanelProps
 }
 
 export const ComicPanel = React.forwardRef<HTMLDivElement, ComicPanelProps>(
-  ({ className, variant, caption, children, ...props }, ref) => {
+  (
+    {
+      className,
+      variant,
+      shadow,
+      tilt,
+      hover,
+      halftone,
+      caption,
+      children,
+      ...props
+    },
+    ref
+  ) => {
     return (
       <div
         ref={ref}
-        className={cn(comicPanelVariants({ variant }), className)}
+        className={cn(
+          comicPanelVariants({ variant, shadow, tilt, hover, halftone }),
+          className
+        )}
         {...props}
       >
         {caption ? (
-          <p className="mb-2 inline-block border-2 border-ink bg-comic-yellow px-2 py-0.5 font-comic text-xs uppercase tracking-wide text-ink shadow-comic-sm">
+          <p className="relative z-10 mb-2 inline-block border-2 border-ink bg-comic-yellow px-2 py-0.5 font-comic text-xs uppercase tracking-wide text-ink shadow-comic-sm">
             {caption}
           </p>
         ) : null}
-        <div className="font-body text-base leading-relaxed">{children}</div>
+        <div className="relative z-10 font-body text-base leading-relaxed">
+          {children}
+        </div>
       </div>
     );
   }

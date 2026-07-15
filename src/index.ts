@@ -171,4 +171,20 @@ export {
   type StatsProps,
   type StatProps,
 } from "./components/stats";
+export {
+  PageTransition,
+  pageTransitionVariants,
+  type PageTransitionProps,
+} from "./components/page-transition";
+export {
+  ComicLoader,
+  comicLoaderVariants,
+  type ComicLoaderProps,
+} from "./components/comic-loader";
+export {
+  Gallery,
+  galleryVariants,
+  type GalleryProps,
+  type GalleryItem,
+} from "./components/gallery";
 export { cn } from "./lib/cn";

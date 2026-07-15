@@ -92,7 +92,7 @@ export const comicPanelVariants = cva(
         pop: "bg-comic-yellow",
         night: "bg-ink text-paper",
         hero:
-          "min-h-[22rem] border-4 bg-comic-yellow p-6 shadow-comic-lg before:absolute before:inset-0 before:-z-10 before:bg-[radial-gradient(circle_at_18%_18%,rgba(255,255,255,0.9)_0_0.45rem,transparent_0.5rem),radial-gradient(circle_at_82%_12%,rgba(255,77,77,0.72)_0_6rem,transparent_6.1rem),linear-gradient(135deg,rgba(77,159,255,0.95),rgba(255,229,102,0.9)_45%,rgba(255,122,182,0.85))] after:absolute after:inset-4 after:-z-10 after:border-2 after:border-ink/25 after:content-['']",
+          "min-h-[22rem] border-4 bg-comic-yellow p-5 shadow-comic-lg before:absolute before:inset-0 before:-z-10 before:bg-[radial-gradient(circle_at_82%_18%,rgba(255,77,77,0.52)_0_4.8rem,transparent_4.9rem),radial-gradient(circle_at_18%_28%,rgba(77,159,255,0.58)_0_8rem,transparent_8.2rem),linear-gradient(135deg,rgba(255,253,245,0.96)_0%,rgba(255,229,102,0.94)_42%,rgba(255,122,182,0.72)_100%)] md:p-7",
       },
       shadow: {
         none: "shadow-none",

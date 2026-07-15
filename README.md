@@ -28,7 +28,15 @@
 Comic-themed React components built with **Tailwind CSS**. Hard shadows, ink borders, punchy motion.
 
 ```tsx
-import { Button, Input, Badge, Card, Dialog, Navbar, toast, ToastProvider } from "comixa-ui";
+import {
+  Button,
+  ComicPanel,
+  Features,
+  Gallery,
+  PageTransition,
+  toast,
+  ToastProvider,
+} from "comixa-ui";
 ```
 
 ## Install
@@ -134,6 +142,14 @@ export function Example() {
 | <img src="docs/assets/components/toast.svg" alt="Toast" width="200" /> | **Toast** | Notifications |
 | <img src="docs/assets/components/divider.svg" alt="Divider" width="200" /> | **Divider** | Comic rules |
 | <img src="docs/assets/components/stats.svg" alt="Stats" width="200" /> | **Stats** | Metric tiles |
+| - | **Ribbon** | Promo ribbons, tickets, burst labels |
+| - | **ComicPage / ComicPanel** | Comic grids and cover-grade hero panels |
+| - | **Gallery** | Grid, featured, and draggable horizontal image strips |
+| - | **PageTransition** | Route/content enter effects |
+| - | **ComicLoader** | Comic loading indicators |
+| - | **ComicReveal** | Replayable section reveal animations |
+| - | **ComicCursor** | Global cursor follower with trailing dots |
+| - | **Features** | Feature grids and comic highlight cards |
 
 ### Button
 
@@ -252,6 +268,7 @@ Classic comic dialogue bubble (no boom/explosion).
 ### ComicPage
 
 Comic-strip grid. `layout="2-1"` = two panels on top, one full-width below.
+`ComicPanel` can also be used on its own as a cover-grade hero panel.
 
 ```tsx
 <ComicPage layout="2-1">
@@ -259,9 +276,17 @@ Comic-strip grid. `layout="2-1"` = two panels on top, one full-width below.
   <ComicPanel caption="2">Top right</ComicPanel>
   <ComicPanel variant="alert">Wide bottom</ComicPanel>
 </ComicPage>
+
+<ComicPanel variant="hero" shadow="xl" halftone tilt hover>
+  <ComicHero />
+</ComicPanel>
 ```
 
 Layouts: `1` `1-1` `2` `2-1` `1-2` `2-2` `3` `1-1-1`
+
+Panel variants: `default` `cream` `sky` `alert` `pop` `night` `hero`  
+Panel shadow: `none` `sm` `md` `lg` `xl`  
+Panel flags: `halftone`, `tilt`, `hover`
 
 ### SoundBadge
 
@@ -280,6 +305,23 @@ Variants: `pow` `bam` `wow` `boom` `zap` `crash` `wham` `bang` `kapow` `splash`
 ### Sticker
 
 `variant` colors + `tilt` (`none` `left` `right` `wild`) + `shape` (`square` `circle` `ticket`)
+
+### Ribbon
+
+Comic promo labels for launch pages, tickets, corners, and bursts.
+
+```tsx
+<Ribbon variant="banner">New issue</Ribbon>
+<Ribbon variant="corner" tilt="right">Hot</Ribbon>
+<Ribbon variant="ticket">Limited</Ribbon>
+<Ribbon variant="burst">Pow</Ribbon>
+```
+
+| Prop | Values | Default |
+|------|--------|---------|
+| `variant` | `banner` `corner` `ticket` `burst` | `banner` |
+| `size` | `sm` `md` `lg` | `md` |
+| `tilt` | `none` `left` `right` | `none` |
 
 ### Card
 
@@ -413,12 +455,14 @@ toast({
 | `duration` | ms number — `0` / `Infinity` keeps toast open |
 | `closable` | `true` / `false` — show/hide × button |
 
-### Testimonials / Pricing / FAQ / Stats
+### Testimonials / Features / Pricing / FAQ / Stats
 
 Compound marketing sections:
 
 ```tsx
 import {
+  Features,
+  Feature,
   Testimonials,
   Testimonial,
   Pricing,
@@ -440,6 +484,19 @@ import {
     avatar={<Avatar name="CZ" size="sm" shape="circle" />}
   />
 </Testimonials>
+
+<Features columns={3}>
+  <Feature
+    variant="yellow"
+    title="Hero panels"
+    description="Cover-grade panels with halftone and hard shadows."
+  />
+  <Feature
+    variant="blue"
+    title="Composable"
+    description="Stack sections without leaving the comic visual language."
+  />
+</Features>
 
 <Pricing>
   <PricingTier
@@ -463,6 +520,95 @@ import {
   <Stat value="12k+" label="Heroes" animate />
 </Stats>
 ```
+
+Feature variants: `default` `yellow` `blue` `burst` `outline`  
+Feature alignment: `left` `center`  
+Features columns: `1` `2` `3` `4`
+
+### Gallery
+
+Image galleries for covers, portfolio work, products, and proof sections.
+
+```tsx
+const items = [
+  {
+    src: "/covers/neon.jpg",
+    alt: "Neon skyline",
+    title: "Neon Alley",
+    description: "Campaign cover.",
+    badge: "New",
+  },
+  {
+    src: "/covers/road.jpg",
+    alt: "Desert road",
+    title: "Road Cut",
+    badge: "Hot",
+  },
+];
+
+<Gallery variant="featured" items={items} />
+<Gallery variant="strip" items={items} />
+```
+
+| Prop | Values / notes | Default |
+|------|--------|---------|
+| `variant` | `grid` `strip` `featured` | `grid` |
+| `items` | `{ src, alt, title?, description?, badge? }[]` | required |
+| `framed` | `true` / `false` | `true` |
+
+`variant="featured"` makes the first image the featured card.  
+`variant="strip"` supports horizontal wheel scrolling and mouse drag scrolling.
+
+### PageTransition
+
+Replayable content/page enter transitions.
+
+```tsx
+<PageTransition variant="panel-swipe" transitionKey={routeId}>
+  <YourPage />
+</PageTransition>
+```
+
+Variants: `panel-swipe` `burst` `flip` `speed-lines`  
+Props: `transitionKey`, `duration`, `easing`, `padding`
+
+### ComicLoader
+
+```tsx
+<ComicLoader variant="dots" />
+<ComicLoader variant="burst" label="Zap" tone="red" />
+```
+
+Variants: `dots` `burst` `panel` `speech`  
+Tones: `yellow` `blue` `red` `green` `pink`
+
+### ComicReveal
+
+Replayable section reveals.
+
+```tsx
+<ComicReveal variant="panel-wipe" revealKey={id}>
+  <Card>Fresh panel</Card>
+</ComicReveal>
+```
+
+Variants: `pop` `slide-up` `panel-wipe` `spotlight`  
+Props: `revealKey`, `delay`, `duration`
+
+### ComicCursor
+
+Global cursor follower with trailing dots. Mount it once on a page.
+
+```tsx
+<ComicCursor variant="dot" trailCount={6} />
+
+<button data-comixa-cursor-zone>
+  Hovering this grows and fades the follower
+</button>
+```
+
+Variants: `dot` `ring` `spark`  
+Props: `enabled`, `hideNativeCursor`, `size`, `trailCount`
 
 ### Animated text
 

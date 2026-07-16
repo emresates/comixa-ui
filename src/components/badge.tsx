@@ -17,7 +17,7 @@ export const badgeVariants = cva(
         pink: "bg-comic-pink text-ink",
         orange: "bg-comic-orange text-ink",
         outline: "bg-paper text-ink",
-        ink: "bg-ink text-paper",
+        ink: "bg-ink !text-white",
         soft: "border-dashed bg-paper-cream text-ink shadow-none",
       },
       size: {
@@ -42,6 +42,7 @@ export const Badge = React.forwardRef<HTMLSpanElement, BadgeProps>(
     return (
       <span
         ref={ref}
+        data-comixa-badge=""
         className={cn(badgeVariants({ variant, size }), className)}
         {...props}
       />

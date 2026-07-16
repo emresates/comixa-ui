@@ -18,7 +18,7 @@ export const stickerVariants = cva(
         green: "bg-comic-green",
         pink: "bg-comic-pink",
         orange: "bg-comic-orange",
-        ink: "bg-ink text-paper",
+        ink: "bg-ink !text-white",
       },
       size: {
         sm: "min-h-12 min-w-12 rounded-md px-2 py-1 text-xs",
@@ -58,6 +58,7 @@ export const Sticker = React.forwardRef<HTMLSpanElement, StickerProps>(
     return (
       <span
         ref={ref}
+        data-comixa-sticker=""
         className={cn(
           stickerVariants({ variant, size, tilt, shape }),
           className,

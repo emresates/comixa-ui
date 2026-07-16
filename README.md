@@ -34,6 +34,7 @@ import {
   Features,
   Gallery,
   PageTransition,
+  Textarea,
   Timeline,
   TimelineItem,
   toast,
@@ -138,6 +139,7 @@ export function Example() {
 | <img src="docs/assets/components/badge.svg" alt="Badge" width="200" /> | **Badge** | Status tags and labels |
 | <img src="docs/assets/components/sticker.svg" alt="Sticker" width="200" /> | **Sticker** | Tilted promo stickers |
 | <img src="docs/assets/components/input.svg" alt="Input" width="200" /> | **Input** | Ink-bordered text fields |
+| - | **Textarea** | Multiline fields for notes and scripts |
 | <img src="docs/assets/components/select.svg" alt="Select" width="200" /> | **Select** | Custom listbox dropdown |
 | <img src="docs/assets/components/checkbox.svg" alt="Checkbox" width="200" /> | **Checkbox** | Checkable options |
 | <img src="docs/assets/components/radio.svg" alt="Radio" width="200" /> | **Radio** | Single-choice radios |
@@ -179,6 +181,23 @@ export function Example() {
 | `variant` | `default` `ghost` `filled` | `default` |
 | `inputSize` | `sm` `md` `lg` | `md` |
 | `state` | `default` `error` `success` | `default` |
+
+### Textarea
+
+Multiline field with the same ink-bordered form language as `Input`.
+
+```tsx
+<Textarea placeholder="Write your story..." />
+<Textarea variant="filled" textareaSize="lg" resize="none" />
+<Textarea state="error" defaultValue="This needs more punch." />
+```
+
+| Prop | Values | Default |
+|------|--------|---------|
+| `variant` | `default` `ghost` `filled` | `default` |
+| `textareaSize` | `sm` `md` `lg` | `md` |
+| `state` | `default` `error` `success` | `default` |
+| `resize` | `none` `vertical` `horizontal` `both` | `vertical` |
 
 ### Badge
 

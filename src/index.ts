@@ -1,6 +1,11 @@
 export { Button, buttonVariants, type ButtonProps } from "./components/button";
 export { Input, inputVariants, type InputProps } from "./components/input";
 export {
+  Textarea,
+  textareaVariants,
+  type TextareaProps,
+} from "./components/textarea";
+export {
   Select,
   selectTriggerVariants,
   selectVariants,

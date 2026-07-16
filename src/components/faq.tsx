@@ -22,7 +22,8 @@ export const faqVariants = cva("flex w-full flex-col gap-3", {
   variants: {
     variant: {
       default: "",
-      panel: "rounded-xl border-2 border-ink bg-paper p-3 shadow-comic-sm",
+      panel:
+        "p-3 [border-width:var(--comixa-button-border-width,2px)] [border-color:var(--comixa-outline-border,#1E1E1E)] [border-radius:var(--comixa-button-radius,0.75rem)] [background:var(--comixa-outline-bg,#FFFFFF)] [color:var(--comixa-outline-text,#111111)] [box-shadow:var(--comixa-outline-shadow-value,2px_2px_0_0_var(--comixa-outline-shadow,#1E1E1E))]",
     },
   },
   defaultVariants: {
@@ -107,11 +108,16 @@ export const FAQ = React.forwardRef<HTMLDivElement, FAQProps>(
 FAQ.displayName = "FAQ";
 
 export const faqItemVariants = cva(
-  "overflow-hidden rounded-xl border-2 border-ink bg-paper shadow-comic-sm",
+  [
+    "overflow-hidden",
+    "[border-width:var(--comixa-button-border-width,2px)] [border-color:var(--comixa-outline-border,#1E1E1E)] [border-radius:var(--comixa-button-radius,0.75rem)]",
+    "[background:var(--comixa-outline-bg,#FFFFFF)] [color:var(--comixa-outline-text,#111111)] [box-shadow:var(--comixa-outline-shadow-value,2px_2px_0_0_var(--comixa-outline-shadow,#1E1E1E))]",
+  ].join(" "),
   {
     variants: {
       open: {
-        true: "bg-paper-cream",
+        true:
+          "[background:var(--comixa-default-bg,#FFF3D6)] [color:var(--comixa-default-text,#111111)] [border-color:var(--comixa-default-border,#1E1E1E)]",
         false: "",
       },
     },
@@ -151,7 +157,7 @@ export const FAQItem = React.forwardRef<HTMLDivElement, FAQItemProps>(
             aria-controls={panelId}
             className={cn(
               "flex w-full items-center justify-between gap-3 px-4 py-3 text-left",
-              "font-comic text-base uppercase tracking-wide text-ink",
+              "font-comic text-base uppercase tracking-wide [color:inherit]",
               "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-comic-blue focus-visible:ring-offset-2"
             )}
             onClick={() => toggle(value)}
@@ -159,8 +165,10 @@ export const FAQItem = React.forwardRef<HTMLDivElement, FAQItemProps>(
             <span>{title}</span>
             <span
               className={cn(
-                "inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-md border-2 border-ink bg-comic-yellow text-sm shadow-comic-sm transition-transform",
-                isOpen && "rotate-45 bg-comic-orange"
+                "inline-flex h-7 w-7 shrink-0 items-center justify-center text-sm transition-transform",
+                "[border-width:var(--comixa-button-border-width,2px)] [border-color:var(--comixa-warning-border,#1E1E1E)] [border-radius:var(--comixa-button-radius,0.375rem)] [background:var(--comixa-warning-bg,#FFD84D)] [color:var(--comixa-warning-text,#111111)] [box-shadow:var(--comixa-warning-shadow-value,2px_2px_0_0_var(--comixa-warning-shadow,#1E1E1E))]",
+                isOpen &&
+                  "rotate-45 [background:var(--comixa-danger-bg,#FF9B54)] [color:var(--comixa-danger-text,#FFFFFF)]"
               )}
               aria-hidden="true"
             >
@@ -174,7 +182,7 @@ export const FAQItem = React.forwardRef<HTMLDivElement, FAQItemProps>(
           aria-labelledby={buttonId}
           hidden={!isOpen}
           className={cn(
-            "border-t-2 border-ink px-4 py-3 font-body text-sm text-ink-muted",
+            "border-t-2 px-4 py-3 font-body text-sm [border-color:var(--comixa-outline-border,#1E1E1E)] [color:var(--pg-fg-muted,#5C5C5C)]",
             isOpen && "animate-comic-pop"
           )}
         >

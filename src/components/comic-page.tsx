@@ -102,7 +102,7 @@ export const comicPanelVariants = cva(
         pop:
           "[background:var(--comixa-warning-bg,#FFD84D)] [color:var(--comixa-warning-text,#111111)] [border-color:var(--comixa-warning-border,#1E1E1E)]",
         night:
-          "[background:var(--pg-surface-dark,#1A1A1A)] [color:var(--pg-surface-light,#FFF3D6)] [border-color:var(--comixa-outline-border,#1E1E1E)]",
+          "[background:#1A1A1A] [color:#FFF3D6] [border-color:var(--comixa-outline-border,#1E1E1E)]",
         hero:
           "min-h-[22rem] [border-width:calc(var(--comixa-button-border-width,2px)_*_2)] [background:var(--comixa-warning-bg,#FFD84D)] [color:var(--comixa-warning-text,#111111)] [border-color:var(--comixa-warning-border,#1E1E1E)] p-5 [box-shadow:var(--comixa-warning-shadow-value,6px_6px_0_0_var(--comixa-warning-shadow,#1E1E1E))] before:absolute before:inset-0 before:-z-10 before:bg-[radial-gradient(circle_at_82%_18%,rgba(255,77,77,0.52)_0_4.8rem,transparent_4.9rem),radial-gradient(circle_at_18%_28%,rgba(77,159,255,0.58)_0_8rem,transparent_8.2rem),linear-gradient(135deg,rgba(255,253,245,0.58)_0%,rgba(255,229,102,0.42)_42%,rgba(255,122,182,0.32)_100%)] md:p-7",
       },

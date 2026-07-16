@@ -9,7 +9,6 @@
   <img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript" />
   <img src="https://img.shields.io/badge/Tailwind-38BDF8?style=for-the-badge&logo=tailwindcss&logoColor=1A1A1A" alt="Tailwind" />
   <img src="https://img.shields.io/badge/Accessible-5BD67A?style=for-the-badge&logo=ACCESSIBLE-ICON&logoColor=1A1A1A" alt="Accessible" />
-  <img src="https://img.shields.io/badge/Dark_Mode-1A1A1A?style=for-the-badge&logo=nightwatch&logoColor=FFE566" alt="Dark Mode" />
 </p>
 
 <p align="center">
@@ -175,8 +174,8 @@ export function Example() {
 
 Button variants are semantic. Theme changes should come from CSS variables like
 `--comixa-primary-bg`, `--comixa-danger-border`, and `--comixa-warning-shadow`.
-Comixa also exports `defaultTheme`, `retroTheme`, `darkTheme`, `popArtTheme`,
-`mangaTheme`, `vintageTheme`, and `comixaThemes` as token objects.
+Comixa also exports `defaultTheme`, `retroTheme`, `popArtTheme`, `mangaTheme`,
+`vintageTheme`, and `comixaThemes` as token objects.
 
 ### Input
 

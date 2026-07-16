@@ -221,7 +221,6 @@ export {
 } from "./components/comic-cursor";
 export {
   comixaThemes,
-  darkTheme,
   defaultTheme,
   mangaTheme,
   popArtTheme,

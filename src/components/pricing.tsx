@@ -35,13 +35,15 @@ Pricing.displayName = "Pricing";
 
 export const pricingTierVariants = cva(
   [
-    "relative flex h-full flex-col gap-4 rounded-xl border-2 border-ink p-6",
-    "bg-paper text-ink shadow-comic",
+    "relative flex h-full flex-col gap-4 p-6",
+    "[border-width:var(--comixa-button-border-width,2px)] [border-color:var(--comixa-outline-border,#1E1E1E)] [border-radius:var(--comixa-button-radius,0.75rem)]",
+    "[background:var(--comixa-outline-bg,#FFFFFF)] [color:var(--comixa-outline-text,#111111)] [box-shadow:var(--comixa-outline-shadow-value,4px_4px_0_0_var(--comixa-outline-shadow,#1E1E1E))]",
   ].join(" "),
   {
     variants: {
       featured: {
-        true: "z-10 scale-[1.02] bg-comic-yellow shadow-comic-lg -rotate-1",
+        true:
+          "z-10 scale-[1.02] -rotate-1 [background:var(--comixa-warning-bg,#FFD84D)] [color:var(--comixa-warning-text,#111111)] [border-color:var(--comixa-warning-border,#1E1E1E)] [box-shadow:var(--comixa-warning-shadow-value,6px_6px_0_0_var(--comixa-warning-shadow,#1E1E1E))]",
         false: "",
       },
     },
@@ -87,14 +89,16 @@ export const PricingTier = React.forwardRef<HTMLDivElement, PricingTierProps>(
       {...props}
     >
       {badge ? (
-        <span className="absolute -top-3 right-4 rounded-md border-2 border-ink bg-comic-red px-2 py-0.5 font-comic text-xs uppercase tracking-wide text-white shadow-comic-sm">
+        <span className="absolute -top-3 right-4 px-2 py-0.5 font-comic text-xs uppercase tracking-wide [border-width:var(--comixa-button-border-width,2px)] [border-color:var(--comixa-danger-border,#1E1E1E)] [border-radius:var(--comixa-button-radius,0.375rem)] [background:var(--comixa-danger-bg,#FF5757)] [color:var(--comixa-danger-text,#FFFFFF)] [box-shadow:var(--comixa-danger-shadow-value,2px_2px_0_0_var(--comixa-danger-shadow,#1E1E1E))]">
           {badge}
         </span>
       ) : null}
       <div>
         <h3 className="font-comic text-2xl uppercase tracking-wide">{name}</h3>
         {description ? (
-          <p className="mt-1 text-sm text-ink-muted">{description}</p>
+          <p className="mt-1 text-sm [color:var(--pg-fg-muted,#5C5C5C)]">
+            {description}
+          </p>
         ) : null}
       </div>
       <div className="flex items-end gap-1">
@@ -102,7 +106,9 @@ export const PricingTier = React.forwardRef<HTMLDivElement, PricingTierProps>(
           {price}
         </span>
         {period ? (
-          <span className="pb-1 text-sm text-ink-muted">/{period}</span>
+          <span className="pb-1 text-sm [color:var(--pg-fg-muted,#5C5C5C)]">
+            /{period}
+          </span>
         ) : null}
       </div>
       {features && features.length > 0 ? (
@@ -110,7 +116,7 @@ export const PricingTier = React.forwardRef<HTMLDivElement, PricingTierProps>(
           {features.map((item, i) => (
             <li key={i} className="flex items-start gap-2">
               <span
-                className="mt-0.5 font-comic text-comic-green"
+                className="mt-0.5 font-comic [color:var(--comixa-success-bg,#4ADE80)]"
                 aria-hidden="true"
               >
                 ✓

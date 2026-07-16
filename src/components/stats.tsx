@@ -32,19 +32,26 @@ Stats.displayName = "Stats";
 
 export const statVariants = cva(
   [
-    "flex flex-col items-start gap-1 rounded-xl border-2 border-ink p-4",
-    "shadow-comic-sm font-body text-ink",
+    "flex flex-col items-start gap-1 p-4",
+    "font-body [border-width:var(--comixa-button-border-width,2px)] [border-color:var(--comixa-outline-border,#1E1E1E)] [border-radius:var(--comixa-button-radius,0.75rem)]",
   ].join(" "),
   {
     variants: {
       tone: {
-        default: "bg-paper",
-        cream: "bg-paper-cream",
-        yellow: "bg-comic-yellow",
-        blue: "bg-comic-blue text-white",
-        red: "bg-comic-red text-white",
-        green: "bg-comic-green",
-        pink: "bg-comic-pink",
+        default:
+          "[background:var(--comixa-outline-bg,#FFFFFF)] [color:var(--comixa-outline-text,#111111)] [box-shadow:var(--comixa-outline-shadow-value,2px_2px_0_0_var(--comixa-outline-shadow,#1E1E1E))]",
+        cream:
+          "[background:var(--comixa-default-bg,#FFF3D6)] [color:var(--comixa-default-text,#111111)] [border-color:var(--comixa-default-border,#1E1E1E)] [box-shadow:var(--comixa-default-shadow-value,2px_2px_0_0_var(--comixa-default-shadow,#1E1E1E))]",
+        yellow:
+          "[background:var(--comixa-warning-bg,#FFD84D)] [color:var(--comixa-warning-text,#111111)] [border-color:var(--comixa-warning-border,#1E1E1E)] [box-shadow:var(--comixa-warning-shadow-value,2px_2px_0_0_var(--comixa-warning-shadow,#1E1E1E))]",
+        blue:
+          "[background:var(--comixa-primary-bg,#4F9CF9)] [color:var(--comixa-primary-text,#FFFFFF)] [border-color:var(--comixa-primary-border,#1E1E1E)] [box-shadow:var(--comixa-primary-shadow-value,2px_2px_0_0_var(--comixa-primary-shadow,#1E1E1E))]",
+        red:
+          "[background:var(--comixa-danger-bg,#FF5757)] [color:var(--comixa-danger-text,#FFFFFF)] [border-color:var(--comixa-danger-border,#1E1E1E)] [box-shadow:var(--comixa-danger-shadow-value,2px_2px_0_0_var(--comixa-danger-shadow,#1E1E1E))]",
+        green:
+          "[background:var(--comixa-success-bg,#4ADE80)] [color:var(--comixa-success-text,#111111)] [border-color:var(--comixa-success-border,#1E1E1E)] [box-shadow:var(--comixa-success-shadow-value,2px_2px_0_0_var(--comixa-success-shadow,#1E1E1E))]",
+        pink:
+          "[background:var(--comixa-danger-bg,#FF4FA3)] [color:var(--comixa-danger-text,#FFFFFF)] [border-color:var(--comixa-danger-border,#1E1E1E)] [box-shadow:var(--comixa-danger-shadow-value,2px_2px_0_0_var(--comixa-danger-shadow,#1E1E1E))]",
       },
       size: {
         sm: "p-3",

@@ -57,12 +57,12 @@ export const timelineItemVariants = cva(
   {
     variants: {
       color: {
-        red: "[--timeline-dot:#ef4444]",
-        yellow: "[--timeline-dot:#ffd84d]",
-        blue: "[--timeline-dot:#54c8d4]",
-        orange: "[--timeline-dot:#ff9b54]",
-        pink: "[--timeline-dot:#ff6fae]",
-        green: "[--timeline-dot:#57d68d]",
+        red: "[--timeline-dot:var(--comixa-danger-bg,#ef4444)]",
+        yellow: "[--timeline-dot:var(--comixa-warning-bg,#ffd84d)]",
+        blue: "[--timeline-dot:var(--comixa-primary-bg,#54c8d4)]",
+        orange: "[--timeline-dot:var(--comixa-default-bg,#ff9b54)]",
+        pink: "[--timeline-dot:var(--comixa-danger-bg,#ff6fae)]",
+        green: "[--timeline-dot:var(--comixa-success-bg,#57d68d)]",
       },
       tilt: {
         none: "",
@@ -109,19 +109,21 @@ export const TimelineItem = React.forwardRef<HTMLElement, TimelineItemProps>(
       <div className="relative flex justify-center">
         {!isLast ? (
           <span
-            className="absolute left-1/2 top-10 h-[calc(100%+2rem-2rem)] -translate-x-1/2 border-l-4 border-ink"
+            className="absolute left-1/2 top-10 h-[calc(100%+2rem-2rem)] -translate-x-1/2 border-l-4 [border-color:var(--comixa-outline-border,#1E1E1E)]"
             data-timeline-line
             aria-hidden="true"
           />
         ) : null}
         <span
-          className="relative z-10 mt-2 h-8 w-8 rounded-full border-4 border-ink bg-[var(--timeline-dot)] shadow-comic-sm"
+          className="relative z-10 mt-2 h-8 w-8 rounded-full border-4 [border-color:var(--comixa-outline-border,#1E1E1E)] bg-[var(--timeline-dot)] [box-shadow:var(--comixa-outline-shadow-value,2px_2px_0_0_var(--comixa-outline-shadow,#1E1E1E))]"
           aria-hidden="true"
         />
       </div>
       <div
         className={cn(
-          "relative overflow-hidden rounded-xl border-4 border-ink bg-paper p-5 shadow-comic transition-transform duration-200",
+          "relative overflow-hidden p-5 transition-transform duration-200",
+          "[border-width:calc(var(--comixa-button-border-width,2px)_*_2)] [border-color:var(--comixa-outline-border,#1E1E1E)] [border-radius:var(--comixa-button-radius,0.75rem)]",
+          "[background:var(--comixa-outline-bg,#FFFFFF)] [color:var(--comixa-outline-text,#111111)] [box-shadow:var(--comixa-outline-shadow-value,4px_4px_0_0_var(--comixa-outline-shadow,#1E1E1E))]",
           "hover:-translate-y-1",
           tilt === "left" && "-rotate-1",
           tilt === "right" && "rotate-1"
@@ -131,21 +133,21 @@ export const TimelineItem = React.forwardRef<HTMLElement, TimelineItemProps>(
           className="pointer-events-none absolute inset-0 opacity-[0.08]"
           style={{
             backgroundImage:
-              "radial-gradient(circle at 1px 1px, #1A1A1A 1px, transparent 0)",
+              "var(--comixa-outline-pattern, radial-gradient(circle at 1px 1px, rgba(26,26,26,0.42) 1px, transparent 0))",
             backgroundSize: "12px 12px",
           }}
           aria-hidden="true"
         />
         <div className="relative z-10 flex flex-col gap-3">
-          <span className="w-fit rounded-full border-2 border-ink bg-ink px-4 py-1 font-comic text-sm uppercase leading-none text-comic-yellow shadow-comic-sm">
+          <span className="w-fit rounded-full px-4 py-1 font-comic text-sm uppercase leading-none [border-width:var(--comixa-button-border-width,2px)] [border-color:var(--comixa-outline-border,#1E1E1E)] [background:var(--comixa-outline-border,#1E1E1E)] [color:var(--comixa-warning-bg,#FFD84D)] [box-shadow:var(--comixa-outline-shadow-value,2px_2px_0_0_var(--comixa-outline-shadow,#1E1E1E))]">
             {period}
           </span>
           <div className="flex flex-col gap-2">
-            <h3 className="font-comic text-2xl uppercase leading-none text-comic-red sm:text-3xl">
+            <h3 className="font-comic text-2xl uppercase leading-none [color:var(--comixa-danger-bg,#FF5757)] sm:text-3xl">
               {title}
             </h3>
             {description ? (
-              <p className="font-body text-sm leading-relaxed text-ink sm:text-base">
+              <p className="font-body text-sm leading-relaxed [color:var(--comixa-outline-text,#111111)] sm:text-base">
                 {description}
               </p>
             ) : null}

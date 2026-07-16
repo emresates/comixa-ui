@@ -32,17 +32,21 @@ Testimonials.displayName = "Testimonials";
 
 export const testimonialVariants = cva(
   [
-    "relative flex h-full flex-col gap-4 border-2 border-ink p-5",
-    "font-body text-ink shadow-comic",
+    "relative flex h-full flex-col gap-4 p-5",
+    "font-body [color:var(--comixa-outline-text,#111111)]",
+    "[border-width:var(--comixa-button-border-width,2px)] [border-color:var(--comixa-outline-border,#1E1E1E)] [border-radius:var(--comixa-button-radius,0.75rem)]",
   ].join(" "),
   {
     variants: {
       variant: {
-        default: "rounded-xl bg-paper",
-        cream: "rounded-xl bg-paper-cream",
-        pop: "rounded-xl bg-comic-yellow -rotate-1 shadow-comic-lg",
+        default:
+          "[background:var(--comixa-outline-bg,#FFFFFF)] [color:var(--comixa-outline-text,#111111)] [box-shadow:var(--comixa-outline-shadow-value,4px_4px_0_0_var(--comixa-outline-shadow,#1E1E1E))]",
+        cream:
+          "[background:var(--comixa-default-bg,#FFF3D6)] [color:var(--comixa-default-text,#111111)] [border-color:var(--comixa-default-border,#1E1E1E)] [box-shadow:var(--comixa-default-shadow-value,4px_4px_0_0_var(--comixa-default-shadow,#1E1E1E))]",
+        pop:
+          "-rotate-1 [background:var(--comixa-warning-bg,#FFD84D)] [color:var(--comixa-warning-text,#111111)] [border-color:var(--comixa-warning-border,#1E1E1E)] [box-shadow:var(--comixa-warning-shadow-value,6px_6px_0_0_var(--comixa-warning-shadow,#1E1E1E))]",
         speech:
-          "rounded-[1.5rem] bg-paper after:absolute after:-bottom-3 after:left-8 after:h-0 after:w-0 after:border-x-[10px] after:border-t-[12px] after:border-x-transparent after:border-t-ink",
+          "[background:var(--comixa-outline-bg,#FFFFFF)] [color:var(--comixa-outline-text,#111111)] [box-shadow:var(--comixa-outline-shadow-value,4px_4px_0_0_var(--comixa-outline-shadow,#1E1E1E))] [border-radius:1.5rem] after:absolute after:-bottom-3 after:left-8 after:h-0 after:w-0 after:border-x-[10px] after:border-t-[12px] after:border-x-transparent after:[border-top-color:var(--comixa-outline-border,#1E1E1E)]",
       },
     },
     defaultVariants: {
@@ -60,7 +64,7 @@ function Stars({ count }: { count: number }) {
           key={i}
           className={cn(
             "font-comic text-sm leading-none",
-            i < n ? "text-comic-orange" : "text-ink/25"
+            i < n ? "[color:var(--comixa-warning-bg,#FF9B54)]" : "opacity-25"
           )}
           aria-hidden="true"
         >
@@ -104,9 +108,9 @@ export const Testimonial = React.forwardRef<HTMLElement, TestimonialProps>(
     >
       {typeof rating === "number" ? <Stars count={rating} /> : null}
       <blockquote className="flex-1 text-base leading-relaxed">
-        <span className="font-comic text-2xl leading-none text-ink/30">“</span>
+        <span className="font-comic text-2xl leading-none opacity-30">“</span>
         {quote}
-        <span className="font-comic text-2xl leading-none text-ink/30">”</span>
+        <span className="font-comic text-2xl leading-none opacity-30">”</span>
       </blockquote>
       <figcaption className="mt-auto flex items-center gap-3">
         {avatar ? <div className="shrink-0">{avatar}</div> : null}
@@ -115,7 +119,9 @@ export const Testimonial = React.forwardRef<HTMLElement, TestimonialProps>(
             {author}
           </div>
           {role ? (
-            <div className="truncate text-sm text-ink-muted">{role}</div>
+            <div className="truncate text-sm [color:var(--pg-fg-muted,#5C5C5C)]">
+              {role}
+            </div>
           ) : null}
         </div>
       </figcaption>

@@ -22,7 +22,6 @@ export type ButtonTheme = {
 export type ComixaThemeName =
   | "default"
   | "retro"
-  | "dark"
   | "pop-art"
   | "manga"
   | "vintage";
@@ -112,56 +111,6 @@ export const retroTheme = {
   ghost: {
     bg: "transparent",
     text: "#3B2B22",
-    border: "transparent",
-    shadow: "transparent",
-  },
-} satisfies ButtonTheme;
-
-export const darkTheme = {
-  default: {
-    bg: "#101114",
-    text: "#e8fbff",
-    border: "#62f5ff",
-    shadow: "#111111",
-    shadowValue: "0 0 0 2px #101114, 0 0 16px rgba(98, 245, 255, 0.45)",
-    pattern:
-      "linear-gradient(120deg, transparent, rgba(98, 245, 255, 0.28), transparent)",
-    patternSize: "100% 100%",
-    patternOpacity: 1,
-  },
-  primary: {
-    bg: "#3B82F6",
-    text: "#FFFFFF",
-    border: "#22D3EE",
-    shadow: "#111111",
-  },
-  success: {
-    bg: "#22C55E",
-    text: "#FFFFFF",
-    border: "#22D3EE",
-    shadow: "#111111",
-  },
-  danger: {
-    bg: "#EF4444",
-    text: "#FFFFFF",
-    border: "#22D3EE",
-    shadow: "#111111",
-  },
-  warning: {
-    bg: "#EAB308",
-    text: "#111111",
-    border: "#22D3EE",
-    shadow: "#111111",
-  },
-  outline: {
-    bg: "#1F2937",
-    text: "#FFFFFF",
-    border: "#22D3EE",
-    shadow: "#111111",
-  },
-  ghost: {
-    bg: "transparent",
-    text: "#FFFFFF",
     border: "transparent",
     shadow: "transparent",
   },
@@ -325,7 +274,6 @@ export const vintageTheme = {
 export const comixaThemes = {
   default: defaultTheme,
   retro: retroTheme,
-  dark: darkTheme,
   "pop-art": popArtTheme,
   manga: mangaTheme,
   vintage: vintageTheme,

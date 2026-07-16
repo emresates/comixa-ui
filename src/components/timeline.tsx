@@ -139,7 +139,14 @@ export const TimelineItem = React.forwardRef<HTMLElement, TimelineItemProps>(
           aria-hidden="true"
         />
         <div className="relative z-10 flex flex-col gap-3">
-          <span className="w-fit rounded-full px-4 py-1 font-comic text-sm uppercase leading-none [border-width:var(--comixa-button-border-width,2px)] [border-color:var(--comixa-outline-border,#1E1E1E)] [background:var(--comixa-outline-border,#1E1E1E)] [color:var(--comixa-warning-bg,#FFD84D)] [box-shadow:var(--comixa-outline-shadow-value,2px_2px_0_0_var(--comixa-outline-shadow,#1E1E1E))]">
+          <span
+            className="w-fit rounded-full px-4 py-1 font-comic text-sm uppercase leading-none [border-width:var(--comixa-button-border-width,2px)] [box-shadow:var(--comixa-outline-shadow-value,2px_2px_0_0_var(--comixa-outline-shadow,#1E1E1E))]"
+            style={{
+              backgroundColor: "var(--comixa-outline-border,#1E1E1E)",
+              borderColor: "var(--comixa-outline-border,#1E1E1E)",
+              color: "var(--comixa-warning-bg,#FFD84D)",
+            }}
+          >
             {period}
           </span>
           <div className="flex flex-col gap-2">

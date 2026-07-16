@@ -140,6 +140,8 @@ export {
   PatternBackground,
   ExplosionBackground,
   ComicPaperBackground,
+  PopArtBackground,
+  VintagePaperBackground,
   backgroundVariants,
   type BackgroundProps,
   type BackgroundVariant,
@@ -216,7 +218,9 @@ export {
 } from "./components/comic-reveal";
 export {
   ComicCursor,
+  CursorFollow,
   type ComicCursorProps,
+  type CursorFollowProps,
   type ComicCursorVariant,
 } from "./components/comic-cursor";
 export {

@@ -150,9 +150,9 @@ export function Example() {
 | - | **Gallery** | Grid, featured, and draggable horizontal image strips |
 | - | **Timeline** | Vertical comic timelines for resumes and launch stories |
 | - | **PageTransition** | Route/content enter effects |
-| - | **ComicLoader** | Comic loading indicators |
-| - | **ComicReveal** | Replayable section reveal animations |
-| - | **ComicCursor** | Global cursor follower with trailing dots |
+| - | **Loader Animation** | Comic loading indicators |
+| - | **Reveal Animation** | Replayable section reveal animations |
+| - | **Cursor** | Global cursor follower with trailing dots |
 | - | **Features** | Feature grids and comic highlight cards |
 
 ### Button
@@ -625,7 +625,7 @@ Replayable content/page enter transitions.
 Variants: `panel-swipe` `burst` `flip` `speed-lines`  
 Props: `transitionKey`, `duration`, `easing`, `padding`
 
-### ComicLoader
+### Loader Animation
 
 ```tsx
 <ComicLoader variant="dots" />
@@ -635,7 +635,7 @@ Props: `transitionKey`, `duration`, `easing`, `padding`
 Variants: `dots` `burst` `panel` `speech`  
 Tones: `yellow` `blue` `red` `green` `pink`
 
-### ComicReveal
+### Reveal Animation
 
 Replayable section reveals.
 
@@ -652,20 +652,22 @@ Replayable section reveals.
 Variants: `pop` `slide-up` `panel-wipe` `spotlight`  
 Props: `revealKey`, `delay`, `duration`, `triggerOnView`, `once`
 
-### ComicCursor
+### Cursor
 
-Global cursor follower with trailing dots. Mount it once on a page.
+Theme-ready cursor follower. Mount it once on a page.
 
 ```tsx
-<ComicCursor variant="dot" trailCount={6} />
+<CursorFollow enabled animated showLabel />
+<ComicCursor variant="pop-art" trailCount={6} />
 
 <button data-comixa-cursor-zone>
   Hovering this grows and fades the follower
 </button>
 ```
 
-Variants: `dot` `ring` `spark`  
-Props: `enabled`, `hideNativeCursor`, `size`, `trailCount`
+Theme variants: `comic` `retro` `pop-art` `manga` `vintage`  
+Legacy variants: `dot` `ring` `spark`  
+Props: `enabled`, `animated`, `showLabel`, `hideNativeCursor`, `behindOnHover`, `size`, `trailCount`
 
 ### Animated text
 
@@ -699,14 +701,18 @@ import {
   GridBackground,
   ExplosionBackground,
   ComicPaperBackground,
+  PopArtBackground,
+  VintagePaperBackground,
 } from "comixa-ui";
 
 <DotsBackground className="rounded-xl p-8" intensity="md">
   Hero copy
 </DotsBackground>
+<PopArtBackground className="rounded-xl p-8">Pop art</PopArtBackground>
+<VintagePaperBackground className="rounded-xl p-8">Vintage paper</VintagePaperBackground>
 ```
 
-Variants: `dots` `grid` `lines` `pattern` `explosion` `comic-paper`  
+Variants: `dots` `grid` `lines` `pattern` `explosion` `comic-paper` `pop-art` `vintage-paper`  
 Tone: `paper` `cream` `yellow` `ink` · Intensity: `sm` `md` `lg`
 
 ## Design tokens (via preset)

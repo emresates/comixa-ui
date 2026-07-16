@@ -14,8 +14,8 @@ const CSS = `
   100% { transform: scale(0.7) rotate(-8deg); opacity: 0.65; }
 }
 @keyframes comixa-loader-panel {
-  0%, 100% { transform: translateX(-6px); box-shadow: 2px 2px 0 #1A1A1A; }
-  50% { transform: translateX(6px); box-shadow: 6px 6px 0 #1A1A1A; }
+  0%, 100% { transform: translateX(-6px); box-shadow: var(--comixa-loader-shadow-sm); }
+  50% { transform: translateX(6px); box-shadow: var(--comixa-loader-shadow-lg); }
 }
 @keyframes comixa-loader-speech {
   0%, 100% { transform: scale(0.96); opacity: 0.75; }
@@ -37,7 +37,10 @@ function ensureStyles() {
 }
 
 export const comicLoaderVariants = cva(
-  "inline-flex items-center justify-center font-comic uppercase tracking-wide text-ink",
+  [
+    "inline-flex items-center justify-center font-comic uppercase tracking-wide",
+    "[color:var(--comixa-loader-text)]",
+  ].join(" "),
   {
     variants: {
       variant: {
@@ -52,11 +55,16 @@ export const comicLoaderVariants = cva(
         lg: "text-xl",
       },
       tone: {
-        yellow: "",
-        blue: "",
-        red: "",
-        green: "",
-        pink: "",
+        yellow:
+          "[--comixa-loader-bg:var(--comixa-warning-bg,#FFD84D)] [--comixa-loader-text:var(--comixa-warning-text,#111111)] [--comixa-loader-border:var(--comixa-warning-border,#1E1E1E)] [--comixa-loader-shadow:var(--comixa-warning-shadow-value,4px_4px_0_0_var(--comixa-warning-shadow,#1E1E1E))]",
+        blue:
+          "[--comixa-loader-bg:var(--comixa-primary-bg,#4F9CF9)] [--comixa-loader-text:var(--comixa-primary-text,#FFFFFF)] [--comixa-loader-border:var(--comixa-primary-border,#1E1E1E)] [--comixa-loader-shadow:var(--comixa-primary-shadow-value,4px_4px_0_0_var(--comixa-primary-shadow,#1E1E1E))]",
+        red:
+          "[--comixa-loader-bg:var(--comixa-danger-bg,#FF5757)] [--comixa-loader-text:var(--comixa-danger-text,#FFFFFF)] [--comixa-loader-border:var(--comixa-danger-border,#1E1E1E)] [--comixa-loader-shadow:var(--comixa-danger-shadow-value,4px_4px_0_0_var(--comixa-danger-shadow,#1E1E1E))]",
+        green:
+          "[--comixa-loader-bg:var(--comixa-success-bg,#4ADE80)] [--comixa-loader-text:var(--comixa-success-text,#111111)] [--comixa-loader-border:var(--comixa-success-border,#1E1E1E)] [--comixa-loader-shadow:var(--comixa-success-shadow-value,4px_4px_0_0_var(--comixa-success-shadow,#1E1E1E))]",
+        pink:
+          "[--comixa-loader-bg:var(--comixa-danger-bg,#FF4FA3)] [--comixa-loader-text:var(--comixa-danger-text,#FFFFFF)] [--comixa-loader-border:var(--comixa-danger-border,#1E1E1E)] [--comixa-loader-shadow:var(--comixa-danger-shadow-value,4px_4px_0_0_var(--comixa-danger-shadow,#1E1E1E))]",
       },
     },
     defaultVariants: {
@@ -66,14 +74,6 @@ export const comicLoaderVariants = cva(
     },
   }
 );
-
-const toneClass = {
-  yellow: "bg-comic-yellow",
-  blue: "bg-comic-blue",
-  red: "bg-comic-red",
-  green: "bg-comic-green",
-  pink: "bg-comic-pink",
-} as const;
 
 export interface ComicLoaderProps
   extends React.HTMLAttributes<HTMLDivElement>,
@@ -97,8 +97,6 @@ export const ComicLoader = React.forwardRef<HTMLDivElement, ComicLoaderProps>(
       ensureStyles();
     }, []);
 
-    const color = toneClass[tone ?? "yellow"];
-
     return (
       <div
         ref={ref}
@@ -113,7 +111,7 @@ export const ComicLoader = React.forwardRef<HTMLDivElement, ComicLoaderProps>(
               <span
                 key={i}
                 data-comixa-loader-dot=""
-                className={cn("h-3 w-3 rounded-full border-2 border-ink", color)}
+                className="h-3 w-3 rounded-full [border-width:var(--comixa-button-border-width,2px)] [border-color:var(--comixa-loader-border)] [background:var(--comixa-loader-bg)] [box-shadow:var(--comixa-loader-shadow)]"
                 style={{ ["--delay" as string]: `${i * 120}ms` }}
               />
             ))}
@@ -124,8 +122,7 @@ export const ComicLoader = React.forwardRef<HTMLDivElement, ComicLoaderProps>(
           <span
             data-comixa-loader-burst=""
             className={cn(
-              "grid h-16 w-16 place-items-center border-2 border-ink shadow-comic",
-              color
+              "grid h-16 w-16 place-items-center [border-width:var(--comixa-button-border-width,2px)] [border-color:var(--comixa-loader-border)] [background:var(--comixa-loader-bg)] [box-shadow:var(--comixa-loader-shadow)]"
             )}
             style={{
               clipPath:
@@ -139,7 +136,15 @@ export const ComicLoader = React.forwardRef<HTMLDivElement, ComicLoaderProps>(
           <>
             <span
               data-comixa-loader-panel=""
-              className={cn("h-10 w-14 border-2 border-ink", color)}
+              className="h-10 w-14 [border-width:var(--comixa-button-border-width,2px)] [border-color:var(--comixa-loader-border)] [background:var(--comixa-loader-bg)]"
+              style={
+                {
+                  "--comixa-loader-shadow-sm":
+                    "2px 2px 0 var(--comixa-loader-border)",
+                  "--comixa-loader-shadow-lg":
+                    "6px 6px 0 var(--comixa-loader-border)",
+                } as React.CSSProperties
+              }
             />
             <span>{label}</span>
           </>
@@ -148,13 +153,7 @@ export const ComicLoader = React.forwardRef<HTMLDivElement, ComicLoaderProps>(
           <span
             data-comixa-loader-speech=""
             className={cn(
-              "relative rounded-[1.25rem] border-2 border-ink px-4 py-2 shadow-comic-sm after:absolute after:-bottom-2 after:left-5 after:h-4 after:w-4 after:rotate-45 after:border-b-2 after:border-r-2 after:border-ink",
-              color,
-              tone === "yellow" ? "after:bg-comic-yellow" : "",
-              tone === "blue" ? "after:bg-comic-blue" : "",
-              tone === "red" ? "after:bg-comic-red" : "",
-              tone === "green" ? "after:bg-comic-green" : "",
-              tone === "pink" ? "after:bg-comic-pink" : ""
+              "relative px-4 py-2 [border-width:var(--comixa-button-border-width,2px)] [border-color:var(--comixa-loader-border)] [border-radius:calc(var(--comixa-button-radius,0.5rem)_*_2.5)] [background:var(--comixa-loader-bg)] [box-shadow:var(--comixa-loader-shadow)] after:absolute after:-bottom-2 after:left-5 after:h-4 after:w-4 after:rotate-45 after:border-b-2 after:border-r-2 after:[border-color:var(--comixa-loader-border)] after:[background:var(--comixa-loader-bg)]"
             )}
           >
             {label}

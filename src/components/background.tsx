@@ -8,15 +8,21 @@ export type BackgroundVariant =
   | "lines"
   | "pattern"
   | "explosion"
-  | "comic-paper";
+  | "comic-paper"
+  | "pop-art"
+  | "vintage-paper";
 
 export const backgroundVariants = cva("relative overflow-hidden", {
   variants: {
     tone: {
-      paper: "bg-paper text-ink",
-      cream: "bg-paper-cream text-ink",
-      yellow: "bg-comic-yellow text-ink",
-      ink: "bg-ink text-paper",
+      paper:
+        "[background:var(--comixa-outline-bg,#FFFFFF)] [color:var(--comixa-outline-text,#111111)]",
+      cream:
+        "[background:var(--comixa-default-bg,#FFF3D6)] [color:var(--comixa-default-text,#111111)]",
+      yellow:
+        "[background:var(--comixa-warning-bg,#FFD84D)] [color:var(--comixa-warning-text,#111111)]",
+      ink:
+        "[background:var(--comixa-outline-border,#1A1A1A)] [color:var(--comixa-outline-bg,#FFFDF5)]",
     },
     intensity: {
       sm: "",
@@ -86,6 +92,30 @@ function layerStyle(
         boxShadow: "inset 0 0 0 3px rgba(255,253,245,0.45)",
         border: "2px solid #1A1A1A",
       };
+    case "pop-art": {
+      const size = intensity === "sm" ? 11 : intensity === "lg" ? 20 : 15;
+      return {
+        backgroundImage:
+          "radial-gradient(circle at 2px 2px, var(--comixa-warning-bg,#FFE14D) 2px, transparent 0), linear-gradient(135deg, transparent 0 48%, rgba(255,255,255,0.34) 48% 52%, transparent 52% 100%)",
+        backgroundSize: `${size}px ${size}px, 32px 32px`,
+        backgroundColor: "var(--comixa-danger-bg,#FF4B4B)",
+        opacity: intensity === "sm" ? 0.55 : intensity === "lg" ? 0.9 : 0.72,
+      };
+    }
+    case "vintage-paper":
+      return {
+        backgroundImage:
+          "radial-gradient(circle at 1px 1px, rgba(74,58,42,0.18) 0.8px, transparent 0), repeating-linear-gradient(0deg, rgba(74,58,42,0.08) 0, rgba(74,58,42,0.08) 1px, transparent 1px, transparent 6px)",
+        backgroundSize:
+          intensity === "sm"
+            ? "10px 10px, 100% 8px"
+            : intensity === "lg"
+              ? "6px 6px, 100% 4px"
+              : "8px 8px, 100% 6px",
+        backgroundColor: "var(--comixa-outline-bg,#F7EED8)",
+        boxShadow:
+          "inset 0 0 0 1px rgba(74,58,42,0.2), inset 0 0 38px rgba(74,58,42,0.12)",
+      };
   }
 }
 
@@ -145,4 +175,9 @@ export const ExplosionBackground = makeNamed(
 export const ComicPaperBackground = makeNamed(
   "comic-paper",
   "ComicPaperBackground"
+);
+export const PopArtBackground = makeNamed("pop-art", "PopArtBackground");
+export const VintagePaperBackground = makeNamed(
+  "vintage-paper",
+  "VintagePaperBackground"
 );

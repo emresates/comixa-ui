@@ -640,10 +640,14 @@ Replayable section reveals.
 <ComicReveal variant="panel-wipe" revealKey={id}>
   <Card>Fresh panel</Card>
 </ComicReveal>
+
+<ComicReveal variant="pop" triggerOnView>
+  <Card>Reveals when visible</Card>
+</ComicReveal>
 ```
 
 Variants: `pop` `slide-up` `panel-wipe` `spotlight`  
-Props: `revealKey`, `delay`, `duration`
+Props: `revealKey`, `delay`, `duration`, `triggerOnView`, `once`
 
 ### ComicCursor
 

@@ -40,6 +40,47 @@ function ensureStyles() {
   document.head.appendChild(style);
 }
 
+function useInView(
+  enabled: boolean,
+  once: boolean
+): [React.RefObject<HTMLDivElement | null>, boolean] {
+  const ref = React.useRef<HTMLDivElement | null>(null);
+  const [visible, setVisible] = React.useState(!enabled);
+
+  React.useEffect(() => {
+    if (!enabled) {
+      setVisible(true);
+      return;
+    }
+    setVisible(false);
+    const el = ref.current;
+    if (!el || typeof IntersectionObserver === "undefined") {
+      setVisible(true);
+      return;
+    }
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry?.isIntersecting && entry.intersectionRatio > 0) {
+          setVisible(true);
+          if (once) observer.disconnect();
+        } else if (!once) {
+          setVisible(false);
+        }
+      },
+      { threshold: [0, 0.2] }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [enabled, once]);
+
+  return [ref, visible];
+}
+
+function assignRef<T>(ref: React.ForwardedRef<T>, node: T | null) {
+  if (typeof ref === "function") ref(node);
+  else if (ref) ref.current = node;
+}
+
 export const comicRevealVariants = cva("will-change-transform", {
   variants: {
     variant: {
@@ -67,6 +108,8 @@ export interface ComicRevealProps
   revealKey?: React.Key;
   delay?: number;
   duration?: number;
+  triggerOnView?: boolean;
+  once?: boolean;
 }
 
 export const ComicReveal = React.forwardRef<HTMLDivElement, ComicRevealProps>(
@@ -77,23 +120,30 @@ export const ComicReveal = React.forwardRef<HTMLDivElement, ComicRevealProps>(
       revealKey,
       delay = 0,
       duration = 520,
+      triggerOnView = false,
+      once = true,
       style,
       ...props
     },
-    ref
+    forwardedRef
   ) => {
     React.useEffect(() => {
       ensureStyles();
     }, []);
 
+    const [viewRef, visible] = useInView(triggerOnView, once);
     return (
       <div
         key={revealKey}
-        ref={ref}
-        data-comixa-reveal=""
+        ref={(node) => {
+          viewRef.current = node;
+          assignRef(forwardedRef, node);
+        }}
+        data-comixa-reveal={visible ? "" : undefined}
         className={cn(comicRevealVariants({ variant }), className)}
         style={
           {
+            opacity: visible ? undefined : 0,
             ["--comixa-reveal-name" as string]:
               animationNames[variant ?? "pop"],
             ["--comixa-reveal-delay" as string]: `${delay}ms`,

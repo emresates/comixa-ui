@@ -111,7 +111,7 @@ export function Example() {
     <div className="flex flex-col gap-4 bg-paper p-8">
       <Badge variant="yellow">New</Badge>
 
-      <Button variant="pop" effect="pop">
+      <Button>
         Pow!
       </Button>
 
@@ -119,15 +119,9 @@ export function Example() {
         Continue
       </Button>
 
-      <Button variant="danger" effect="shake">
+      <Button variant="danger">
         Boom
       </Button>
-
-      <Button variant="retro">Retro</Button>
-      <Button variant="dark">Dark</Button>
-      <Button variant="pop-art">Pop Art</Button>
-      <Button variant="manga">Manga</Button>
-      <Button variant="vintage">Vintage</Button>
 
       <Input placeholder="Hero name..." />
       <Input state="error" placeholder="Try again..." />
@@ -166,11 +160,10 @@ export function Example() {
 
 | Prop | Values | Default |
 |------|--------|---------|
-| `variant` | `pop` `primary` `danger` `success` `outline` `ghost` `retro` `dark` `pop-art` `manga` `vintage` | `pop` |
+| `variant` | `default` `primary` `danger` `success` `warning` `outline` `ghost` | `default` |
 | `size` | `sm` `md` `lg` | `md` |
 | `loading` | `true` / `false` | `false` |
 | `icon` | `true` / `false` — square icon-only button | `false` |
-| `effect` | `none` `pop` `shake` `wiggle` | `none` |
 
 ```tsx
 <Button loading>Saving…</Button>
@@ -179,6 +172,11 @@ export function Example() {
   <PlusIcon />
 </Button>
 ```
+
+Button variants are semantic. Theme changes should come from CSS variables like
+`--comixa-primary-bg`, `--comixa-danger-border`, and `--comixa-warning-shadow`.
+Comixa also exports `defaultTheme`, `retroTheme`, `darkTheme`, `popArtTheme`,
+`mangaTheme`, `vintageTheme`, and `comixaThemes` as token objects.
 
 ### Input
 
@@ -241,11 +239,11 @@ Custom listbox (not a native `<select>`). Arrow stays on the right.
 
 ### Checkbox / Radio / Switch
 
-| | Checkbox / Radio | Switch |
+| | Checkbox | Radio | Switch |
 |--|--|--|
-| `variant` | `default` `primary` `danger` `success` `pink` | same |
-| size prop | `checkboxSize` / `radioSize`: `sm` `md` `lg` | `switchSize` |
-| extras | `label` | `checked`, `onCheckedChange`, `label` |
+| `variant` | `default` `primary` `danger` `success` `pink` | — | `default` `primary` `danger` `success` `pink` |
+| size prop | `checkboxSize`: `sm` `md` `lg` | `radioSize`: `sm` `md` `lg` | `switchSize` |
+| extras | `label` | `label`, `invalid`, native `disabled` | `checked`, `onCheckedChange`, `label` |
 
 `RadioGroup` wraps radios (`orientation`: `horizontal` \| `vertical`).
 

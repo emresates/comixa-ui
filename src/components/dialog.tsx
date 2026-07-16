@@ -61,18 +61,26 @@ function ensureDialogStyles() {
 
 export const dialogContentVariants = cva(
   [
-    "relative flex w-[min(100%,28rem)] flex-col border-2 border-ink text-ink",
+    "relative flex w-[min(100%,28rem)] flex-col",
+    "[border-width:var(--comixa-button-border-width,2px)] [border-color:var(--comixa-outline-border,#1E1E1E)] [border-radius:var(--comixa-button-radius,0.75rem)]",
+    "[color:var(--comixa-outline-text,#111111)] [font-family:var(--comixa-button-font,inherit)]",
     "origin-center focus:outline-none",
   ].join(" "),
   {
     variants: {
       variant: {
-        default: "bg-paper shadow-comic-lg rounded-xl",
-        cream: "bg-paper-cream shadow-comic-lg rounded-xl",
-        boom: "bg-comic-yellow shadow-comic-lg rounded-xl",
-        alert: "bg-comic-red text-white shadow-comic-lg rounded-xl",
-        success: "bg-comic-green text-ink shadow-comic-lg rounded-xl",
-        panel: "bg-comic-blue text-white shadow-comic-lg rounded-lg",
+        default:
+          "[background:var(--comixa-outline-bg,#FFFFFF)] [color:var(--comixa-outline-text,#111111)] [box-shadow:var(--comixa-outline-shadow-value,6px_6px_0_0_var(--comixa-outline-shadow,#1E1E1E))]",
+        cream:
+          "[background:var(--comixa-default-bg,#FFF3D6)] [color:var(--comixa-default-text,#111111)] [border-color:var(--comixa-default-border,#1E1E1E)] [box-shadow:var(--comixa-default-shadow-value,6px_6px_0_0_var(--comixa-default-shadow,#1E1E1E))]",
+        boom:
+          "[background:var(--comixa-warning-bg,#FFD84D)] [color:var(--comixa-warning-text,#111111)] [border-color:var(--comixa-warning-border,#1E1E1E)] [box-shadow:var(--comixa-warning-shadow-value,6px_6px_0_0_var(--comixa-warning-shadow,#1E1E1E))]",
+        alert:
+          "[background:var(--comixa-danger-bg,#FF5757)] [color:var(--comixa-danger-text,#FFFFFF)] [border-color:var(--comixa-danger-border,#1E1E1E)] [box-shadow:var(--comixa-danger-shadow-value,6px_6px_0_0_var(--comixa-danger-shadow,#1E1E1E))]",
+        success:
+          "[background:var(--comixa-success-bg,#4ADE80)] [color:var(--comixa-success-text,#111111)] [border-color:var(--comixa-success-border,#1E1E1E)] [box-shadow:var(--comixa-success-shadow-value,6px_6px_0_0_var(--comixa-success-shadow,#1E1E1E))]",
+        panel:
+          "[background:var(--comixa-primary-bg,#4F9CF9)] [color:var(--comixa-primary-text,#FFFFFF)] [border-color:var(--comixa-primary-border,#1E1E1E)] [box-shadow:var(--comixa-primary-shadow-value,6px_6px_0_0_var(--comixa-primary-shadow,#1E1E1E))]",
       },
       size: {
         sm: "max-w-sm p-4",
@@ -242,7 +250,8 @@ export const DialogContent = React.forwardRef<
             aria-label="Close"
             className={cn(
               "absolute right-3 top-3 inline-flex h-8 w-8 items-center justify-center",
-              "border-2 border-ink bg-paper font-comic text-lg leading-none text-ink shadow-comic-sm",
+              "[border-width:var(--comixa-button-border-width,2px)] [border-color:var(--comixa-outline-border,#1E1E1E)] [background:var(--comixa-outline-bg,#FFFFFF)] [color:var(--comixa-outline-text,#111111)] [border-radius:var(--comixa-button-radius,0.5rem)]",
+              "[box-shadow:var(--comixa-outline-shadow-value,2px_2px_0_0_var(--comixa-outline-shadow,#1E1E1E))] font-comic text-lg leading-none",
               "transition-[transform,box-shadow] duration-150",
               "hover:-translate-y-0.5 active:translate-x-[2px] active:translate-y-[2px] active:shadow-none"
             )}

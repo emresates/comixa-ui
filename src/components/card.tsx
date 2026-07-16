@@ -4,20 +4,28 @@ import { cn } from "../lib/cn";
 
 export const cardVariants = cva(
   [
-    "relative flex flex-col border-2 border-ink text-ink",
+    "relative flex flex-col",
+    "[border-width:var(--comixa-button-border-width,2px)] [border-color:var(--comixa-outline-border,#1E1E1E)] [border-radius:var(--comixa-button-radius,0.75rem)]",
+    "[color:var(--comixa-outline-text,#111111)] [font-family:var(--comixa-button-font,inherit)]",
     "transition-[transform,box-shadow] duration-150",
   ].join(" "),
   {
     variants: {
       variant: {
-        default: "bg-paper shadow-comic rounded-xl",
-        cream: "bg-paper-cream shadow-comic rounded-xl",
-        pop: "bg-comic-yellow shadow-comic-lg rounded-xl -rotate-1",
-        panel: "bg-comic-blue text-white shadow-comic rounded-lg",
-        danger: "bg-comic-red text-white shadow-comic rounded-lg",
+        default:
+          "[background:var(--comixa-outline-bg,#FFFFFF)] [color:var(--comixa-outline-text,#111111)] [box-shadow:var(--comixa-outline-shadow-value,4px_4px_0_0_var(--comixa-outline-shadow,#1E1E1E))]",
+        cream:
+          "[background:var(--comixa-default-bg,#FFF3D6)] [color:var(--comixa-default-text,#111111)] [border-color:var(--comixa-default-border,#1E1E1E)] [box-shadow:var(--comixa-default-shadow-value,4px_4px_0_0_var(--comixa-default-shadow,#1E1E1E))]",
+        pop:
+          "-rotate-1 [background:var(--comixa-warning-bg,#FFD84D)] [color:var(--comixa-warning-text,#111111)] [border-color:var(--comixa-warning-border,#1E1E1E)] [box-shadow:var(--comixa-warning-shadow-value,6px_6px_0_0_var(--comixa-warning-shadow,#1E1E1E))]",
+        panel:
+          "[background:var(--comixa-primary-bg,#4F9CF9)] [color:var(--comixa-primary-text,#FFFFFF)] [border-color:var(--comixa-primary-border,#1E1E1E)] [box-shadow:var(--comixa-primary-shadow-value,4px_4px_0_0_var(--comixa-primary-shadow,#1E1E1E))]",
+        danger:
+          "[background:var(--comixa-danger-bg,#FF5757)] [color:var(--comixa-danger-text,#FFFFFF)] [border-color:var(--comixa-danger-border,#1E1E1E)] [box-shadow:var(--comixa-danger-shadow-value,4px_4px_0_0_var(--comixa-danger-shadow,#1E1E1E))]",
         speech:
-          "bg-paper shadow-comic rounded-[1.5rem] after:absolute after:-bottom-3 after:left-8 after:h-0 after:w-0 after:border-x-[10px] after:border-t-[12px] after:border-x-transparent after:border-t-ink",
-        outline: "bg-transparent shadow-none rounded-xl border-dashed",
+          "[background:var(--comixa-outline-bg,#FFFFFF)] [color:var(--comixa-outline-text,#111111)] [box-shadow:var(--comixa-outline-shadow-value,4px_4px_0_0_var(--comixa-outline-shadow,#1E1E1E))] [border-radius:1.5rem] after:absolute after:-bottom-3 after:left-8 after:h-0 after:w-0 after:border-x-[10px] after:border-t-[12px] after:border-x-transparent after:[border-top-color:var(--comixa-outline-border,#1E1E1E)]",
+        outline:
+          "border-dashed bg-transparent shadow-none [color:var(--comixa-outline-text,#111111)]",
       },
       padding: {
         none: "p-0",
@@ -89,7 +97,10 @@ export const CardDescription = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <p
     ref={ref}
-    className={cn("font-body text-base text-ink-muted", className)}
+    className={cn(
+      "font-body text-base [color:var(--pg-fg-muted,#5C5C5C)]",
+      className
+    )}
     {...props}
   />
 ));

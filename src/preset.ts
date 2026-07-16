@@ -38,6 +38,18 @@ const comicPreset: Partial<Config> = {
           "60%": { transform: "scale(1.06)" },
           "100%": { transform: "scale(1)", opacity: "1" },
         },
+        "comic-button-pop": {
+          "0%, 100%": { transform: "scale(1) rotate(0deg)" },
+          "45%": { transform: "scale(1.08) rotate(-1deg)" },
+          "75%": { transform: "scale(0.98) rotate(1deg)" },
+        },
+        "comic-button-shake": {
+          "0%, 100%": { transform: "translateX(0) rotate(0deg)" },
+          "18%": { transform: "translateX(-4px) rotate(-2deg)" },
+          "36%": { transform: "translateX(4px) rotate(2deg)" },
+          "54%": { transform: "translateX(-3px) rotate(-1deg)" },
+          "72%": { transform: "translateX(3px) rotate(1deg)" },
+        },
         "comic-shake": {
           "0%, 100%": { transform: "translateX(0)" },
           "20%": { transform: "translateX(-3px) rotate(-1deg)" },
@@ -107,6 +119,8 @@ const comicPreset: Partial<Config> = {
       },
       animation: {
         "comic-pop": "comic-pop 0.35s ease-out both",
+        "comic-button-pop": "comic-button-pop 0.32s ease-out both",
+        "comic-button-shake": "comic-button-shake 0.42s ease-in-out both",
         "comic-shake": "comic-shake 0.4s ease-in-out",
         "comic-wiggle": "comic-wiggle 0.5s ease-in-out infinite",
         "comic-overlay-in": "comic-overlay-in 0.2s ease-out both",

@@ -29,7 +29,7 @@ export const soundBadgeVariants = cva(
         pow: "bg-comic-yellow text-ink",
         bam: "bg-comic-red text-white rotate-[4deg]",
         wow: "bg-comic-pink text-ink rotate-[-3deg]",
-        boom: "bg-comic-orange text-ink rotate-[8deg]",
+        boom: "bg-comic-orange text-white rotate-[8deg]",
         zap: "bg-comic-blue text-white rotate-[-8deg]",
         crash: "bg-comic-green text-ink rotate-[5deg]",
         wham: "bg-ink text-comic-yellow rotate-[-2deg]",

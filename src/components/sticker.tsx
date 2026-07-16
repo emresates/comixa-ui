@@ -51,16 +51,22 @@ export interface StickerProps
     VariantProps<typeof stickerVariants> {}
 
 export const Sticker = React.forwardRef<HTMLSpanElement, StickerProps>(
-  ({ className, variant, size, tilt, shape, ...props }, ref) => {
+  ({ className, variant, size, tilt, shape, children, ...props }, ref) => {
+    const isNumberOne =
+      typeof children === "string" && children.trim().toLowerCase() === "#1";
+
     return (
       <span
         ref={ref}
         className={cn(
           stickerVariants({ variant, size, tilt, shape }),
-          className
+          className,
+          isNumberOne && "text-white"
         )}
         {...props}
-      />
+      >
+        {children}
+      </span>
     );
   }
 );

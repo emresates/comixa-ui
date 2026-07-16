@@ -50,17 +50,25 @@ const POSITION_CLASS: Record<ToastPosition, string> = {
 
 export const toastVariants = cva(
   [
-    "pointer-events-auto relative flex w-[min(100%,22rem)] gap-3 border-2 border-ink p-3 shadow-comic",
-    "font-body text-ink",
+    "pointer-events-auto relative isolate flex w-[min(100%,22rem)] gap-3 overflow-hidden p-3",
+    "[border-width:var(--comixa-button-border-width,2px)] [border-color:var(--comixa-toast-border)] [border-radius:var(--comixa-button-radius,0.75rem)]",
+    "[background:var(--comixa-toast-bg)] [box-shadow:var(--comixa-toast-shadow-value)]",
+    "font-body [color:var(--comixa-toast-text)]",
+    "before:pointer-events-none before:absolute before:inset-0 before:-z-10 before:content-[''] before:[background-image:var(--comixa-toast-pattern)] before:[background-size:var(--comixa-toast-pattern-size)] before:opacity-[var(--comixa-toast-pattern-opacity)]",
   ].join(" "),
   {
     variants: {
       variant: {
-        default: "bg-paper rounded-xl",
-        pop: "bg-comic-yellow rounded-xl",
-        success: "bg-comic-green rounded-xl",
-        danger: "bg-comic-red text-white rounded-xl",
-        info: "bg-comic-blue text-white rounded-xl",
+        default:
+          "[--comixa-toast-bg:var(--comixa-outline-bg,#FFFFFF)] [--comixa-toast-text:var(--comixa-outline-text,#111111)] [--comixa-toast-border:var(--comixa-outline-border,#1E1E1E)] [--comixa-toast-shadow-value:var(--comixa-outline-shadow-value,4px_4px_0_0_var(--comixa-outline-shadow,#1E1E1E))] [--comixa-toast-pattern:var(--comixa-outline-pattern,none)] [--comixa-toast-pattern-size:var(--comixa-outline-pattern-size,auto)] [--comixa-toast-pattern-opacity:var(--comixa-outline-pattern-opacity,0)]",
+        pop:
+          "[--comixa-toast-bg:var(--comixa-warning-bg,#FFD84D)] [--comixa-toast-text:var(--comixa-warning-text,#111111)] [--comixa-toast-border:var(--comixa-warning-border,#1E1E1E)] [--comixa-toast-shadow-value:var(--comixa-warning-shadow-value,4px_4px_0_0_var(--comixa-warning-shadow,#1E1E1E))] [--comixa-toast-pattern:var(--comixa-warning-pattern,none)] [--comixa-toast-pattern-size:var(--comixa-warning-pattern-size,auto)] [--comixa-toast-pattern-opacity:var(--comixa-warning-pattern-opacity,0)]",
+        success:
+          "[--comixa-toast-bg:var(--comixa-success-bg,#4ADE80)] [--comixa-toast-text:var(--comixa-success-text,#111111)] [--comixa-toast-border:var(--comixa-success-border,#1E1E1E)] [--comixa-toast-shadow-value:var(--comixa-success-shadow-value,4px_4px_0_0_var(--comixa-success-shadow,#1E1E1E))] [--comixa-toast-pattern:var(--comixa-success-pattern,none)] [--comixa-toast-pattern-size:var(--comixa-success-pattern-size,auto)] [--comixa-toast-pattern-opacity:var(--comixa-success-pattern-opacity,0)]",
+        danger:
+          "[--comixa-toast-bg:var(--comixa-danger-bg,#FF5757)] [--comixa-toast-text:var(--comixa-danger-text,#FFFFFF)] [--comixa-toast-border:var(--comixa-danger-border,#1E1E1E)] [--comixa-toast-shadow-value:var(--comixa-danger-shadow-value,4px_4px_0_0_var(--comixa-danger-shadow,#1E1E1E))] [--comixa-toast-pattern:var(--comixa-danger-pattern,none)] [--comixa-toast-pattern-size:var(--comixa-danger-pattern-size,auto)] [--comixa-toast-pattern-opacity:var(--comixa-danger-pattern-opacity,0)]",
+        info:
+          "[--comixa-toast-bg:var(--comixa-primary-bg,#4F9CF9)] [--comixa-toast-text:var(--comixa-primary-text,#FFFFFF)] [--comixa-toast-border:var(--comixa-primary-border,#1E1E1E)] [--comixa-toast-shadow-value:var(--comixa-primary-shadow-value,4px_4px_0_0_var(--comixa-primary-shadow,#1E1E1E))] [--comixa-toast-pattern:var(--comixa-primary-pattern,none)] [--comixa-toast-pattern-size:var(--comixa-primary-pattern-size,auto)] [--comixa-toast-pattern-opacity:var(--comixa-primary-pattern-opacity,0)]",
       },
     },
     defaultVariants: {
@@ -117,24 +125,46 @@ const ToastContext = React.createContext<ToastContextValue | null>(null);
 
 type Listener = (toasts: ToastRecord[]) => void;
 
-let memoryToasts: ToastRecord[] = [];
-let memoryDefaultPosition: ToastPosition = "bottom-right";
-let memoryDefaultDuration = 3500;
-let memoryDefaultClosable = true;
-const memoryListeners = new Set<Listener>();
+type ToastStore = {
+  toasts: ToastRecord[];
+  defaultPosition: ToastPosition;
+  defaultDuration: number;
+  defaultClosable: boolean;
+  listeners: Set<Listener>;
+};
+
+const TOAST_STORE_KEY = "__COMIXA_TOAST_STORE__";
+
+function getToastStore() {
+  const root = globalThis as typeof globalThis & {
+    [TOAST_STORE_KEY]?: ToastStore;
+  };
+
+  root[TOAST_STORE_KEY] ??= {
+    toasts: [],
+    defaultPosition: "bottom-right",
+    defaultDuration: 3500,
+    defaultClosable: true,
+    listeners: new Set<Listener>(),
+  };
+
+  return root[TOAST_STORE_KEY];
+}
+
+const toastStore = getToastStore();
 const EXIT_MS = 200;
 
 function emit() {
-  for (const listener of memoryListeners) listener(memoryToasts);
+  for (const listener of toastStore.listeners) listener(toastStore.toasts);
 }
 
 function dismissToast(id: string) {
-  memoryToasts = memoryToasts.map((item) =>
+  toastStore.toasts = toastStore.toasts.map((item) =>
     item.id === id ? { ...item, open: false } : item
   );
   emit();
   window.setTimeout(() => {
-    memoryToasts = memoryToasts.filter((item) => item.id !== id);
+    toastStore.toasts = toastStore.toasts.filter((item) => item.id !== id);
     emit();
   }, EXIT_MS);
 }
@@ -143,22 +173,22 @@ function pushToast(input: ToastInput) {
   ensureToastStyles();
   const id = input.id ?? `toast-${Math.random().toString(36).slice(2, 9)}`;
   const duration =
-    input.duration === undefined ? memoryDefaultDuration : input.duration;
+    input.duration === undefined ? toastStore.defaultDuration : input.duration;
   const closable =
-    input.closable === undefined ? memoryDefaultClosable : input.closable;
+    input.closable === undefined ? toastStore.defaultClosable : input.closable;
   const next: ToastRecord = {
     id,
     title: input.title,
     description: input.description,
     variant: input.variant ?? "pop",
-    position: input.position ?? memoryDefaultPosition,
+    position: input.position ?? toastStore.defaultPosition,
     duration,
     closable,
     className: input.className,
     classNames: input.classNames,
     open: true,
   };
-  memoryToasts = [...memoryToasts, next];
+  toastStore.toasts = [...toastStore.toasts, next];
   emit();
 
   if (Number.isFinite(duration) && duration > 0) {
@@ -169,10 +199,10 @@ function pushToast(input: ToastInput) {
 }
 
 function clearToasts() {
-  memoryToasts = memoryToasts.map((item) => ({ ...item, open: false }));
+  toastStore.toasts = toastStore.toasts.map((item) => ({ ...item, open: false }));
   emit();
   window.setTimeout(() => {
-    memoryToasts = [];
+    toastStore.toasts = [];
     emit();
   }, EXIT_MS);
 }
@@ -237,21 +267,23 @@ export function ToastProvider({
   /** Default close-button visibility. */
   closable?: boolean;
 }) {
-  const [toasts, setToasts] = React.useState<ToastRecord[]>(memoryToasts);
+  const [toasts, setToasts] = React.useState<ToastRecord[]>(() => [
+    ...toastStore.toasts,
+  ]);
 
   React.useLayoutEffect(() => {
     ensureToastStyles();
-    memoryDefaultPosition = position;
-    memoryDefaultDuration = duration;
-    memoryDefaultClosable = closable;
+    toastStore.defaultPosition = position;
+    toastStore.defaultDuration = duration;
+    toastStore.defaultClosable = closable;
   }, [position, duration, closable]);
 
   React.useEffect(() => {
     const listener: Listener = (next) => setToasts([...next]);
-    memoryListeners.add(listener);
-    setToasts([...memoryToasts]);
+    toastStore.listeners.add(listener);
+    setToasts([...toastStore.toasts]);
     return () => {
-      memoryListeners.delete(listener);
+      toastStore.listeners.delete(listener);
     };
   }, []);
 
@@ -362,7 +394,9 @@ function ToastView({
           type="button"
           aria-label="Dismiss"
           className={cn(
-            "inline-flex h-7 w-7 shrink-0 items-center justify-center border-2 border-ink bg-paper font-comic text-sm text-ink shadow-comic-sm",
+            "inline-flex h-7 w-7 shrink-0 items-center justify-center font-comic text-sm",
+            "[border-width:var(--comixa-button-border-width,2px)] [border-color:var(--comixa-outline-border,#1E1E1E)] [background:var(--comixa-outline-bg,#FFFFFF)] [color:var(--comixa-outline-text,#111111)] [border-radius:var(--comixa-button-radius,0.5rem)]",
+            "[box-shadow:var(--comixa-outline-shadow-value,2px_2px_0_0_var(--comixa-outline-shadow,#1E1E1E))]",
             "transition-[transform,box-shadow] duration-150",
             "hover:-translate-y-0.5 active:translate-x-[1px] active:translate-y-[1px] active:shadow-none",
             item.classNames?.close

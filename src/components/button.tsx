@@ -5,77 +5,45 @@ import { cn } from "../lib/cn";
 export const buttonVariants = cva(
   [
     "relative isolate inline-flex items-center justify-center gap-2 overflow-hidden whitespace-nowrap",
-    "border-2 border-ink font-comic uppercase tracking-wide",
+    "uppercase",
+    "[border-width:var(--comixa-button-border-width,2px)] [border-radius:var(--comixa-button-radius,0.5rem)] [font-family:var(--comixa-button-font,'Bangers','Comic_Sans_MS',cursive)] [font-weight:var(--comixa-button-font-weight,700)] [letter-spacing:var(--comixa-button-letter-spacing,0.025em)]",
+    "[background:var(--comixa-button-bg)] [border-color:var(--comixa-button-border)] [box-shadow:var(--comixa-button-shadow-value)] [color:var(--comixa-button-text)]",
     "transition-[transform,box-shadow,filter] duration-150",
     "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-comic-blue focus-visible:ring-offset-2",
     "disabled:pointer-events-none disabled:opacity-50",
     "active:translate-x-[2px] active:translate-y-[2px] active:shadow-none",
+    "before:pointer-events-none before:absolute before:inset-0 before:z-0 before:content-[''] before:[background-image:var(--comixa-button-pattern)] before:[background-size:var(--comixa-button-pattern-size)] before:opacity-[var(--comixa-button-pattern-opacity)]",
     "[&>*]:relative [&>*]:z-10",
   ].join(" "),
   {
     variants: {
       variant: {
-        pop: "bg-comic-yellow text-ink shadow-comic hover:-translate-y-0.5",
-        primary: "bg-comic-blue text-white shadow-comic hover:-translate-y-0.5",
-        danger: "bg-comic-red text-white shadow-comic hover:-translate-y-0.5",
-        success: "bg-comic-green text-ink shadow-comic hover:-translate-y-0.5",
-        outline: "bg-paper text-ink shadow-comic-sm hover:-translate-y-0.5",
+        default:
+          "[--comixa-button-bg:var(--comixa-default-bg,var(--comixa-warning-bg,#FFD84D))] [--comixa-button-text:var(--comixa-default-text,var(--comixa-warning-text,#111111))] [--comixa-button-border:var(--comixa-default-border,var(--comixa-warning-border,#1E1E1E))] [--comixa-button-shadow-value:var(--comixa-default-shadow-value,4px_4px_0_0_var(--comixa-default-shadow,var(--comixa-warning-shadow,#1E1E1E)))] [--comixa-button-pattern:var(--comixa-default-pattern,var(--comixa-warning-pattern,none))] [--comixa-button-pattern-size:var(--comixa-default-pattern-size,var(--comixa-warning-pattern-size,auto))] [--comixa-button-pattern-opacity:var(--comixa-default-pattern-opacity,var(--comixa-warning-pattern-opacity,0))] hover:-translate-y-0.5",
+        warning:
+          "[--comixa-button-bg:var(--comixa-warning-bg,#FFD84D)] [--comixa-button-text:var(--comixa-warning-text,#111111)] [--comixa-button-border:var(--comixa-warning-border,#1E1E1E)] [--comixa-button-shadow-value:var(--comixa-warning-shadow-value,4px_4px_0_0_var(--comixa-warning-shadow,#1E1E1E))] [--comixa-button-pattern:var(--comixa-warning-pattern,none)] [--comixa-button-pattern-size:var(--comixa-warning-pattern-size,auto)] [--comixa-button-pattern-opacity:var(--comixa-warning-pattern-opacity,0)] hover:-translate-y-0.5",
+        primary:
+          "[--comixa-button-bg:var(--comixa-primary-bg,#4F9CF9)] [--comixa-button-text:var(--comixa-primary-text,#FFFFFF)] [--comixa-button-border:var(--comixa-primary-border,#1E1E1E)] [--comixa-button-shadow-value:var(--comixa-primary-shadow-value,4px_4px_0_0_var(--comixa-primary-shadow,#1E1E1E))] [--comixa-button-pattern:var(--comixa-primary-pattern,none)] [--comixa-button-pattern-size:var(--comixa-primary-pattern-size,auto)] [--comixa-button-pattern-opacity:var(--comixa-primary-pattern-opacity,0)] hover:-translate-y-0.5",
+        danger:
+          "[--comixa-button-bg:var(--comixa-danger-bg,#FF5757)] [--comixa-button-text:var(--comixa-danger-text,#FFFFFF)] [--comixa-button-border:var(--comixa-danger-border,#1E1E1E)] [--comixa-button-shadow-value:var(--comixa-danger-shadow-value,4px_4px_0_0_var(--comixa-danger-shadow,#1E1E1E))] [--comixa-button-pattern:var(--comixa-danger-pattern,none)] [--comixa-button-pattern-size:var(--comixa-danger-pattern-size,auto)] [--comixa-button-pattern-opacity:var(--comixa-danger-pattern-opacity,0)] hover:-translate-y-0.5",
+        success:
+          "[--comixa-button-bg:var(--comixa-success-bg,#4ADE80)] [--comixa-button-text:var(--comixa-success-text,#111111)] [--comixa-button-border:var(--comixa-success-border,#1E1E1E)] [--comixa-button-shadow-value:var(--comixa-success-shadow-value,4px_4px_0_0_var(--comixa-success-shadow,#1E1E1E))] [--comixa-button-pattern:var(--comixa-success-pattern,none)] [--comixa-button-pattern-size:var(--comixa-success-pattern-size,auto)] [--comixa-button-pattern-opacity:var(--comixa-success-pattern-opacity,0)] hover:-translate-y-0.5",
+        outline:
+          "[--comixa-button-bg:var(--comixa-outline-bg,#FFFFFF)] [--comixa-button-text:var(--comixa-outline-text,#111111)] [--comixa-button-border:var(--comixa-outline-border,#1E1E1E)] [--comixa-button-shadow-value:var(--comixa-outline-shadow-value,2px_2px_0_0_var(--comixa-outline-shadow,#1E1E1E))] [--comixa-button-pattern:var(--comixa-outline-pattern,none)] [--comixa-button-pattern-size:var(--comixa-outline-pattern-size,auto)] [--comixa-button-pattern-opacity:var(--comixa-outline-pattern-opacity,0)] hover:-translate-y-0.5",
         ghost:
-          "bg-transparent text-ink shadow-none hover:bg-paper-cream active:translate-x-0 active:translate-y-0",
-        retro:
-          [
-            "rounded-2xl border-[#5b3a1f] bg-[#d9913d] text-[#2b1d13]",
-            "shadow-[3px_3px_0_0_#7a4d24] hover:-translate-y-0.5 hover:shadow-[4px_4px_0_0_#7a4d24]",
-            "before:absolute before:inset-0 before:z-0 before:opacity-25",
-            "before:bg-[radial-gradient(circle_at_1px_1px,#5b3a1f_1px,transparent_0)] before:bg-[length:9px_9px]",
-            "after:absolute after:inset-0 after:z-0 after:bg-[#f3c66b]/25 after:mix-blend-multiply",
-          ].join(" "),
-        dark:
-          [
-            "border-[#62f5ff] bg-[#101114] text-[#e8fbff]",
-            "shadow-[0_0_0_2px_#101114,0_0_16px_rgba(98,245,255,0.45)]",
-            "hover:-translate-y-1 hover:shadow-[0_0_0_2px_#101114,0_0_26px_rgba(98,245,255,0.75)]",
-            "active:translate-x-0 active:translate-y-0",
-            "before:absolute before:inset-0 before:z-0 before:bg-[linear-gradient(120deg,transparent,rgba(98,245,255,0.28),transparent)]",
-            "before:translate-x-[-110%] hover:before:translate-x-[110%] before:transition-transform before:duration-300",
-          ].join(" "),
-        "pop-art":
-          [
-            "border-ink bg-comic-red text-white shadow-[7px_7px_0_0_#FFE566]",
-            "hover:-translate-y-1 hover:rotate-[-1deg] hover:shadow-[9px_9px_0_0_#4D9FFF]",
-            "before:absolute before:inset-0 before:z-0 before:opacity-25",
-            "before:bg-[radial-gradient(circle_at_2px_2px,#FFE566_2px,transparent_0)] before:bg-[length:12px_12px]",
-            "after:absolute after:-right-3 after:-top-4 after:z-0 after:h-12 after:w-12 after:rotate-12 after:bg-comic-yellow after:[clip-path:polygon(50%_0,61%_33%,98%_35%,68%_55%,79%_91%,50%_70%,21%_91%,32%_55%,2%_35%,39%_33%)]",
-          ].join(" "),
-        manga:
-          [
-            "border-4 border-ink bg-white text-ink shadow-[7px_7px_0_0_#000]",
-            "hover:-translate-y-1 hover:-skew-x-3 hover:shadow-[10px_10px_0_0_#000]",
-            "active:translate-x-[3px] active:translate-y-[3px]",
-            "before:absolute before:inset-0 before:z-0 before:opacity-[0.14]",
-            "before:bg-[repeating-linear-gradient(-32deg,transparent_0,transparent_5px,#1A1A1A_5px,#1A1A1A_6px,transparent_6px,transparent_11px)]",
-            "after:absolute after:inset-0 after:z-0 after:opacity-25",
-            "after:bg-[repeating-linear-gradient(105deg,transparent_0,transparent_13px,#1A1A1A_14px,transparent_15px)]",
-          ].join(" "),
-        vintage:
-          [
-            "border border-[#24304f] bg-[#f4dfb8] font-serif font-black text-[#7f1d2d] shadow-[1.5px_1.5px_0_0_#5a3a24]",
-            "tracking-[0.04em] hover:-translate-y-0.5 hover:bg-[#f7e7c8] hover:shadow-[2px_2px_0_0_#24304f]",
-            "before:absolute before:inset-0 before:z-0 before:opacity-30",
-            "before:bg-[radial-gradient(circle_at_1px_1px,#24304f_0.7px,transparent_0),repeating-linear-gradient(0deg,rgba(36,48,79,0.08)_0,rgba(36,48,79,0.08)_1px,transparent_1px,transparent_5px)] before:bg-[length:8px_8px,100%_6px]",
-            "after:absolute after:inset-0 after:z-0 after:bg-[#7f1d2d]/[0.05]",
-          ].join(" "),
+          "[--comixa-button-bg:var(--comixa-ghost-bg,transparent)] [--comixa-button-text:var(--comixa-ghost-text,#111111)] [--comixa-button-border:var(--comixa-ghost-border,transparent)] [--comixa-button-shadow-value:0_0_0_0_var(--comixa-ghost-shadow,transparent)] [--comixa-button-pattern:var(--comixa-ghost-pattern,none)] [--comixa-button-pattern-size:var(--comixa-ghost-pattern-size,auto)] [--comixa-button-pattern-opacity:var(--comixa-ghost-pattern-opacity,0)] hover:bg-paper-cream active:translate-x-0 active:translate-y-0",
       },
       size: {
-        sm: "h-8 rounded-md px-3 text-sm",
-        md: "h-10 rounded-lg px-4 text-base",
-        lg: "h-12 rounded-xl px-6 text-lg",
+        sm: "h-8 px-3 text-sm",
+        md: "h-10 px-4 text-base",
+        lg: "h-12 px-6 text-lg",
       },
       effect: {
         none: "",
-        pop: "animate-comic-pop",
-        shake: "animate-comic-shake",
-        wiggle: "animate-comic-wiggle",
+        pop: "hover:animate-comic-button-pop focus-visible:animate-comic-button-pop",
+        shake:
+          "hover:animate-comic-button-shake focus-visible:animate-comic-button-shake",
+        wiggle: "hover:animate-comic-wiggle focus-visible:animate-comic-wiggle",
       },
       icon: {
         true: "p-0 aspect-square shrink-0",
@@ -83,12 +51,12 @@ export const buttonVariants = cva(
       },
     },
     compoundVariants: [
-      { icon: true, size: "sm", class: "h-8 w-8 rounded-md" },
-      { icon: true, size: "md", class: "h-10 w-10 rounded-lg" },
-      { icon: true, size: "lg", class: "h-12 w-12 rounded-xl" },
+      { icon: true, size: "sm", class: "h-8 w-8" },
+      { icon: true, size: "md", class: "h-10 w-10" },
+      { icon: true, size: "lg", class: "h-12 w-12" },
     ],
     defaultVariants: {
-      variant: "pop",
+      variant: "default",
       size: "md",
       effect: "none",
       icon: false,
@@ -154,6 +122,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         disabled={disabled || loading}
         aria-busy={loading || undefined}
         data-loading={loading || undefined}
+        data-comixa-button-variant={variant ?? "default"}
         className={cn(
           buttonVariants({ variant, size, effect, icon }),
           className

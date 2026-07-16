@@ -4,24 +4,25 @@ import { cn } from "../lib/cn";
 
 export const switchVariants = cva(
   [
-    "relative inline-flex shrink-0 cursor-pointer items-center border-2 border-ink",
+    "relative inline-flex shrink-0 cursor-pointer items-center",
+    "[border-width:var(--comixa-button-border-width,2px)] [border-color:var(--comixa-outline-border,#1E1E1E)] [box-shadow:var(--comixa-outline-shadow-value,2px_2px_0_0_var(--comixa-outline-shadow,#1E1E1E))]",
     "transition-[background-color,box-shadow,transform] duration-150",
     "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-comic-blue focus-visible:ring-offset-2",
     "disabled:cursor-not-allowed disabled:opacity-50",
-    "shadow-comic-sm data-[state=checked]:shadow-none",
+    "data-[state=checked]:shadow-none",
   ].join(" "),
   {
     variants: {
       variant: {
         default:
-          "bg-paper data-[state=checked]:bg-comic-yellow",
+          "[background:var(--comixa-outline-bg,#FFFFFF)] data-[state=checked]:[background:var(--comixa-default-bg,var(--comixa-warning-bg,#FFD84D))]",
         primary:
-          "bg-paper data-[state=checked]:bg-comic-blue",
+          "[background:var(--comixa-outline-bg,#FFFFFF)] data-[state=checked]:[background:var(--comixa-primary-bg,#4F9CF9)]",
         danger:
-          "bg-paper data-[state=checked]:bg-comic-red",
+          "[background:var(--comixa-outline-bg,#FFFFFF)] data-[state=checked]:[background:var(--comixa-danger-bg,#FF5757)]",
         success:
-          "bg-paper data-[state=checked]:bg-comic-green",
-        pink: "bg-paper data-[state=checked]:bg-comic-pink",
+          "[background:var(--comixa-outline-bg,#FFFFFF)] data-[state=checked]:[background:var(--comixa-success-bg,#4ADE80)]",
+        pink: "[background:var(--comixa-outline-bg,#FFFFFF)] data-[state=checked]:bg-comic-pink",
       },
       switchSize: {
         sm: "h-6 w-10 rounded-md",
@@ -102,7 +103,7 @@ export const Switch = React.forwardRef<HTMLButtonElement, SwitchProps>(
           aria-hidden
           data-state={isChecked ? "checked" : "unchecked"}
           className={cn(
-            "pointer-events-none absolute left-0.5 top-1/2 -translate-y-1/2 rounded-sm border-2 border-ink bg-paper shadow-comic-sm transition-transform duration-150",
+            "pointer-events-none absolute left-0.5 top-1/2 -translate-y-1/2 rounded-sm transition-transform duration-150 [border-width:var(--comixa-button-border-width,2px)] [border-color:var(--comixa-outline-border,#1E1E1E)] [background:var(--comixa-outline-bg,#FFFFFF)] [box-shadow:var(--comixa-outline-shadow-value,2px_2px_0_0_var(--comixa-outline-shadow,#1E1E1E))]",
             thumbSize[size]
           )}
         />
@@ -114,7 +115,7 @@ export const Switch = React.forwardRef<HTMLButtonElement, SwitchProps>(
     return (
       <div
         className={cn(
-          "inline-flex items-center gap-2 font-body text-ink",
+          "inline-flex items-center gap-2 font-body [color:var(--pg-fg,#1A1A1A)]",
           disabled && "opacity-50",
           labelClassName
         )}

@@ -10,19 +10,24 @@ export type SelectOption = {
 
 export const selectTriggerVariants = cva(
   [
-    "relative flex w-full items-center justify-between gap-2 border-2 border-ink font-body text-ink",
+    "relative flex w-full items-center justify-between gap-2 font-body",
+    "[border-width:var(--comixa-button-border-width,2px)] [border-color:var(--comixa-select-border,var(--comixa-outline-border,#1E1E1E))] [border-radius:var(--comixa-button-radius,0.5rem)] [color:var(--comixa-select-text,var(--comixa-outline-text,#111111))]",
     "transition-[box-shadow,transform] duration-150",
-    "focus-visible:outline-none focus-visible:shadow-comic focus-visible:-translate-y-0.5",
+    "focus-visible:outline-none focus-visible:[box-shadow:var(--comixa-select-focus-shadow,var(--comixa-primary-shadow-value,4px_4px_0_0_var(--comixa-primary-shadow,#1E1E1E)))] focus-visible:-translate-y-0.5",
     "disabled:cursor-not-allowed disabled:opacity-50",
     "text-left",
   ].join(" "),
   {
     variants: {
       variant: {
-        default: "bg-paper shadow-comic-sm",
-        ghost: "border-dashed bg-transparent shadow-none",
-        filled: "bg-paper-cream shadow-comic-sm",
-        pop: "bg-comic-yellow shadow-comic-sm",
+        default:
+          "[background:var(--comixa-outline-bg,#FFFFFF)] [box-shadow:var(--comixa-outline-shadow-value,2px_2px_0_0_var(--comixa-outline-shadow,#1E1E1E))]",
+        ghost:
+          "border-dashed [background:var(--comixa-ghost-bg,transparent)] shadow-none",
+        filled:
+          "[background:var(--comixa-default-bg,#FFD84D)] [box-shadow:var(--comixa-default-shadow-value,2px_2px_0_0_var(--comixa-default-shadow,#1E1E1E))]",
+        pop:
+          "[background:var(--comixa-warning-bg,#FFD84D)] [box-shadow:var(--comixa-warning-shadow-value,2px_2px_0_0_var(--comixa-warning-shadow,#1E1E1E))]",
       },
       selectSize: {
         sm: "h-8 rounded-md px-2.5 text-sm",
@@ -31,8 +36,10 @@ export const selectTriggerVariants = cva(
       },
       state: {
         default: "",
-        error: "border-comic-red shadow-[4px_4px_0_0_#FF4D4D]",
-        success: "border-comic-green shadow-[4px_4px_0_0_#5BD67A]",
+        error:
+          "[border-color:var(--comixa-danger-border,#FF4D4D)] [box-shadow:var(--comixa-danger-shadow-value,4px_4px_0_0_var(--comixa-danger-shadow,#FF4D4D))]",
+        success:
+          "[border-color:var(--comixa-success-border,#5BD67A)] [box-shadow:var(--comixa-success-shadow-value,4px_4px_0_0_var(--comixa-success-shadow,#5BD67A))]",
       },
     },
     defaultVariants: {
@@ -192,7 +199,7 @@ export const Select = React.forwardRef<HTMLButtonElement, SelectProps>(
             role="listbox"
             className={cn(
               "absolute left-0 right-0 top-[calc(100%+0.35rem)] z-50 max-h-60 overflow-auto",
-              "border-2 border-ink bg-paper p-1 shadow-comic",
+              "p-1 [border-width:var(--comixa-button-border-width,2px)] [border-color:var(--comixa-outline-border,#1E1E1E)] [background:var(--comixa-outline-bg,#FFFFFF)] [box-shadow:var(--comixa-outline-shadow-value,4px_4px_0_0_var(--comixa-outline-shadow,#1E1E1E))]",
               selectSize === "sm" && "rounded-md",
               (!selectSize || selectSize === "md") && "rounded-lg",
               selectSize === "lg" && "rounded-xl",
@@ -209,11 +216,12 @@ export const Select = React.forwardRef<HTMLButtonElement, SelectProps>(
                     aria-selected={active}
                     disabled={option.disabled}
                     className={cn(
-                      "flex w-full items-center rounded-md px-2.5 py-2 text-left font-body text-ink",
+                      "flex w-full items-center rounded-md px-2.5 py-2 text-left font-body [color:var(--comixa-outline-text,#111111)]",
                       "transition-colors duration-100",
-                      "hover:bg-paper-cream",
+                      "hover:[background:var(--comixa-default-bg,#FFF3D6)]",
                       "disabled:cursor-not-allowed disabled:opacity-40",
-                      active && "bg-comic-yellow font-comic uppercase tracking-wide",
+                      active &&
+                        "font-comic uppercase tracking-wide [background:var(--comixa-warning-bg,#FFD84D)] [color:var(--comixa-warning-text,#111111)]",
                       classNames?.option,
                       active && classNames?.optionActive
                     )}

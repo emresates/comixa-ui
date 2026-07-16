@@ -156,6 +156,14 @@ export {
   type FeatureProps,
 } from "./components/features";
 export {
+  Timeline,
+  TimelineItem,
+  timelineVariants,
+  timelineItemVariants,
+  type TimelineProps,
+  type TimelineItemProps,
+} from "./components/timeline";
+export {
   Pricing,
   PricingTier,
   pricingVariants,

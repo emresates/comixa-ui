@@ -34,6 +34,8 @@ import {
   Features,
   Gallery,
   PageTransition,
+  Timeline,
+  TimelineItem,
   toast,
   ToastProvider,
 } from "comixa-ui";
@@ -145,6 +147,7 @@ export function Example() {
 | - | **Ribbon** | Promo ribbons, tickets, burst labels |
 | - | **ComicPage / ComicPanel** | Comic grids and cover-grade hero panels |
 | - | **Gallery** | Grid, featured, and draggable horizontal image strips |
+| - | **Timeline** | Vertical comic timelines for resumes and launch stories |
 | - | **PageTransition** | Route/content enter effects |
 | - | **ComicLoader** | Comic loading indicators |
 | - | **ComicReveal** | Replayable section reveal animations |
@@ -558,6 +561,34 @@ const items = [
 
 `variant="featured"` makes the first image the featured card.  
 `variant="strip"` supports horizontal wheel scrolling and mouse drag scrolling.
+
+### Timeline
+
+Comic resume, launch, roadmap, and origin-story timelines.
+
+```tsx
+<Timeline variant="roomy">
+  <TimelineItem
+    period="2024 - Today"
+    title="Senior Frontend Dev - TechCo"
+    description="Led the design system and rebuilt the product UI."
+    color="red"
+    tilt="right"
+  />
+  <TimelineItem
+    period="2021 - 2024"
+    title="Frontend Developer - StartupX"
+    description="Scaled an MVP to 1M users."
+    color="yellow"
+    tilt="left"
+  />
+</Timeline>
+```
+
+Timeline variants: `default` `compact` `roomy`  
+Line styles: `dashed` `solid` `none`  
+Item colors: `red` `yellow` `blue` `orange` `pink` `green`  
+Item tilt: `none` `left` `right`
 
 ### PageTransition
 

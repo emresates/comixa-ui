@@ -4,12 +4,13 @@ import { cn } from "../lib/cn";
 
 export const buttonVariants = cva(
   [
-    "inline-flex items-center justify-center gap-2 whitespace-nowrap",
+    "relative isolate inline-flex items-center justify-center gap-2 overflow-hidden whitespace-nowrap",
     "border-2 border-ink font-comic uppercase tracking-wide",
-    "transition-[transform,box-shadow] duration-150",
+    "transition-[transform,box-shadow,filter] duration-150",
     "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-comic-blue focus-visible:ring-offset-2",
     "disabled:pointer-events-none disabled:opacity-50",
     "active:translate-x-[2px] active:translate-y-[2px] active:shadow-none",
+    "[&>*]:relative [&>*]:z-10",
   ].join(" "),
   {
     variants: {
@@ -21,6 +22,49 @@ export const buttonVariants = cva(
         outline: "bg-paper text-ink shadow-comic-sm hover:-translate-y-0.5",
         ghost:
           "bg-transparent text-ink shadow-none hover:bg-paper-cream active:translate-x-0 active:translate-y-0",
+        retro:
+          [
+            "rounded-2xl border-[#5b3a1f] bg-[#d9913d] text-[#2b1d13]",
+            "shadow-[3px_3px_0_0_#7a4d24] hover:-translate-y-0.5 hover:shadow-[4px_4px_0_0_#7a4d24]",
+            "before:absolute before:inset-0 before:z-0 before:opacity-25",
+            "before:bg-[radial-gradient(circle_at_1px_1px,#5b3a1f_1px,transparent_0)] before:bg-[length:9px_9px]",
+            "after:absolute after:inset-0 after:z-0 after:bg-[#f3c66b]/25 after:mix-blend-multiply",
+          ].join(" "),
+        dark:
+          [
+            "border-[#62f5ff] bg-[#101114] text-[#e8fbff]",
+            "shadow-[0_0_0_2px_#101114,0_0_16px_rgba(98,245,255,0.45)]",
+            "hover:-translate-y-1 hover:shadow-[0_0_0_2px_#101114,0_0_26px_rgba(98,245,255,0.75)]",
+            "active:translate-x-0 active:translate-y-0",
+            "before:absolute before:inset-0 before:z-0 before:bg-[linear-gradient(120deg,transparent,rgba(98,245,255,0.28),transparent)]",
+            "before:translate-x-[-110%] hover:before:translate-x-[110%] before:transition-transform before:duration-300",
+          ].join(" "),
+        "pop-art":
+          [
+            "border-ink bg-comic-red text-white shadow-[7px_7px_0_0_#FFE566]",
+            "hover:-translate-y-1 hover:rotate-[-1deg] hover:shadow-[9px_9px_0_0_#4D9FFF]",
+            "before:absolute before:inset-0 before:z-0 before:opacity-25",
+            "before:bg-[radial-gradient(circle_at_2px_2px,#FFE566_2px,transparent_0)] before:bg-[length:12px_12px]",
+            "after:absolute after:-right-3 after:-top-4 after:z-0 after:h-12 after:w-12 after:rotate-12 after:bg-comic-yellow after:[clip-path:polygon(50%_0,61%_33%,98%_35%,68%_55%,79%_91%,50%_70%,21%_91%,32%_55%,2%_35%,39%_33%)]",
+          ].join(" "),
+        manga:
+          [
+            "border-4 border-ink bg-white text-ink shadow-[7px_7px_0_0_#000]",
+            "hover:-translate-y-1 hover:-skew-x-3 hover:shadow-[10px_10px_0_0_#000]",
+            "active:translate-x-[3px] active:translate-y-[3px]",
+            "before:absolute before:inset-0 before:z-0 before:opacity-[0.14]",
+            "before:bg-[repeating-linear-gradient(-32deg,transparent_0,transparent_5px,#1A1A1A_5px,#1A1A1A_6px,transparent_6px,transparent_11px)]",
+            "after:absolute after:inset-0 after:z-0 after:opacity-25",
+            "after:bg-[repeating-linear-gradient(105deg,transparent_0,transparent_13px,#1A1A1A_14px,transparent_15px)]",
+          ].join(" "),
+        vintage:
+          [
+            "border border-[#24304f] bg-[#f4dfb8] font-serif font-black text-[#7f1d2d] shadow-[1.5px_1.5px_0_0_#5a3a24]",
+            "tracking-[0.04em] hover:-translate-y-0.5 hover:bg-[#f7e7c8] hover:shadow-[2px_2px_0_0_#24304f]",
+            "before:absolute before:inset-0 before:z-0 before:opacity-30",
+            "before:bg-[radial-gradient(circle_at_1px_1px,#24304f_0.7px,transparent_0),repeating-linear-gradient(0deg,rgba(36,48,79,0.08)_0,rgba(36,48,79,0.08)_1px,transparent_1px,transparent_5px)] before:bg-[length:8px_8px,100%_6px]",
+            "after:absolute after:inset-0 after:z-0 after:bg-[#7f1d2d]/[0.05]",
+          ].join(" "),
       },
       size: {
         sm: "h-8 rounded-md px-3 text-sm",

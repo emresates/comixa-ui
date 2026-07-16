@@ -123,6 +123,12 @@ export function Example() {
         Boom
       </Button>
 
+      <Button variant="retro">Retro</Button>
+      <Button variant="dark">Dark</Button>
+      <Button variant="pop-art">Pop Art</Button>
+      <Button variant="manga">Manga</Button>
+      <Button variant="vintage">Vintage</Button>
+
       <Input placeholder="Hero name..." />
       <Input state="error" placeholder="Try again..." />
       <Input variant="filled" state="success" placeholder="Looks good" />
@@ -160,7 +166,7 @@ export function Example() {
 
 | Prop | Values | Default |
 |------|--------|---------|
-| `variant` | `pop` `primary` `danger` `success` `outline` `ghost` | `pop` |
+| `variant` | `pop` `primary` `danger` `success` `outline` `ghost` `retro` `dark` `pop-art` `manga` `vintage` | `pop` |
 | `size` | `sm` `md` `lg` | `md` |
 | `loading` | `true` / `false` | `false` |
 | `icon` | `true` / `false` — square icon-only button | `false` |

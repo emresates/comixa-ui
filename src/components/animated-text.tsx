@@ -65,6 +65,7 @@ function useInView(
       setVisible(true);
       return;
     }
+    setVisible(false);
     const el = ref.current;
     if (!el || typeof IntersectionObserver === "undefined") {
       setVisible(true);
@@ -72,14 +73,14 @@ function useInView(
     }
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry?.isIntersecting) {
+        if (entry?.isIntersecting && entry.intersectionRatio > 0) {
           setVisible(true);
           if (once) observer.disconnect();
         } else if (!once) {
           setVisible(false);
         }
       },
-      { threshold: 0.2 }
+      { threshold: [0, 0.2] }
     );
     observer.observe(el);
     return () => observer.disconnect();
@@ -143,6 +144,13 @@ function assignRef<T>(ref: React.ForwardedRef<T>, node: T | null) {
   else if (ref) ref.current = node;
 }
 
+function shouldTriggerOnView(
+  triggerOnView: boolean | undefined,
+  start: "inView" | "immediate"
+): boolean {
+  return triggerOnView ?? start === "inView";
+}
+
 /* ---------- LetterReveal ---------- */
 
 export interface LetterRevealProps
@@ -156,7 +164,10 @@ export interface LetterRevealProps
   pause?: number;
   /** How many times to play. `Infinity` = forever. Default `Infinity` */
   repeat?: AnimationRepeat;
+  /** Start the animation only when the element enters the viewport. */
+  triggerOnView?: boolean;
   once?: boolean;
+  /** @deprecated Use `triggerOnView` instead. */
   start?: "inView" | "immediate";
 }
 
@@ -171,6 +182,7 @@ export const LetterReveal = React.forwardRef<HTMLElement, LetterRevealProps>(
       stagger = 35,
       pause = 900,
       repeat = Infinity,
+      triggerOnView,
       once = true,
       start = "inView",
       style,
@@ -182,7 +194,8 @@ export const LetterReveal = React.forwardRef<HTMLElement, LetterRevealProps>(
       ensureAnimatedTextStyles();
     }, []);
 
-    const [viewRef, visible] = useInView(start === "inView", once);
+    const triggerInView = shouldTriggerOnView(triggerOnView, start);
+    const [viewRef, visible] = useInView(triggerInView, once);
     const text = toPlainText(children);
     const chars = Array.from(text);
     const cycleMs =
@@ -244,7 +257,10 @@ export interface TypewriterProps
   /** @deprecated Use `repeat={Infinity}` instead */
   loop?: boolean;
   caret?: boolean;
+  /** Start the animation only when the element enters the viewport. */
+  triggerOnView?: boolean;
   once?: boolean;
+  /** @deprecated Use `triggerOnView` instead. */
   start?: "inView" | "immediate";
 }
 
@@ -260,6 +276,7 @@ export const Typewriter = React.forwardRef<HTMLElement, TypewriterProps>(
       repeat,
       loop,
       caret = true,
+      triggerOnView,
       once = true,
       start = "inView",
       ...props
@@ -273,7 +290,10 @@ export const Typewriter = React.forwardRef<HTMLElement, TypewriterProps>(
     const resolvedRepeat: AnimationRepeat =
       repeat ?? (loop === false ? 1 : Infinity);
 
-    const [viewRef, visible] = useInView(start === "inView", once);
+    const [viewRef, visible] = useInView(
+      shouldTriggerOnView(triggerOnView, start),
+      once
+    );
     const full = toPlainText(children);
     const [count, setCount] = React.useState(0);
 
@@ -327,7 +347,7 @@ export const Typewriter = React.forwardRef<HTMLElement, TypewriterProps>(
         {...props}
       >
         <span aria-hidden="true">{full.slice(0, count)}</span>
-        {caret ? (
+        {caret && visible ? (
           <span
             data-comixa-caret=""
             className="ml-0.5 inline-block h-[1em] w-[0.08em] translate-y-[0.1em] bg-ink align-baseline"
@@ -397,7 +417,10 @@ export interface ComicTextProps
   pause?: number;
   /** How many times to play the effect. `Infinity` = forever. Default `Infinity` */
   repeat?: AnimationRepeat;
+  /** Start the animation only when the element enters the viewport. */
+  triggerOnView?: boolean;
   once?: boolean;
+  /** @deprecated Use `triggerOnView` instead. */
   start?: "inView" | "immediate";
 }
 
@@ -412,6 +435,7 @@ export const ComicText = React.forwardRef<HTMLElement, ComicTextProps>(
       tone,
       pause = 700,
       repeat = Infinity,
+      triggerOnView,
       once = true,
       start = "immediate",
       children,
@@ -419,7 +443,8 @@ export const ComicText = React.forwardRef<HTMLElement, ComicTextProps>(
     },
     forwardedRef
   ) => {
-    const [viewRef, visible] = useInView(start === "inView", once);
+    const triggerInView = shouldTriggerOnView(triggerOnView, start);
+    const [viewRef, visible] = useInView(triggerInView, once);
     const effectKey = effect ?? "none";
     const baseMs = EFFECT_CYCLE_MS[effectKey] ?? 1200;
     const cycle = useRepeatCycle(
@@ -446,9 +471,11 @@ export const ComicText = React.forwardRef<HTMLElement, ComicTextProps>(
         {...props}
       >
         <span
-          key={cycle}
+          key={`${visible ? "in" : "out"}-${cycle}`}
           className={cn(
-            "inline-block",
+            "inline-block transition-opacity duration-150",
+            triggerInView && !visible && "opacity-0",
+            (!triggerInView || visible) && "opacity-100",
             visible &&
               effectKey === "pop" &&
               "animate-comic-pop",
@@ -509,7 +536,10 @@ export interface HighlightProps
   pause?: number;
   /** How many times to play. `Infinity` = forever. Default `Infinity` */
   repeat?: AnimationRepeat;
+  /** Start the animation only when the element enters the viewport. */
+  triggerOnView?: boolean;
   once?: boolean;
+  /** @deprecated Use `triggerOnView` instead. */
   start?: "inView" | "immediate";
 }
 
@@ -523,6 +553,7 @@ export const Highlight = React.forwardRef<HTMLElement, HighlightProps>(
       duration = 700,
       pause = 900,
       repeat = Infinity,
+      triggerOnView,
       once = true,
       start = "inView",
       children,
@@ -535,7 +566,10 @@ export const Highlight = React.forwardRef<HTMLElement, HighlightProps>(
       ensureAnimatedTextStyles();
     }, []);
 
-    const [viewRef, visible] = useInView(start === "inView", once);
+    const [viewRef, visible] = useInView(
+      shouldTriggerOnView(triggerOnView, start),
+      once
+    );
     const color = HIGHLIGHT_COLORS[tone ?? "yellow"];
     const cycle = useRepeatCycle(visible, delay + duration + pause, repeat);
 

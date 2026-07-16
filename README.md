@@ -663,6 +663,7 @@ Props: `enabled`, `hideNativeCursor`, `size`, `trailCount`
 ### Animated text
 
 `repeat` controls how many times the animation plays (`Infinity` = forever, default).
+Use `triggerOnView` to start the animation when the element enters the viewport.
 
 ```tsx
 import { LetterReveal, Typewriter, ComicText, Highlight } from "comixa-ui";
@@ -674,10 +675,14 @@ import { LetterReveal, Typewriter, ComicText, Highlight } from "comixa-ui";
 <Typewriter repeat={1}>Once only</Typewriter>
 
 <ComicText effect="pop" tilt="left" repeat={Infinity}>Kapow!</ComicText>
+<ComicText effect="pop" triggerOnView repeat={1}>On screen!</ComicText>
+
 <p>
   Ship <Highlight tone="yellow" repeat={Infinity}>faster</Highlight> pages.
 </p>
 ```
+
+Viewport trigger props: `triggerOnView`, `once`
 
 ### Background
 

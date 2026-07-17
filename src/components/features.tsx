@@ -1,6 +1,7 @@
 import * as React from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "../lib/cn";
+import { mergeComixaThemeStyle, type ThemeableProps } from "../themes";
 
 export const featuresVariants = cva("grid w-full gap-4", {
   variants: {
@@ -18,13 +19,16 @@ export const featuresVariants = cva("grid w-full gap-4", {
 
 export interface FeaturesProps
   extends React.HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof featuresVariants> {}
+    VariantProps<typeof featuresVariants>,
+    ThemeableProps {}
 
 export const Features = React.forwardRef<HTMLDivElement, FeaturesProps>(
-  ({ className, columns, ...props }, ref) => (
+  ({ className, columns, theme, style, ...props }, ref) => (
     <div
       ref={ref}
+      data-comixa-theme={theme}
       className={cn(featuresVariants({ columns }), className)}
+      style={mergeComixaThemeStyle(theme, style)}
       {...props}
     />
   )
@@ -65,7 +69,8 @@ export const featureVariants = cva(
 
 export interface FeatureProps
   extends Omit<React.HTMLAttributes<HTMLElement>, "title">,
-    VariantProps<typeof featureVariants> {
+    VariantProps<typeof featureVariants>,
+    ThemeableProps {
   icon?: React.ReactNode;
   title: React.ReactNode;
   description?: React.ReactNode;
@@ -73,12 +78,14 @@ export interface FeatureProps
 
 export const Feature = React.forwardRef<HTMLElement, FeatureProps>(
   (
-    { className, variant, align, icon, title, description, children, ...props },
+    { className, variant, align, icon, title, description, children, theme, style, ...props },
     ref
   ) => (
     <article
       ref={ref}
+      data-comixa-theme={theme}
       className={cn(featureVariants({ variant, align }), className)}
+      style={mergeComixaThemeStyle(theme, style)}
       {...props}
     >
       {icon ? (

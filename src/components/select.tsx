@@ -1,6 +1,7 @@
 import * as React from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "../lib/cn";
+import { mergeComixaThemeStyle, type ThemeableProps } from "../themes";
 
 export type SelectOption = {
   value: string;
@@ -61,7 +62,8 @@ export type SelectClassNames = {
 
 export interface SelectProps
   extends Omit<React.HTMLAttributes<HTMLDivElement>, "onChange" | "defaultValue">,
-    VariantProps<typeof selectTriggerVariants> {
+    VariantProps<typeof selectTriggerVariants>,
+    ThemeableProps {
   options: SelectOption[];
   value?: string;
   defaultValue?: string;
@@ -88,6 +90,8 @@ export const Select = React.forwardRef<HTMLButtonElement, SelectProps>(
       name,
       classNames,
       id,
+      theme,
+      style,
       ...props
     },
     ref
@@ -131,6 +135,8 @@ export const Select = React.forwardRef<HTMLButtonElement, SelectProps>(
         ref={rootRef}
         className={cn("relative w-full", classNames?.root, className)}
         data-state={open ? "open" : "closed"}
+        data-comixa-theme={theme}
+        style={mergeComixaThemeStyle(theme, style)}
         {...props}
       >
         {name ? (

@@ -224,8 +224,16 @@ export {
   type ComicCursorVariant,
 } from "./components/comic-cursor";
 export {
+  ComixaProvider,
+  ThemeScope,
+  useComixaTheme,
+  type ComixaProviderProps,
+} from "./theme-provider";
+export {
   comixaThemes,
   defaultTheme,
+  getComixaThemeStyle,
+  mergeComixaThemeStyle,
   mangaTheme,
   popArtTheme,
   retroTheme,
@@ -233,5 +241,6 @@ export {
   type ButtonTheme,
   type ButtonThemeSlot,
   type ComixaThemeName,
+  type ThemeableProps,
 } from "./themes";
 export { cn } from "./lib/cn";

@@ -1,6 +1,7 @@
 import * as React from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "../lib/cn";
+import { mergeComixaThemeStyle, type ThemeableProps } from "../themes";
 
 export const buttonVariants = cva(
   [
@@ -91,7 +92,8 @@ function Spinner({ className }: { className?: string }) {
 
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof buttonVariants> {
+    VariantProps<typeof buttonVariants>,
+    ThemeableProps {
   /** Shows a spinner and disables the button */
   loading?: boolean;
 }
@@ -108,6 +110,8 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       disabled,
       type = "button",
       children,
+      theme,
+      style,
       ...props
     },
     ref
@@ -123,10 +127,12 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         aria-busy={loading || undefined}
         data-loading={loading || undefined}
         data-comixa-button-variant={variant ?? "default"}
+        data-comixa-theme={theme}
         className={cn(
           buttonVariants({ variant, size, effect, icon }),
           className
         )}
+        style={mergeComixaThemeStyle(theme, style)}
         {...props}
       >
         {loading ? <Spinner className={spinnerSize} /> : null}

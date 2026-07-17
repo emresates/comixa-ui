@@ -1,6 +1,7 @@
 import * as React from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "../lib/cn";
+import { mergeComixaThemeStyle, type ThemeableProps } from "../themes";
 
 export const stickerVariants = cva(
   [
@@ -59,10 +60,11 @@ export const stickerVariants = cva(
 
 export interface StickerProps
   extends React.HTMLAttributes<HTMLSpanElement>,
-    VariantProps<typeof stickerVariants> {}
+    VariantProps<typeof stickerVariants>,
+    ThemeableProps {}
 
 export const Sticker = React.forwardRef<HTMLSpanElement, StickerProps>(
-  ({ className, variant, size, tilt, shape, children, ...props }, ref) => {
+  ({ className, variant, size, tilt, shape, children, theme, style, ...props }, ref) => {
     const isNumberOne =
       typeof children === "string" && children.trim().toLowerCase() === "#1";
 
@@ -71,11 +73,13 @@ export const Sticker = React.forwardRef<HTMLSpanElement, StickerProps>(
         ref={ref}
         data-comixa-sticker=""
         data-comixa-sticker-variant={variant ?? "yellow"}
+        data-comixa-theme={theme}
         className={cn(
           stickerVariants({ variant, size, tilt, shape }),
           className,
           isNumberOne && "text-white"
         )}
+        style={mergeComixaThemeStyle(theme, style)}
         {...props}
       >
         {children}

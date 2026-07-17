@@ -2,6 +2,8 @@ import * as React from "react";
 import { createPortal } from "react-dom";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "../lib/cn";
+import { mergeComixaThemeStyle, type ThemeableProps } from "../themes";
+import { useComixaTheme } from "../theme-provider";
 
 const TOAST_STYLE_ID = "comixa-toast-keyframes";
 const TOAST_CSS = `
@@ -254,6 +256,7 @@ export function ToastProvider({
   position = "bottom-right",
   duration = 3500,
   closable = true,
+  theme,
 }: {
   children?: React.ReactNode;
   /** Applied to every viewport container. */
@@ -266,7 +269,7 @@ export function ToastProvider({
   duration?: number;
   /** Default close-button visibility. */
   closable?: boolean;
-}) {
+} & ThemeableProps) {
   const [toasts, setToasts] = React.useState<ToastRecord[]>(() => [
     ...toastStore.toasts,
   ]);
@@ -310,6 +313,8 @@ export function ToastProvider({
     }
     return map;
   }, [toasts, position]);
+  const providerTheme = useComixaTheme();
+  const resolvedTheme = theme ?? providerTheme;
 
   return (
     <ToastContext.Provider value={value}>
@@ -328,6 +333,8 @@ export function ToastProvider({
                   )}
                   data-comixa-toast-viewport=""
                   data-position={pos}
+                  data-comixa-theme={resolvedTheme}
+                  style={mergeComixaThemeStyle(resolvedTheme, undefined)}
                 >
                   {items.map((item) => (
                     <ToastView

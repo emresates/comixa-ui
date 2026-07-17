@@ -1,6 +1,7 @@
 import * as React from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "../lib/cn";
+import { mergeComixaThemeStyle, type ThemeableProps } from "../themes";
 
 export const textareaVariants = cva(
   [
@@ -56,21 +57,24 @@ export const textareaVariants = cva(
 
 export interface TextareaProps
   extends React.TextareaHTMLAttributes<HTMLTextAreaElement>,
-    VariantProps<typeof textareaVariants> {}
+    VariantProps<typeof textareaVariants>,
+    ThemeableProps {}
 
 export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
   (
-    { className, variant, textareaSize, state, resize, ...props },
+    { className, variant, textareaSize, state, resize, theme, style, ...props },
     ref
   ) => (
     <textarea
       ref={ref}
       data-comixa-textarea=""
       data-comixa-field-state={state ?? "default"}
+      data-comixa-theme={theme}
       className={cn(
         textareaVariants({ variant, textareaSize, state, resize }),
         className
       )}
+      style={mergeComixaThemeStyle(theme, style)}
       {...props}
     />
   )

@@ -1,6 +1,7 @@
 import * as React from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "../lib/cn";
+import { mergeComixaThemeStyle, type ThemeableProps } from "../themes";
 
 export const avatarVariants = cva(
   [
@@ -50,7 +51,8 @@ export const avatarVariants = cva(
 
 export interface AvatarProps
   extends React.HTMLAttributes<HTMLSpanElement>,
-    VariantProps<typeof avatarVariants> {
+    VariantProps<typeof avatarVariants>,
+    ThemeableProps {
   src?: string;
   alt?: string;
   fallback?: React.ReactNode;
@@ -78,6 +80,8 @@ export const Avatar = React.forwardRef<HTMLSpanElement, AvatarProps>(
       fallback,
       name,
       children,
+      theme,
+      style,
       ...props
     },
     ref
@@ -92,7 +96,9 @@ export const Avatar = React.forwardRef<HTMLSpanElement, AvatarProps>(
     return (
       <span
         ref={ref}
+        data-comixa-theme={theme}
         className={cn(avatarVariants({ variant, size, shape }), className)}
+        style={mergeComixaThemeStyle(theme, style)}
         {...props}
       >
         {showImage ? (

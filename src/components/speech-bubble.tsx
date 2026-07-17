@@ -1,6 +1,7 @@
 import * as React from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "../lib/cn";
+import { mergeComixaThemeStyle, type ThemeableProps } from "../themes";
 
 export const speechBubbleVariants = cva(
   [
@@ -124,7 +125,8 @@ function ThoughtTail({
 
 export interface SpeechBubbleProps
   extends Omit<React.HTMLAttributes<HTMLDivElement>, "color">,
-    VariantProps<typeof speechBubbleVariants> {
+    VariantProps<typeof speechBubbleVariants>,
+    ThemeableProps {
   caption?: React.ReactNode;
 }
 
@@ -138,6 +140,8 @@ export const SpeechBubble = React.forwardRef<HTMLDivElement, SpeechBubbleProps>(
       tail = "bottomLeft",
       caption,
       children,
+      theme,
+      style,
       ...props
     },
     ref
@@ -157,6 +161,7 @@ export const SpeechBubble = React.forwardRef<HTMLDivElement, SpeechBubbleProps>(
     return (
       <div
         ref={ref}
+        data-comixa-theme={theme}
         className={cn(
           speechBubbleVariants({
             shape: resolvedShape,
@@ -173,6 +178,7 @@ export const SpeechBubble = React.forwardRef<HTMLDivElement, SpeechBubbleProps>(
             "bg-paper",
           className
         )}
+        style={mergeComixaThemeStyle(theme, style)}
         data-shape={resolvedShape}
         {...props}
       >

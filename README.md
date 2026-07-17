@@ -29,6 +29,7 @@ Comic-themed React components built with **Tailwind CSS**. Hard shadows, ink bor
 ```tsx
 import {
   Button,
+  ComixaProvider,
   ComicPanel,
   Features,
   Gallery,
@@ -103,10 +104,11 @@ export default {
 ## Usage
 
 ```tsx
-import { Button, Input, Badge } from "comixa-ui";
+import { ComixaProvider, Button, Input, Badge } from "comixa-ui";
 
 export function Example() {
   return (
+    <ComixaProvider theme="pop-art">
     <div className="flex flex-col gap-4 bg-paper p-8">
       <Badge variant="yellow">New</Badge>
 
@@ -125,10 +127,32 @@ export function Example() {
       <Input placeholder="Hero name..." />
       <Input state="error" placeholder="Try again..." />
       <Input variant="filled" state="success" placeholder="Looks good" />
+
+      <Button theme="manga" variant="danger">
+        Manga override
+      </Button>
     </div>
+    </ComixaProvider>
   );
 }
 ```
+
+## Themes
+
+Wrap your app with `ComixaProvider` and every Comixa component inside it will
+inherit that theme. Any component with a `theme` prop overrides the provider for
+itself and its children.
+
+```tsx
+<ComixaProvider theme="retro">
+  <Button>Retro button</Button>
+  <Card theme="manga">
+    <Button variant="danger">Manga button</Button>
+  </Card>
+</ComixaProvider>
+```
+
+Themes: `default`, `retro`, `pop-art`, `manga`, `vintage`.
 
 ## Components
 
@@ -217,7 +241,7 @@ Custom listbox (not a native `<select>`). Arrow stays on the right.
 <Select
   value={hero}
   onValueChange={setHero}
-  variant="pop"
+  variant="filled"
   placeholder="Pick a hero"
   options={[
     { value: "zap", label: "Captain Zap" },
@@ -231,7 +255,7 @@ Custom listbox (not a native `<select>`). Arrow stays on the right.
 | `options` | `{ value, label, disabled? }[]` | required |
 | `value` / `defaultValue` | string | — |
 | `onValueChange` | `(value: string) => void` | — |
-| `variant` | `default` `ghost` `filled` `pop` | `default` |
+| `variant` | `default` `ghost` `filled` | `default` |
 | `selectSize` | `sm` `md` `lg` | `md` |
 | `state` | `default` `error` `success` | `default` |
 | `classNames` | `root` `trigger` `value` `placeholder` `icon` `list` `option` `optionActive` | — |

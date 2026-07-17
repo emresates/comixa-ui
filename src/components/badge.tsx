@@ -1,6 +1,7 @@
 import * as React from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "../lib/cn";
+import { mergeComixaThemeStyle, type ThemeableProps } from "../themes";
 
 export const badgeVariants = cva(
   [
@@ -46,16 +47,19 @@ export const badgeVariants = cva(
 
 export interface BadgeProps
   extends React.HTMLAttributes<HTMLSpanElement>,
-    VariantProps<typeof badgeVariants> {}
+    VariantProps<typeof badgeVariants>,
+    ThemeableProps {}
 
 export const Badge = React.forwardRef<HTMLSpanElement, BadgeProps>(
-  ({ className, variant, size, children, ...props }, ref) => {
+  ({ className, variant, size, children, theme, style, ...props }, ref) => {
     return (
       <span
         ref={ref}
         data-comixa-badge=""
         data-comixa-badge-variant={variant ?? "yellow"}
+        data-comixa-theme={theme}
         className={cn(badgeVariants({ variant, size }), className)}
+        style={mergeComixaThemeStyle(theme, style)}
         {...props}
       >
         {children}

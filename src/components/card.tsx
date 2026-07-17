@@ -1,6 +1,7 @@
 import * as React from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "../lib/cn";
+import { mergeComixaThemeStyle, type ThemeableProps } from "../themes";
 
 export const cardVariants = cva(
   [
@@ -49,14 +50,17 @@ export const cardVariants = cva(
 
 export interface CardProps
   extends React.HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof cardVariants> {}
+    VariantProps<typeof cardVariants>,
+    ThemeableProps {}
 
 export const Card = React.forwardRef<HTMLDivElement, CardProps>(
-  ({ className, variant, padding, effect, ...props }, ref) => {
+  ({ className, variant, padding, effect, theme, style, ...props }, ref) => {
     return (
       <div
         ref={ref}
+        data-comixa-theme={theme}
         className={cn(cardVariants({ variant, padding, effect }), className)}
+        style={mergeComixaThemeStyle(theme, style)}
         {...props}
       />
     );

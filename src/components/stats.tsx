@@ -1,6 +1,7 @@
 import * as React from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "../lib/cn";
+import { mergeComixaThemeStyle, type ThemeableProps } from "../themes";
 
 export const statsVariants = cva("grid w-full gap-4", {
   variants: {
@@ -24,13 +25,14 @@ const StatsTriggerContext = React.createContext<StatsTriggerValue | null>(null);
 
 export interface StatsProps
   extends React.HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof statsVariants> {
+    VariantProps<typeof statsVariants>,
+    ThemeableProps {
   /** Start animated child stats when the whole Stats grid enters the viewport */
   triggerOnView?: boolean;
 }
 
 export const Stats = React.forwardRef<HTMLDivElement, StatsProps>(
-  ({ className, columns, triggerOnView = false, children, ...props }, ref) => {
+  ({ className, columns, triggerOnView = false, children, theme, style, ...props }, ref) => {
     const localRef = React.useRef<HTMLDivElement | null>(null);
     const [visible, setVisible] = React.useState(!triggerOnView);
 
@@ -68,7 +70,9 @@ export const Stats = React.forwardRef<HTMLDivElement, StatsProps>(
             if (typeof ref === "function") ref(node);
             else if (ref) ref.current = node;
           }}
+          data-comixa-theme={theme}
           className={cn(statsVariants({ columns }), className)}
+          style={mergeComixaThemeStyle(theme, style)}
           {...props}
         >
           {children}
@@ -159,7 +163,8 @@ function useCountUp(target: number, enabled: boolean, decimals: number) {
 
 export interface StatProps
   extends React.HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof statVariants> {
+    VariantProps<typeof statVariants>,
+    ThemeableProps {
   value: React.ReactNode;
   label: React.ReactNode;
   hint?: React.ReactNode;
@@ -180,6 +185,8 @@ export const Stat = React.forwardRef<HTMLDivElement, StatProps>(
       hint,
       animate = false,
       triggerOnView,
+      theme,
+      style,
       ...props
     },
     ref
@@ -237,7 +244,9 @@ export const Stat = React.forwardRef<HTMLDivElement, StatProps>(
           if (typeof ref === "function") ref(node);
           else if (ref) ref.current = node;
         }}
+        data-comixa-theme={theme}
         className={cn(statVariants({ tone, size }), className)}
+        style={mergeComixaThemeStyle(theme, style)}
         {...props}
       >
         <div

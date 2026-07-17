@@ -1,6 +1,7 @@
 import * as React from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "../lib/cn";
+import { mergeComixaThemeStyle, type ThemeableProps } from "../themes";
 
 export const SOUND_WORDS = [
   "POW",
@@ -86,13 +87,14 @@ const defaultWord: Record<
 
 export interface SoundBadgeProps
   extends React.HTMLAttributes<HTMLSpanElement>,
-    VariantProps<typeof soundBadgeVariants> {
+    VariantProps<typeof soundBadgeVariants>,
+    ThemeableProps {
   /** Override text — defaults to the variant word (POW!, BAM!, …). */
   word?: string;
 }
 
 export const SoundBadge = React.forwardRef<HTMLSpanElement, SoundBadgeProps>(
-  ({ className, variant = "pow", size, burst, word, children, ...props }, ref) => {
+  ({ className, variant = "pow", size, burst, word, children, theme, style, ...props }, ref) => {
     const label =
       children ?? word ?? defaultWord[variant ?? "pow"] ?? "POW!";
 
@@ -101,11 +103,13 @@ export const SoundBadge = React.forwardRef<HTMLSpanElement, SoundBadgeProps>(
         ref={ref}
         data-comixa-sound-badge=""
         data-comixa-sound-badge-variant={variant ?? "pow"}
+        data-comixa-theme={theme}
         className={cn(
           soundBadgeVariants({ variant, size, burst }),
           burst && "relative px-5 py-4",
           className
         )}
+        style={mergeComixaThemeStyle(theme, style)}
         {...props}
       >
         {burst ? (

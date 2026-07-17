@@ -1,6 +1,7 @@
 import * as React from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "../lib/cn";
+import { mergeComixaThemeStyle, type ThemeableProps } from "../themes";
 
 export const switchVariants = cva(
   [
@@ -45,7 +46,8 @@ const thumbSize = {
 
 export interface SwitchProps
   extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "onChange">,
-    VariantProps<typeof switchVariants> {
+    VariantProps<typeof switchVariants>,
+    ThemeableProps {
   checked?: boolean;
   defaultChecked?: boolean;
   onCheckedChange?: (checked: boolean) => void;
@@ -66,6 +68,8 @@ export const Switch = React.forwardRef<HTMLButtonElement, SwitchProps>(
       label,
       labelClassName,
       id,
+      theme,
+      style,
       ...props
     },
     ref
@@ -94,7 +98,9 @@ export const Switch = React.forwardRef<HTMLButtonElement, SwitchProps>(
         data-state={isChecked ? "checked" : "unchecked"}
         data-comixa-switch=""
         data-comixa-switch-variant={variant ?? "default"}
+        data-comixa-theme={theme}
         className={cn(switchVariants({ variant, switchSize: size }), className)}
+        style={mergeComixaThemeStyle(theme, style)}
         onClick={(event) => {
           props.onClick?.(event);
           if (!event.defaultPrevented) toggle();

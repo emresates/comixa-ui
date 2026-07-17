@@ -1,6 +1,7 @@
 import * as React from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "../lib/cn";
+import { mergeComixaThemeStyle, type ThemeableProps } from "../themes";
 
 export const radioVariants = cva(
   [
@@ -29,7 +30,8 @@ export const radioVariants = cva(
 
 export interface RadioProps
   extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "size" | "type">,
-    VariantProps<typeof radioVariants> {
+    VariantProps<typeof radioVariants>,
+    ThemeableProps {
   label?: React.ReactNode;
   labelClassName?: string;
   invalid?: boolean;
@@ -37,7 +39,7 @@ export interface RadioProps
 
 export const Radio = React.forwardRef<HTMLInputElement, RadioProps>(
   (
-    { className, radioSize, label, labelClassName, invalid, id, ...props },
+    { className, radioSize, label, labelClassName, invalid, id, theme, style, ...props },
     ref
   ) => {
     const generatedId = React.useId();
@@ -50,12 +52,14 @@ export const Radio = React.forwardRef<HTMLInputElement, RadioProps>(
         type="radio"
         aria-invalid={invalid || props["aria-invalid"] || undefined}
         data-invalid={invalid || props["aria-invalid"] ? "true" : undefined}
+        data-comixa-theme={theme}
         className={cn(
           radioVariants({ radioSize }),
           "checked:[background:var(--comixa-radio-checked-bg,var(--comixa-default-bg,var(--comixa-warning-bg,#FFD84D)))] checked:[border-color:var(--comixa-radio-checked-border,var(--comixa-outline-border,#1E1E1E))] checked:[box-shadow:var(--comixa-radio-checked-shadow,none)]",
           "data-[invalid=true]:[border-color:var(--comixa-radio-invalid-border,var(--comixa-danger-border,#FF5757))] data-[invalid=true]:[box-shadow:var(--comixa-radio-invalid-shadow,var(--comixa-danger-shadow-value,4px_4px_0_0_var(--comixa-danger-shadow,#FF5757)))]",
           className
         )}
+        style={mergeComixaThemeStyle(theme, style)}
         {...props}
       />
     );

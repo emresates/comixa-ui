@@ -2,6 +2,8 @@ import * as React from "react";
 import { createPortal } from "react-dom";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "../lib/cn";
+import { mergeComixaThemeStyle, type ThemeableProps } from "../themes";
+import { useComixaTheme } from "../theme-provider";
 
 const EXIT_MS = 220;
 
@@ -201,7 +203,8 @@ export function Dialog({
 
 export interface DialogContentProps
   extends React.HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof dialogContentVariants> {
+    VariantProps<typeof dialogContentVariants>,
+    ThemeableProps {
   showClose?: boolean;
   effect?: "none" | "pop" | "shake";
 }
@@ -219,11 +222,15 @@ export const DialogContent = React.forwardRef<
       showClose = true,
       children,
       onClick,
+      theme,
+      style,
       ...props
     },
     ref
   ) => {
     const { state, onOpenChange } = useDialogContext();
+    const providerTheme = useComixaTheme();
+    const resolvedTheme = theme ?? providerTheme;
 
     return (
       <div
@@ -233,11 +240,13 @@ export const DialogContent = React.forwardRef<
         data-comixa-dialog-panel=""
         data-state={effect === "none" ? "open" : state}
         data-effect={effect}
+        data-comixa-theme={resolvedTheme}
         className={cn(
           "pointer-events-auto",
           dialogContentVariants({ variant, size }),
           className
         )}
+        style={mergeComixaThemeStyle(resolvedTheme, style)}
         onClick={(event) => {
           event.stopPropagation();
           onClick?.(event);

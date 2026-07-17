@@ -1,6 +1,7 @@
 import * as React from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "../lib/cn";
+import { mergeComixaThemeStyle, type ThemeableProps } from "../themes";
 
 export const dividerVariants = cva("relative flex w-full items-center", {
   variants: {
@@ -27,7 +28,8 @@ export const dividerVariants = cva("relative flex w-full items-center", {
 
 export interface DividerProps
   extends React.HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof dividerVariants> {
+    VariantProps<typeof dividerVariants>,
+    ThemeableProps {
   label?: React.ReactNode;
   labelClassName?: string;
 }
@@ -97,7 +99,7 @@ function Line({
 
 export const Divider = React.forwardRef<HTMLDivElement, DividerProps>(
   (
-    { className, variant = "solid", tone, label, labelClassName, ...props },
+    { className, variant = "solid", tone, label, labelClassName, theme, style, ...props },
     ref
   ) => {
     const lineVariant = variant ?? "solid";
@@ -107,7 +109,9 @@ export const Divider = React.forwardRef<HTMLDivElement, DividerProps>(
         <div
           ref={ref}
           role="separator"
+          data-comixa-theme={theme}
           className={cn(dividerVariants({ variant, tone }), "py-2", className)}
+          style={mergeComixaThemeStyle(theme, style)}
           {...props}
         >
           <Line variant={lineVariant} />
@@ -119,7 +123,9 @@ export const Divider = React.forwardRef<HTMLDivElement, DividerProps>(
       <div
         ref={ref}
         role="separator"
+        data-comixa-theme={theme}
         className={cn(dividerVariants({ variant, tone }), "gap-3 py-2", className)}
+        style={mergeComixaThemeStyle(theme, style)}
         {...props}
       >
         <div className="min-w-0 flex-1">

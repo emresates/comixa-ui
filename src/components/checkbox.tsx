@@ -1,6 +1,7 @@
 import * as React from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "../lib/cn";
+import { mergeComixaThemeStyle, type ThemeableProps } from "../themes";
 
 export const checkboxVariants = cva(
   [
@@ -44,7 +45,8 @@ export const checkboxVariants = cva(
 
 export interface CheckboxProps
   extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "size" | "type">,
-    VariantProps<typeof checkboxVariants> {
+    VariantProps<typeof checkboxVariants>,
+    ThemeableProps {
   label?: React.ReactNode;
   labelClassName?: string;
 }
@@ -58,6 +60,8 @@ export const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
       label,
       labelClassName,
       id,
+      theme,
+      style,
       ...props
     },
     ref
@@ -72,10 +76,12 @@ export const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
         type="checkbox"
         data-comixa-checkbox=""
         data-comixa-checkbox-variant={variant ?? "default"}
+        data-comixa-theme={theme}
         className={cn(
           checkboxVariants({ variant, checkboxSize }),
           className
         )}
+        style={mergeComixaThemeStyle(theme, style)}
         {...props}
       />
     );

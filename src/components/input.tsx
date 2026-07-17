@@ -1,6 +1,7 @@
 import * as React from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "../lib/cn";
+import { mergeComixaThemeStyle, type ThemeableProps } from "../themes";
 
 export const inputVariants = cva(
   [
@@ -50,11 +51,12 @@ export const inputVariants = cva(
 
 export interface InputProps
   extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "size">,
-    VariantProps<typeof inputVariants> {}
+    VariantProps<typeof inputVariants>,
+    ThemeableProps {}
 
 export const Input = React.forwardRef<HTMLInputElement, InputProps>(
   (
-    { className, variant, inputSize, state, type = "text", ...props },
+    { className, variant, inputSize, state, type = "text", theme, style, ...props },
     ref
   ) => {
     return (
@@ -63,7 +65,9 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
         type={type}
         data-comixa-input=""
         data-comixa-field-state={state ?? "default"}
+        data-comixa-theme={theme}
         className={cn(inputVariants({ variant, inputSize, state }), className)}
+        style={mergeComixaThemeStyle(theme, style)}
         {...props}
       />
     );

@@ -1,6 +1,7 @@
 import * as React from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "../lib/cn";
+import { mergeComixaThemeStyle, type ThemeableProps } from "../themes";
 
 export const ribbonVariants = cva(
   [
@@ -45,15 +46,18 @@ export const ribbonVariants = cva(
 
 export interface RibbonProps
   extends React.HTMLAttributes<HTMLSpanElement>,
-    VariantProps<typeof ribbonVariants> {}
+    VariantProps<typeof ribbonVariants>,
+    ThemeableProps {}
 
 export const Ribbon = React.forwardRef<HTMLSpanElement, RibbonProps>(
-  ({ className, variant, size, tilt, ...props }, ref) => (
+  ({ className, variant, size, tilt, theme, style, ...props }, ref) => (
     <span
       ref={ref}
       data-comixa-ribbon=""
       data-comixa-ribbon-variant={variant ?? "banner"}
+      data-comixa-theme={theme}
       className={cn(ribbonVariants({ variant, size, tilt }), className)}
+      style={mergeComixaThemeStyle(theme, style)}
       {...props}
     />
   )

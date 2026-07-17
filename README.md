@@ -154,31 +154,6 @@ itself and its children.
 
 Themes: `default`, `retro`, `pop-art`, `manga`, `vintage`.
 
-## Components
-
-| Preview | Component | What it is |
-|:-------:|-----------|------------|
-| <img src="docs/assets/components/button.svg" alt="Button" width="200" /> | **Button** | CTAs with variants, loading, icon buttons |
-| <img src="docs/assets/components/badge.svg" alt="Badge" width="200" /> | **Badge** | Status tags and labels |
-| <img src="docs/assets/components/sticker.svg" alt="Sticker" width="200" /> | **Sticker** | Tilted promo stickers |
-| <img src="docs/assets/components/input.svg" alt="Input" width="200" /> | **Input** | Ink-bordered text fields |
-| - | **Textarea** | Multiline fields for notes and scripts |
-| <img src="docs/assets/components/select.svg" alt="Select" width="200" /> | **Select** | Custom listbox dropdown |
-| <img src="docs/assets/components/checkbox.svg" alt="Checkbox" width="200" /> | **Checkbox** | Checkable options |
-| <img src="docs/assets/components/radio.svg" alt="Radio" width="200" /> | **Radio** | Single-choice radios |
-| <img src="docs/assets/components/toast.svg" alt="Toast" width="200" /> | **Toast** | Notifications |
-| <img src="docs/assets/components/divider.svg" alt="Divider" width="200" /> | **Divider** | Comic rules |
-| <img src="docs/assets/components/stats.svg" alt="Stats" width="200" /> | **Stats** | Metric tiles |
-| - | **Ribbon** | Promo ribbons, tickets, burst labels |
-| - | **ComicPage / ComicPanel** | Comic grids and cover-grade hero panels |
-| - | **Gallery** | Grid, featured, and draggable horizontal image strips |
-| - | **Timeline** | Vertical comic timelines for resumes and launch stories |
-| - | **PageTransition** | Route/content enter effects |
-| - | **Loader Animation** | Comic loading indicators |
-| - | **Reveal Animation** | Replayable section reveal animations |
-| - | **Cursor** | Global cursor follower with trailing dots |
-| - | **Features** | Feature grids and comic highlight cards |
-
 ### Button
 
 | Prop | Values | Default |

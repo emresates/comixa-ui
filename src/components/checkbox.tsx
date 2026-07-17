@@ -70,6 +70,8 @@ export const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
         ref={ref}
         id={inputId}
         type="checkbox"
+        data-comixa-checkbox=""
+        data-comixa-checkbox-variant={variant ?? "default"}
         className={cn(
           checkboxVariants({ variant, checkboxSize }),
           className

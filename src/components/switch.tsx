@@ -92,6 +92,8 @@ export const Switch = React.forwardRef<HTMLButtonElement, SwitchProps>(
         aria-checked={isChecked}
         disabled={disabled}
         data-state={isChecked ? "checked" : "unchecked"}
+        data-comixa-switch=""
+        data-comixa-switch-variant={variant ?? "default"}
         className={cn(switchVariants({ variant, switchSize: size }), className)}
         onClick={(event) => {
           props.onClick?.(event);
@@ -102,6 +104,7 @@ export const Switch = React.forwardRef<HTMLButtonElement, SwitchProps>(
         <span
           aria-hidden
           data-state={isChecked ? "checked" : "unchecked"}
+          data-comixa-switch-thumb=""
           className={cn(
             "pointer-events-none absolute left-0.5 top-1/2 -translate-y-1/2 rounded-sm transition-transform duration-150 [border-width:var(--comixa-button-border-width,2px)] [border-color:var(--comixa-outline-border,#1E1E1E)] [background:var(--comixa-outline-bg,#FFFFFF)] [box-shadow:var(--comixa-outline-shadow-value,2px_2px_0_0_var(--comixa-outline-shadow,#1E1E1E))]",
             thumbSize[size]

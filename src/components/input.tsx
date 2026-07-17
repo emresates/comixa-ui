@@ -62,6 +62,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
         ref={ref}
         type={type}
         data-comixa-input=""
+        data-comixa-field-state={state ?? "default"}
         className={cn(inputVariants({ variant, inputSize, state }), className)}
         {...props}
       />

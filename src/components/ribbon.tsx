@@ -52,6 +52,7 @@ export const Ribbon = React.forwardRef<HTMLSpanElement, RibbonProps>(
     <span
       ref={ref}
       data-comixa-ribbon=""
+      data-comixa-ribbon-variant={variant ?? "banner"}
       className={cn(ribbonVariants({ variant, size, tilt }), className)}
       {...props}
     />

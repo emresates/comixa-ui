@@ -21,13 +21,11 @@ export const selectTriggerVariants = cva(
     variants: {
       variant: {
         default:
-          "[background:var(--comixa-outline-bg,#FFFFFF)] [box-shadow:var(--comixa-outline-shadow-value,2px_2px_0_0_var(--comixa-outline-shadow,#1E1E1E))]",
+          "[background:var(--comixa-select-bg,var(--comixa-outline-bg,#FFFFFF))] [box-shadow:var(--comixa-outline-shadow-value,2px_2px_0_0_var(--comixa-outline-shadow,#1E1E1E))]",
         ghost:
-          "border-dashed [background:var(--comixa-ghost-bg,transparent)] shadow-none",
+          "border-dashed [background:var(--comixa-select-ghost-bg,var(--comixa-ghost-bg,transparent))] shadow-none",
         filled:
-          "[background:var(--comixa-default-bg,#FFD84D)] [box-shadow:var(--comixa-default-shadow-value,2px_2px_0_0_var(--comixa-default-shadow,#1E1E1E))]",
-        pop:
-          "[background:var(--comixa-warning-bg,#FFD84D)] [box-shadow:var(--comixa-warning-shadow-value,2px_2px_0_0_var(--comixa-warning-shadow,#1E1E1E))]",
+          "[background:var(--comixa-select-filled-bg,var(--comixa-default-bg,#FFD84D))] [box-shadow:var(--comixa-default-shadow-value,2px_2px_0_0_var(--comixa-default-shadow,#1E1E1E))]",
       },
       selectSize: {
         sm: "h-8 rounded-md px-2.5 text-sm",
@@ -37,9 +35,9 @@ export const selectTriggerVariants = cva(
       state: {
         default: "",
         error:
-          "[border-color:var(--comixa-danger-border,#FF4D4D)] [box-shadow:var(--comixa-danger-shadow-value,4px_4px_0_0_var(--comixa-danger-shadow,#FF4D4D))]",
+          "[border-color:var(--comixa-select-error-border,var(--comixa-danger-border,#FF4D4D))] [background:var(--comixa-select-error-bg,var(--comixa-select-bg,var(--comixa-outline-bg,#FFFFFF)))] [color:var(--comixa-select-error-text,var(--comixa-select-text,var(--comixa-outline-text,#111111)))] [box-shadow:var(--comixa-select-error-shadow,var(--comixa-danger-shadow-value,4px_4px_0_0_var(--comixa-danger-shadow,#FF4D4D)))]",
         success:
-          "[border-color:var(--comixa-success-border,#5BD67A)] [box-shadow:var(--comixa-success-shadow-value,4px_4px_0_0_var(--comixa-success-shadow,#5BD67A))]",
+          "[border-color:var(--comixa-select-success-border,var(--comixa-success-border,#5BD67A))] [background:var(--comixa-select-success-bg,var(--comixa-select-bg,var(--comixa-outline-bg,#FFFFFF)))] [color:var(--comixa-select-success-text,var(--comixa-select-text,var(--comixa-outline-text,#111111)))] [box-shadow:var(--comixa-select-success-shadow,var(--comixa-success-shadow-value,4px_4px_0_0_var(--comixa-success-shadow,#5BD67A)))]",
       },
     },
     defaultVariants: {
@@ -147,6 +145,8 @@ export const Select = React.forwardRef<HTMLButtonElement, SelectProps>(
           aria-haspopup="listbox"
           aria-expanded={open}
           aria-controls={listId}
+          data-comixa-select-trigger=""
+          data-comixa-select-state={state ?? "default"}
           className={cn(
             selectTriggerVariants({ variant, selectSize, state }),
             classNames?.trigger
@@ -199,7 +199,7 @@ export const Select = React.forwardRef<HTMLButtonElement, SelectProps>(
             role="listbox"
             className={cn(
               "absolute left-0 right-0 top-[calc(100%+0.35rem)] z-50 max-h-60 overflow-auto",
-              "p-1 [border-width:var(--comixa-button-border-width,2px)] [border-color:var(--comixa-outline-border,#1E1E1E)] [background:var(--comixa-outline-bg,#FFFFFF)] [box-shadow:var(--comixa-outline-shadow-value,4px_4px_0_0_var(--comixa-outline-shadow,#1E1E1E))]",
+              "p-1 [border-width:var(--comixa-button-border-width,2px)] [border-color:var(--comixa-select-menu-border,var(--comixa-outline-border,#1E1E1E))] [background:var(--comixa-select-menu-bg,var(--comixa-outline-bg,#FFFFFF))] [box-shadow:var(--comixa-select-menu-shadow,var(--comixa-outline-shadow-value,4px_4px_0_0_var(--comixa-outline-shadow,#1E1E1E)))]",
               selectSize === "sm" && "rounded-md",
               (!selectSize || selectSize === "md") && "rounded-lg",
               selectSize === "lg" && "rounded-xl",

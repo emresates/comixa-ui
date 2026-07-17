@@ -66,6 +66,7 @@ export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
     <textarea
       ref={ref}
       data-comixa-textarea=""
+      data-comixa-field-state={state ?? "default"}
       className={cn(
         textareaVariants({ variant, textareaSize, state, resize }),
         className

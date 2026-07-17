@@ -15,18 +15,67 @@ export const statsVariants = cva("grid w-full gap-4", {
   },
 });
 
+type StatsTriggerValue = {
+  triggerOnView: boolean;
+  visible: boolean;
+};
+
+const StatsTriggerContext = React.createContext<StatsTriggerValue | null>(null);
+
 export interface StatsProps
   extends React.HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof statsVariants> {}
+    VariantProps<typeof statsVariants> {
+  /** Start animated child stats when the whole Stats grid enters the viewport */
+  triggerOnView?: boolean;
+}
 
 export const Stats = React.forwardRef<HTMLDivElement, StatsProps>(
-  ({ className, columns, ...props }, ref) => (
-    <div
-      ref={ref}
-      className={cn(statsVariants({ columns }), className)}
-      {...props}
-    />
-  )
+  ({ className, columns, triggerOnView = false, children, ...props }, ref) => {
+    const localRef = React.useRef<HTMLDivElement | null>(null);
+    const [visible, setVisible] = React.useState(!triggerOnView);
+
+    React.useEffect(() => {
+      if (!triggerOnView) {
+        setVisible(true);
+        return;
+      }
+
+      const el = localRef.current;
+      if (!el || typeof IntersectionObserver === "undefined") {
+        setVisible(true);
+        return;
+      }
+
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry?.isIntersecting) {
+            setVisible(true);
+            observer.disconnect();
+          }
+        },
+        { threshold: 0.3 }
+      );
+
+      observer.observe(el);
+      return () => observer.disconnect();
+    }, [triggerOnView]);
+
+    return (
+      <StatsTriggerContext.Provider value={{ triggerOnView, visible }}>
+        <div
+          ref={(node) => {
+            localRef.current = node;
+            if (typeof ref === "function") ref(node);
+            else if (ref) ref.current = node;
+          }}
+          className={cn(statsVariants({ columns }), className)}
+          {...props}
+        >
+          {children}
+        </div>
+      </StatsTriggerContext.Provider>
+    );
+  }
 );
 Stats.displayName = "Stats";
 
@@ -116,6 +165,8 @@ export interface StatProps
   hint?: React.ReactNode;
   /** Animate numeric string values when they enter the viewport */
   animate?: boolean;
+  /** Start count-up when this Stat enters the viewport */
+  triggerOnView?: boolean;
 }
 
 export const Stat = React.forwardRef<HTMLDivElement, StatProps>(
@@ -128,16 +179,25 @@ export const Stat = React.forwardRef<HTMLDivElement, StatProps>(
       label,
       hint,
       animate = false,
+      triggerOnView,
       ...props
     },
     ref
   ) => {
     const localRef = React.useRef<HTMLDivElement | null>(null);
-    const [inView, setInView] = React.useState(!animate);
+    const parentTrigger = React.useContext(StatsTriggerContext);
+    const shouldTriggerOnView =
+      triggerOnView ?? (parentTrigger?.triggerOnView ? false : animate);
+    const [inView, setInView] = React.useState(!shouldTriggerOnView);
     const parsed = typeof value === "string" ? parseNumeric(value) : null;
 
     React.useEffect(() => {
-      if (!animate || !parsed) {
+      if (parentTrigger?.triggerOnView) {
+        setInView(parentTrigger.visible);
+        return;
+      }
+
+      if (!shouldTriggerOnView || !parsed) {
         setInView(true);
         return;
       }
@@ -157,7 +217,7 @@ export const Stat = React.forwardRef<HTMLDivElement, StatProps>(
       );
       observer.observe(el);
       return () => observer.disconnect();
-    }, [animate, parsed]);
+    }, [parentTrigger, shouldTriggerOnView, parsed]);
 
     const animatedNumber = useCountUp(
       parsed?.number ?? 0,

@@ -19,23 +19,36 @@ export type SoundWord = (typeof SOUND_WORDS)[number];
 
 export const soundBadgeVariants = cva(
   [
-    "inline-flex select-none items-center justify-center border-2 border-ink",
-    "font-comic uppercase leading-none tracking-wide shadow-comic",
+    "relative isolate inline-flex select-none items-center justify-center overflow-hidden border-2",
+    "font-comic uppercase leading-none tracking-wide",
+    "[border-color:var(--comixa-sound-border)] [background:var(--comixa-sound-bg)] [color:var(--comixa-sound-text)] [box-shadow:var(--comixa-sound-shadow-value)]",
+    "[font-family:var(--comixa-button-font,'Bangers','Comic_Sans_MS',cursive)] [letter-spacing:var(--comixa-button-letter-spacing,0.025em)]",
+    "before:pointer-events-none before:absolute before:inset-0 before:z-0 before:content-[''] before:[background-image:var(--comixa-sound-pattern)] before:[background-size:var(--comixa-sound-pattern-size)] before:opacity-[var(--comixa-sound-pattern-opacity)]",
     "rotate-[-6deg]",
   ].join(" "),
   {
     variants: {
       variant: {
-        pow: "bg-comic-yellow text-ink",
-        bam: "bg-comic-red text-white rotate-[4deg]",
-        wow: "bg-comic-pink text-ink rotate-[-3deg]",
-        boom: "bg-comic-orange !text-white rotate-[8deg]",
-        zap: "bg-comic-blue text-white rotate-[-8deg]",
-        crash: "bg-comic-green text-ink rotate-[5deg]",
-        wham: "bg-ink text-comic-yellow rotate-[-2deg]",
-        bang: "bg-comic-red text-comic-yellow rotate-[6deg]",
-        kapow: "bg-comic-yellow text-comic-red rotate-[-10deg]",
-        splash: "bg-comic-blue text-paper rotate-[3deg]",
+        pow:
+          "[--comixa-sound-bg:var(--comixa-warning-bg,#FFD84D)] [--comixa-sound-text:var(--comixa-warning-text,#111111)] [--comixa-sound-border:var(--comixa-warning-border,#1E1E1E)] [--comixa-sound-shadow-value:var(--comixa-warning-shadow-value,4px_4px_0_0_var(--comixa-warning-shadow,#1E1E1E))] [--comixa-sound-pattern:var(--comixa-warning-pattern,none)] [--comixa-sound-pattern-size:var(--comixa-warning-pattern-size,auto)] [--comixa-sound-pattern-opacity:var(--comixa-warning-pattern-opacity,0)]",
+        bam:
+          "rotate-[4deg] [--comixa-sound-bg:var(--comixa-danger-bg,#FF5757)] [--comixa-sound-text:var(--comixa-danger-text,#FFFFFF)] [--comixa-sound-border:var(--comixa-danger-border,#1E1E1E)] [--comixa-sound-shadow-value:var(--comixa-danger-shadow-value,4px_4px_0_0_var(--comixa-danger-shadow,#1E1E1E))] [--comixa-sound-pattern:var(--comixa-danger-pattern,none)] [--comixa-sound-pattern-size:var(--comixa-danger-pattern-size,auto)] [--comixa-sound-pattern-opacity:var(--comixa-danger-pattern-opacity,0)]",
+        wow:
+          "rotate-[-3deg] [--comixa-sound-bg:var(--comixa-default-bg,var(--comixa-warning-bg,#FF7AB6))] [--comixa-sound-text:var(--comixa-default-text,var(--comixa-warning-text,#111111))] [--comixa-sound-border:var(--comixa-default-border,var(--comixa-warning-border,#1E1E1E))] [--comixa-sound-shadow-value:var(--comixa-default-shadow-value,4px_4px_0_0_var(--comixa-default-shadow,var(--comixa-warning-shadow,#1E1E1E)))] [--comixa-sound-pattern:var(--comixa-default-pattern,var(--comixa-warning-pattern,none))] [--comixa-sound-pattern-size:var(--comixa-default-pattern-size,var(--comixa-warning-pattern-size,auto))] [--comixa-sound-pattern-opacity:var(--comixa-default-pattern-opacity,var(--comixa-warning-pattern-opacity,0))]",
+        boom:
+          "rotate-[8deg] !text-white [--comixa-sound-bg:var(--comixa-danger-bg,#FF9F1C)] [--comixa-sound-text:#FFFFFF] [--comixa-sound-border:var(--comixa-danger-border,#1E1E1E)] [--comixa-sound-shadow-value:var(--comixa-danger-shadow-value,4px_4px_0_0_var(--comixa-danger-shadow,#1E1E1E))] [--comixa-sound-pattern:var(--comixa-danger-pattern,none)] [--comixa-sound-pattern-size:var(--comixa-danger-pattern-size,auto)] [--comixa-sound-pattern-opacity:var(--comixa-danger-pattern-opacity,0)]",
+        zap:
+          "rotate-[-8deg] [--comixa-sound-bg:var(--comixa-primary-bg,#4F9CF9)] [--comixa-sound-text:var(--comixa-primary-text,#FFFFFF)] [--comixa-sound-border:var(--comixa-primary-border,#1E1E1E)] [--comixa-sound-shadow-value:var(--comixa-primary-shadow-value,4px_4px_0_0_var(--comixa-primary-shadow,#1E1E1E))] [--comixa-sound-pattern:var(--comixa-primary-pattern,none)] [--comixa-sound-pattern-size:var(--comixa-primary-pattern-size,auto)] [--comixa-sound-pattern-opacity:var(--comixa-primary-pattern-opacity,0)]",
+        crash:
+          "rotate-[5deg] [--comixa-sound-bg:var(--comixa-success-bg,#4ADE80)] [--comixa-sound-text:var(--comixa-success-text,#111111)] [--comixa-sound-border:var(--comixa-success-border,#1E1E1E)] [--comixa-sound-shadow-value:var(--comixa-success-shadow-value,4px_4px_0_0_var(--comixa-success-shadow,#1E1E1E))] [--comixa-sound-pattern:var(--comixa-success-pattern,none)] [--comixa-sound-pattern-size:var(--comixa-success-pattern-size,auto)] [--comixa-sound-pattern-opacity:var(--comixa-success-pattern-opacity,0)]",
+        wham:
+          "rotate-[-2deg] [--comixa-sound-bg:#1A1A1A] [--comixa-sound-text:var(--comixa-warning-bg,#FFD84D)] [--comixa-sound-border:#1A1A1A] [--comixa-sound-shadow-value:4px_4px_0_0_#1A1A1A] [--comixa-sound-pattern:none] [--comixa-sound-pattern-size:auto] [--comixa-sound-pattern-opacity:0]",
+        bang:
+          "rotate-[6deg] [--comixa-sound-bg:var(--comixa-danger-bg,#FF5757)] [--comixa-sound-text:var(--comixa-warning-bg,#FFD84D)] [--comixa-sound-border:var(--comixa-danger-border,#1E1E1E)] [--comixa-sound-shadow-value:var(--comixa-danger-shadow-value,4px_4px_0_0_var(--comixa-danger-shadow,#1E1E1E))] [--comixa-sound-pattern:var(--comixa-danger-pattern,none)] [--comixa-sound-pattern-size:var(--comixa-danger-pattern-size,auto)] [--comixa-sound-pattern-opacity:var(--comixa-danger-pattern-opacity,0)]",
+        kapow:
+          "rotate-[-10deg] [--comixa-sound-bg:var(--comixa-warning-bg,#FFD84D)] [--comixa-sound-text:var(--comixa-danger-bg,#FF5757)] [--comixa-sound-border:var(--comixa-warning-border,#1E1E1E)] [--comixa-sound-shadow-value:var(--comixa-warning-shadow-value,4px_4px_0_0_var(--comixa-warning-shadow,#1E1E1E))] [--comixa-sound-pattern:var(--comixa-warning-pattern,none)] [--comixa-sound-pattern-size:var(--comixa-warning-pattern-size,auto)] [--comixa-sound-pattern-opacity:var(--comixa-warning-pattern-opacity,0)]",
+        splash:
+          "rotate-[3deg] [--comixa-sound-bg:var(--comixa-primary-bg,#4F9CF9)] [--comixa-sound-text:var(--comixa-primary-text,#FFFFFF)] [--comixa-sound-border:var(--comixa-primary-border,#1E1E1E)] [--comixa-sound-shadow-value:var(--comixa-primary-shadow-value,4px_4px_0_0_var(--comixa-primary-shadow,#1E1E1E))] [--comixa-sound-pattern:var(--comixa-primary-pattern,none)] [--comixa-sound-pattern-size:var(--comixa-primary-pattern-size,auto)] [--comixa-sound-pattern-opacity:var(--comixa-primary-pattern-opacity,0)]",
       },
       size: {
         sm: "rounded-md px-2 py-1 text-sm",
@@ -87,6 +100,7 @@ export const SoundBadge = React.forwardRef<HTMLSpanElement, SoundBadgeProps>(
       <span
         ref={ref}
         data-comixa-sound-badge=""
+        data-comixa-sound-badge-variant={variant ?? "pow"}
         className={cn(
           soundBadgeVariants({ variant, size, burst }),
           burst && "relative px-5 py-4",

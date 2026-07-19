@@ -152,7 +152,8 @@ itself and its children.
 </ComixaProvider>
 ```
 
-Themes: `default`, `retro`, `pop-art`, `manga`, `vintage`.
+Themes: `comic`, `retro`, `pop-art`, `manga`, `vintage`. When `theme` is
+omitted, `ComixaProvider` uses the `comic` theme.
 
 ### Button
 
@@ -173,7 +174,7 @@ Themes: `default`, `retro`, `pop-art`, `manga`, `vintage`.
 
 Button variants are semantic. Theme changes should come from CSS variables like
 `--comixa-primary-bg`, `--comixa-danger-border`, and `--comixa-warning-shadow`.
-Comixa also exports `defaultTheme`, `retroTheme`, `popArtTheme`, `mangaTheme`,
+Comixa also exports `comicTheme`, `retroTheme`, `popArtTheme`, `mangaTheme`,
 `vintageTheme`, and `comixaThemes` as token objects.
 
 ### Input

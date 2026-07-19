@@ -22,13 +22,13 @@ export type ButtonTheme = {
 };
 
 export type ComixaThemeName =
-  | "default"
+  | "comic"
   | "retro"
   | "pop-art"
   | "manga"
   | "vintage";
 
-export const defaultTheme = {
+export const comicTheme = {
   default: {
     bg: "#FFD84D",
     text: "#111111",
@@ -274,7 +274,7 @@ export const vintageTheme = {
 } satisfies ButtonTheme;
 
 export const comixaThemes = {
-  default: defaultTheme,
+  comic: comicTheme,
   retro: retroTheme,
   "pop-art": popArtTheme,
   manga: mangaTheme,
@@ -315,7 +315,7 @@ type ThemeMeta = {
 };
 
 const themeMeta: Record<ComixaThemeName, ThemeMeta> = {
-  default: {
+  comic: {
     font: `"Bangers", "Comic Sans MS", cursive`,
     radius: "0.5rem",
     borderWidth: "2px",
@@ -459,9 +459,9 @@ function addSlotVars(vars: CssVars, name: keyof ButtonTheme, slot: ButtonThemeSl
   vars[`--comixa-${name}-pattern-opacity`] = slot.patternOpacity ?? 0;
 }
 
-export function getComixaThemeStyle(theme: ComixaThemeName = "default"): CssVars {
-  const tokens = comixaThemes[theme] ?? defaultTheme;
-  const meta = themeMeta[theme] ?? themeMeta.default;
+export function getComixaThemeStyle(theme: ComixaThemeName = "comic"): CssVars {
+  const tokens = comixaThemes[theme] ?? comicTheme;
+  const meta = themeMeta[theme] ?? themeMeta.comic;
   const vars: CssVars = {
     "--comixa-button-font": meta.font,
     "--comixa-button-radius": meta.radius,

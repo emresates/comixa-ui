@@ -85,7 +85,7 @@ const THEME_RUNTIME_CSS = `
 }
 `;
 
-const ComixaThemeContext = React.createContext<ComixaThemeName>("default");
+const ComixaThemeContext = React.createContext<ComixaThemeName>("comic");
 
 export function useComixaTheme() {
   return React.useContext(ComixaThemeContext);
@@ -105,7 +105,7 @@ export interface ComixaProviderProps extends React.HTMLAttributes<HTMLDivElement
 }
 
 export const ComixaProvider = React.forwardRef<HTMLDivElement, ComixaProviderProps>(
-  ({ theme = "default", className, style, children, ...props }, ref) => {
+  ({ theme = "comic", className, style, children, ...props }, ref) => {
     React.useLayoutEffect(() => {
       ensureThemeStyles();
     }, []);

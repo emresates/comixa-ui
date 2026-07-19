@@ -231,7 +231,7 @@ export {
 } from "./theme-provider";
 export {
   comixaThemes,
-  defaultTheme,
+  comicTheme,
   getComixaThemeStyle,
   mergeComixaThemeStyle,
   mangaTheme,
